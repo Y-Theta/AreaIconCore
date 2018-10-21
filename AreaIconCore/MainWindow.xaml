@@ -4,7 +4,9 @@
               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
               xmlns:yt="clr-namespace:YControls;assembly=YControls"
+              xmlns:model="clr-namespace:AreaIconCore.Models"
               xmlns:service="clr-namespace:AreaIconCore.Services"
+              xmlns:setting="clr-namespace:YFrameworkBase.Setting;assembly=YFrameworkBase"
               xmlns:local="clr-namespace:AreaIconCore"
               DragingMode="FullWindow"
               Background="Transparent"
@@ -18,10 +20,26 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding Extensions,Source={x:Static service:CoreSettings.Instence}}">
+        <ListView x:Name="ListV">
             <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBox Text="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                <DataTemplate DataType="{x:Type model:ExtensionInfo}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <!--<TextBox Text="{Binding}"
+                                 Margin="4,0,4,0"
+                                 Grid.Column="0" />-->
+                        <TextBox Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="4,0,4,0"
+                                 Grid.Column="1" />
+                        <TextBox Text="{Binding Enabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="4,0,4,0"
+                                 Grid.Column="2" />
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -34,6 +52,7 @@
             <Button Click="Button_Click">Save</Button>
             <Button Click="Button_Click_1"
                     Grid.Column="1">Show</Button>
+            <Button Click="Button_Click_2" Grid.Column="2">Close</Button>
         </Grid>
     </Grid>
 </yt:YT_Window>
