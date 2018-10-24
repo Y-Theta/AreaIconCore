@@ -4,29 +4,26 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F17B54EF-29FA-47F3-81B8-B47E434FE968}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <RootNamespace>AreaIconCore</RootNamespace>
-    <AssemblyName>AreaIconCore</AssemblyName>
+    <ProjectGuid>{47C42FA3-A8D1-4D51-AF7F-5C875BF87E02}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>D6_ex</RootNamespace>
+    <AssemblyName>D6_ex</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\AreaIconCore\bin\Debug\extensions\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -38,9 +35,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -50,28 +44,18 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsBase">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Models\Extension.cs" />
-    <Compile Include="Services\CoreSettings.cs" />
-    <Compile Include="Services\HostAdapter.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="D6Core.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -99,21 +83,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\SelfLibraries\YControls1.0\YControls1.0\YControls1.0\YControls.csproj">
-      <Project>{11c8d3a8-f83f-4112-95c5-b61684af36a7}</Project>
-      <Name>YControls</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SelfLibraries\YMvvmBase\YMvvmBase\YFrameworkBase.csproj">
       <Project>{dc63e2d7-36b8-455e-9644-1fff2c95fa24}</Project>
       <Name>YFrameworkBase</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\ExtensionContract\ExtensionContract.csproj">
-      <Project>{CEB7B8B5-AFE5-42C8-9E7F-9FFE428768E0}</Project>
+      <Project>{ceb7b8b5-afe5-42c8-9e7f-9ffe428768e0}</Project>
       <Name>ExtensionContract</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -42,9 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationScenario.cs" />
-    <Compile Include="ExtensionBase.cs" />
     <Compile Include="IContract.cs" />
+    <Compile Include="InnerDomainExtenesion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SelfLibraries\YMvvmBase\YMvvmBase\YFrameworkBase.csproj">
+      <Project>{DC63E2D7-36B8-455E-9644-1FFF2C95FA24}</Project>
+      <Name>YFrameworkBase</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
