@@ -1,4 +1,5 @@
-﻿using ExtensionContract;
+﻿using D6_ex.Services;
+using ExtensionContract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -23,7 +24,12 @@ namespace D6_ex {
         public override object Run(ApplicationScenario c) {
             switch (c) {
                 case ApplicationScenario.AreaIcon:
+                    return AreaIconServices.Instance.StringIcon();
+                case ApplicationScenario.UnLoad:
+                    PostData(this,ApplicationScenario.UnLoad);
                     return null;
+                case ApplicationScenario.MainPage:
+                    return new FluxPage();
                 default: return null;
             }
         }
@@ -33,6 +39,11 @@ namespace D6_ex {
             Author = "Y_Theta";
             Edition = "1";
             Description = "用于六维空间的相关控件";
+            Application = new Dictionary<ApplicationScenario, int> {
+                { ApplicationScenario.AreaIcon ,1},
+                { ApplicationScenario.MainPage ,1},
+                { ApplicationScenario.MainWindowInit,1 },
+            };
         }
     }
 }

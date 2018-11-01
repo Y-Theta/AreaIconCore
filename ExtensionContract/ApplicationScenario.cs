@@ -37,6 +37,11 @@ namespace ExtensionContract {
         /// </summary>
         MainWindowEnd,
 
+        /// <summary>
+        /// 作为主程序的主页面显示
+        /// </summary>
+        MainPage,
+
         #region AreaIcon
 
         /// <summary>

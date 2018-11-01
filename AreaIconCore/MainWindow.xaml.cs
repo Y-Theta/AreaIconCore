@@ -1,21 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using System.Windows;
-using ColorD = System.Drawing.Color;
-using Image = System.Drawing.Image;
-using Pen = System.Drawing.Pen;
-using Color = System.Windows.Media.Color;
-using Drawing = System.Drawing;
 using AreaIconCore.Services;
-using YFrameworkBase.Setting;
-using YFrameworkBase;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows.Data;
-using System.Windows.Controls;
-using AreaIconCore.Models;
 using YControls.AreaIconWindow;
 
 namespace AreaIconCore {
@@ -23,8 +9,6 @@ namespace AreaIconCore {
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
     public partial class MainWindow : YT_Window {
-        private IntPtr _ico = IntPtr.Zero;
-
         public MainWindow() {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
@@ -56,27 +40,33 @@ namespace AreaIconCore {
             //CoreSettings.Instence.MainColor = ColorD.FromArgb(80, 80, 80, 80);
             //SettingManager.Instence.Config = new SettingNodeInfo { Name = "setting.xml" };
             #endregion
-            HostAdapter.Instance.PluginsPath = AppDomain.CurrentDomain.BaseDirectory + @"extensions\";
+            //foreach (var ext in HostAdapter.Instance.ExtensionDirectory.Values) {
+            //    if (ext.Application.ContainsKey(ExtensionContract.ApplicationScenario.AreaIcon)) {
+            //        if (!AllowAreaIcon)
+            //            AllowAreaIcon = true;
+            //        RegisterAreaIcon(ext.Name);
+            //        AreaIcons[ext.Name].Areaicon = (Icon)ext.Run(ExtensionContract.ApplicationScenario.AreaIcon);
+            //        AreaIcons[ext.Name].IconMouseDoubleClick += MainWindow_IconMouseDoubleClick;
+            //    }
+            //    if (ext.Application.ContainsKey(ExtensionContract.ApplicationScenario.MainPage)) {
+            //        MainFrame.Content = ext.Run(ExtensionContract.ApplicationScenario.MainPage);
+            //    }
+            //}
         }
 
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {
-            GC.Collect(2, GCCollectionMode.Forced, true);
-            if (Visibility == Visibility.Hidden)
-                Show();
+            if (Visibility == Visibility.Visible)
+                App.Current.MainWindow.Hide();
             else
-                Hide();
+                App.Current.MainWindow.Show();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) {
-           
+        private void FIconToggleButton_Checked(object sender, RoutedEventArgs e) {
+
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e) {
-           
-        }
+        private void FIconToggleButton_Checked_1(object sender, RoutedEventArgs e) {
 
-        private void Button_Click_2(object sender, RoutedEventArgs e) {
-            
         }
     }
 }

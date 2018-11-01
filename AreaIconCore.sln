@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D6_ex", "D6_ex\D6_ex.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YControls", "..\SelfLibraries\YControls1.0\YControls1.0\YControls1.0\YControls.csproj", "{11C8D3A8-F83F-4112-95C5-B61684AF36A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpServices", "..\SimpleHttpFrameWork\HttpServices\HttpServices.csproj", "{13B56F09-8884-48B7-ABC6-B9840F819FD5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{11C8D3A8-F83F-4112-95C5-B61684AF36A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11C8D3A8-F83F-4112-95C5-B61684AF36A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11C8D3A8-F83F-4112-95C5-B61684AF36A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13B56F09-8884-48B7-ABC6-B9840F819FD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B56F09-8884-48B7-ABC6-B9840F819FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B56F09-8884-48B7-ABC6-B9840F819FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B56F09-8884-48B7-ABC6-B9840F819FD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

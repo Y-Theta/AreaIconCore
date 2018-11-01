@@ -59,7 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\DirectoryKind.cs" />
     <Compile Include="Models\Extension.cs" />
+    <Compile Include="Services\AssemblyManager.cs" />
     <Compile Include="Services\CoreSettings.cs" />
     <Compile Include="Services\HostAdapter.cs" />
     <Page Include="MainWindow.xaml">
@@ -106,15 +108,21 @@
     <ProjectReference Include="..\..\SelfLibraries\YControls1.0\YControls1.0\YControls1.0\YControls.csproj">
       <Project>{11c8d3a8-f83f-4112-95c5-b61684af36a7}</Project>
       <Name>YControls</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\SelfLibraries\YMvvmBase\YMvvmBase\YFrameworkBase.csproj">
       <Project>{dc63e2d7-36b8-455e-9644-1fff2c95fa24}</Project>
       <Name>YFrameworkBase</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\ExtensionContract\ExtensionContract.csproj">
       <Project>{CEB7B8B5-AFE5-42C8-9E7F-9FFE428768E0}</Project>
       <Name>ExtensionContract</Name>
+      <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="0.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
