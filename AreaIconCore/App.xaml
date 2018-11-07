@@ -7,6 +7,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/YControls;component/Themes/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <FontFamily x:Key="Questrial">
+                pack://application:,,,/FontLibrary;component/Questrial.ttf#Questrial
+            </FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

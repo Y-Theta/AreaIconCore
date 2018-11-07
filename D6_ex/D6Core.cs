@@ -1,5 +1,4 @@
-﻿using D6_ex.Services;
-using ExtensionContract;
+﻿using ExtensionContract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -24,7 +23,6 @@ namespace D6_ex {
         public override object Run(ApplicationScenario c) {
             switch (c) {
                 case ApplicationScenario.AreaIcon:
-                    return AreaIconServices.Instance.StringIcon();
                 case ApplicationScenario.UnLoad:
                     PostData(this,ApplicationScenario.UnLoad);
                     return null;

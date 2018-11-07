@@ -9,6 +9,8 @@
                      xmlns:yt_window="clr-namespace:YControls.AreaIconWindow;assembly=YControls"
                      xmlns:yt_button="clr-namespace:YControls.FontIconButtons;assembly=YControls"
                      xmlns:yt_slide="clr-namespace:YControls.SlideControls;assembly=YControls"
+                     xmlns:yt_text="clr-namespace:YControls.TextControls;assembly=YControls"
+                     xmlns:yt_flow="clr-namespace:YControls.FlowControls;assembly=YControls"
                      ExtendToTitleBar="True"
                      AutoHideTitleBar="True"
                      TitleHeight="24"
@@ -21,26 +23,59 @@
     <yt_window:YT_Window.TitleArea>
         <Grid Background="#ff00ff00" />
     </yt_window:YT_Window.TitleArea>
+    <yt_window:YT_Window.Resources>
+        <Style x:Key="FIconRepeatButtonDefault"
+               TargetType="yt_button:FIconButton">
+            <Setter Property="OverridesDefaultStyle"
+                    Value="False" />
+            <Setter Property="IconVisibility"
+                    Value="Collapsed" />
+            <Setter Property="LabelString"
+                    Value="" />
+            <Setter Property="LabelBgOver"
+                    Value="Cyan" />
+            <Setter Property="LabelBgPressed"
+                    Value="Yellow" />
+            <Setter Property="LabelBgNormal"
+                    Value="White" />
+        </Style>
+        <Style x:Key="AIPopup"
+               TargetType="yt_flow:YT_PopupBase">
+            <Setter Property="RelativeRect"
+                    Value="8,8" />
+            <Setter Property="PlacementTarget"
+                    Value="{Binding MainWindow, Source={ x:Static local:App.Current}}" />
+            <Setter Property="RelativeMode"
+                    Value="LeftBottom" />
+            <Setter Property="Child">
+                <Setter.Value>
+                    <Grid Background="Yellow"
+                          Width="120"
+                          Height="24">
+
+                    </Grid>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <yt_flow:YT_ContextMenu x:Key="ContextM" Style="{StaticResource WinXTaskBarContextMenuStyle}">
+            <yt_flow:YT_MenuItem Icon="&#xE701;"
+                                 LabelString="item"
+                                 Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
+            <yt_flow:YT_MenuItem Icon="&#xE701;"
+                                 LabelString="item"
+                                 Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
+            <yt_flow:YT_MenuItem  Icon="&#xE701;"
+                                  LabelString="item"
+                                  Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
+        </yt_flow:YT_ContextMenu>
+
+    </yt_window:YT_Window.Resources>
     <Grid Background="#80000000">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid.Resources>
-            <Style x:Key="FIconRepeatButtonDefault"
-                   TargetType="yt_button:FIconButton">
-                <Setter Property="IconVisibility"
-                        Value="Collapsed" />
-                <Setter Property="LabelString"
-                        Value="333333333" />
-                <Setter Property="LabelBgNormal"
-                        Value="Red" />
-                <Setter Property="LabelBgOver"
-                        Value="Black" />
-                <Setter Property="LabelBgPressed"
-                        Value="#40000000" />
-            </Style>
-        </Grid.Resources>
         <ListView x:Name="ListV"
                   Visibility="Collapsed">
             <ListView.ItemTemplate>
@@ -52,7 +87,6 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
-
                         <TextBox Text="{Binding}"
                                  Margin="4,0,4,0"
                                  Grid.Column="0" />
@@ -66,50 +100,30 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <yt_slide:YT_ScrollViewer Grid.Row="0">
-            <Viewbox>
-                <Image Source="0.jpg" />
-            </Viewbox>
-        </yt_slide:YT_ScrollViewer>
+
         <Grid x:Name="ButtonPanel"
-              Grid.Row="1">
+              Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <yt_button:FIconRadioButton IconFgNormal="Blue"
-                                        IconBgNormal="White"
-                                        IconBgOver="Cyan"
-                                        IconSelectFgNormal="Blue"
-                                        LabelString="Label"
-                                        LabelSelect="Select"
-                                        LabelSelectFgNormal="Blue"
-                                        IconLayout="LabelLeft"
-                                        Content="&#xE701;"
-                                        IconSelect="&#xE700;"
-                                        Grid.Column="1"
-                                        Checked="FIconToggleButton_Checked" />
-            <yt_button:FIconRadioButton IconFgNormal="Blue"
-                                        IconBgNormal="White"
-                                        IconSelectFgNormal="Red"
-                                        LabelString="Label"
-                                        LabelSelect="Select"
-                                        LabelSelectFgNormal="Red"
-                                        IconLayout="LabelLeft"
-                                        Content="&#xE701;"
-                                        IconSelect="&#xE700;"
-                                        Grid.Column="0"
-                                        Checked="FIconToggleButton_Checked_1" />
-            <yt_button:FIconRepeatButton LabelString="Label"
-                                         IconVisibility="Collapsed"
-                                         
-                                   LabelBgNormal="White"
-                                   LabelBgOver="Cyan"
-                                   LabelBgPressed="Yellow"
-                                   IconLayout="LabelLeft"
+            <yt_button:FIconButton LabelString="ABCDEF"
+                                   LabelFontFamily="{DynamicResource Questrial}"
+                                   LabelFontSize="24"
                                    Content="&#xE701;"
-                                   Grid.Column="2" />
+                                   Grid.Column="0"
+                                   Click="FIconToggleButton_Checked" />
+            <yt_button:FIconButton LabelString="ABCDEF"
+                                   LabelFontSize="24"
+                                   Content="&#xE701;"
+                                   Grid.Column="1"
+                                   Click="FIconToggleButton_Checked_1" />
+            <yt_button:FIconButton LabelString="ABCDEF"
+                                   LabelFontSize="24"
+                                   Content="&#xE701;"
+                                   Grid.Column="2"
+                                   Click="FIconButton_Click" />
         </Grid>
     </Grid>
 </yt_window:YT_Window>
