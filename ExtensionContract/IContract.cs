@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ExtensionContract {
 
-    public delegate void OnExtensionAction(object sender, ApplicationScenario scenario);
+    public delegate void OnExtensionAction(object sender, ApplicationScenario scenario, object para);
 
     /// <summary>
     /// 插件约定
@@ -44,7 +44,7 @@ namespace ExtensionContract {
         /// <summary>
         /// 触发PostData,通知主程序接收数据
         /// </summary>
-        void PostData(object sender, ApplicationScenario scenario);
+        void PostData(object sender, ApplicationScenario scenario, object para);
 
         /// <summary>
         /// 获取插件信息的字符描述
@@ -54,6 +54,6 @@ namespace ExtensionContract {
         /// <summary>
         /// 运行插件并带回必要值
         /// </summary>
-        object Run(ApplicationScenario c);
+        object Run(ApplicationScenario c, object arg = null);
     }
 }

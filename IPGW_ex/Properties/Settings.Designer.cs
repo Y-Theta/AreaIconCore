@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace D6_ex.Properties
+namespace IPGW_ex.Properties
 {
     
     

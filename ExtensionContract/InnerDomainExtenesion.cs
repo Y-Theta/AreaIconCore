@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using YFrameworkBase;
 
 namespace ExtensionContract {
-    public abstract class InnerDomainExtenesion<T> : IInnerDomainExtensionContract where T : class, new(){
+    public abstract class InnerDomainExtenesion<T> : IInnerDomainExtensionContract where T : class, new() {
         #region Properties
 
         private static Lazy<T> _instence = new Lazy<T>(() => { return new T(); });
@@ -35,11 +35,11 @@ namespace ExtensionContract {
                                 $"Description :  {Description}\n");
         }
 
-        public void PostData(object sender, ApplicationScenario scenario) {
-            Notify?.Invoke(sender, scenario);
+        public void PostData(object sender, ApplicationScenario scenario, object para = null) {
+            Notify?.Invoke(sender, scenario, para);
         }
 
-        public abstract object Run(ApplicationScenario c);
+        public abstract object Run(ApplicationScenario c, object arg = null);
         #endregion
 
         #region Constructors

@@ -1,0 +1,105 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:yt_button="clr-namespace:YControls.FontIconButtons;assembly=YControls"
+                    xmlns:yt_flow="clr-namespace:YControls.FlowControls;assembly=YControls"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AreaIconCore.Views">
+    <!--#region                                                         -->
+    <!--#endregion-->
+
+    <!--#region                                                         ButtonStyles-->
+    <Style x:Key="CloseButton"
+           TargetType="yt_button:FIconButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="LabelVisibility"
+                Value="Collapsed" />
+        <Setter Property="ToolTipString"
+                Value="关闭" />
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="Margin"
+                Value="1" />
+        <Setter Property="Content"
+                Value="&#xE106;" />
+        <Setter Property="IconMargin"
+                Value="2" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="IconFgNormal"
+                Value="#C0FFFFFF" />
+        <Setter Property="IconFgOver"
+                Value="#C0FFFFFF" />
+        <Setter Property="IconFgPressed"
+                Value="#C0FFFFFF" />
+        <Setter Property="IconBgNormal"
+                Value="Transparent" />
+        <Setter Property="IconBgOver"
+                Value="#8000aaff" />
+        <Setter Property="IconBgPressed"
+                Value="#c000aaff" />
+
+    </Style>
+    <!--#endregion-->
+
+    <!--#region                                                         Popup-->
+    <Style TargetType="yt_flow:YT_PopupBase"
+           x:Key="AeroPopup">
+        <Setter Property="AllowsTransparency"
+                Value="True" />
+        <Setter Property="RelativeMode"
+                Value="RightBottom" />
+        <Setter Property="Placement"
+                Value="AbsolutePoint" />
+        <Setter Property="AutoHide"
+                Value="True" />
+        <Setter Property="AutoHideDelay"
+                Value="3000" />
+        <Setter Property="RelativeRect"
+                Value="8,8" />
+        <Setter Property="Child">
+            <Setter.Value>
+                <Border Width="320"
+                        Height="180"
+                        Background="#80000000">
+
+                </Border>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region                                                         ContextMenu-->
+    <Style x:Key="AreaContextMenuSeperator"
+           TargetType="{x:Type Separator}">
+        <Setter Property="Margin"
+                Value="4,1" />
+        <Setter Property="Focusable"
+                Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            Height="1"
+                            SnapsToDevicePixels="true" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <yt_flow:YT_ContextMenu x:Key="AreaIconContextMenu"
+                            Style="{StaticResource WinXTaskBarContextMenuStyle}">
+        <yt_flow:YT_MenuItem LabelString="显示主页面"
+                             Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
+        <yt_flow:YT_MenuItem LabelString="设置"
+                             Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
+        <Separator Background="#808080"
+                   Style="{StaticResource AreaContextMenuSeperator}" />
+        <yt_flow:YT_MenuItem LabelString="退出程序"
+                             Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
+    </yt_flow:YT_ContextMenu>
+    <!--#endregion-->
+
+
+</ResourceDictionary>

@@ -12,7 +12,7 @@ namespace AreaIconCore.Services {
         #region Properties
         [ImportMany(typeof(IInnerDomainExtensionContract), AllowRecomposition = true)]
         private List<IInnerDomainExtensionContract> _addInContracts;
-        public Dictionary<string, IInnerDomainExtensionContract> ExtensionDirectory {  get; set; }
+        public Dictionary<string, IInnerDomainExtensionContract> ExtensionDirectory { get; set; }
 
         private String _pluginsPath;
         public String PluginsPath {
@@ -32,8 +32,12 @@ namespace AreaIconCore.Services {
             string[] pahts = Directory.GetDirectories(_pluginsPath);
             foreach (var p in pahts) {
                 string key = p.Split('\\').Last();
-                if (!CoreSettings.Instence.Extensions.ContainsKey(key) || CoreSettings.Instence.Extensions[key])
+                if (!CoreSettings.Instance.Extensions.ContainsKey(key) || CoreSettings.Instance.Extensions[key]) {
                     _acceptcatalog.Catalogs.Add(new DirectoryCatalog(p));
+                    if (!CoreSettings.Instance.Extensions.ContainsKey(key)) {
+                        CoreSettings.Instance.Extensions.Add(key, true);
+                    }
+                }
             }
             _container = new CompositionContainer(_acceptcatalog);
             _container.ComposeParts(this);
@@ -43,7 +47,7 @@ namespace AreaIconCore.Services {
             }
         }
 
-        private void Extension_Notify(object sender, ApplicationScenario scenario) {
+        private void Extension_Notify(object sender, ApplicationScenario scenario, object obj) {
             Console.WriteLine(sender.ToString() + scenario);
         }
 

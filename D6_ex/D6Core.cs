@@ -20,11 +20,11 @@ namespace D6_ex {
     [Export(typeof(IInnerDomainExtensionContract))]
     public class D6Core : InnerDomainExtenesion<D6Core> {
 
-        public override object Run(ApplicationScenario c) {
+        public override object Run(ApplicationScenario c, object obj) {
             switch (c) {
                 case ApplicationScenario.AreaIcon:
                 case ApplicationScenario.UnLoad:
-                    PostData(this,ApplicationScenario.UnLoad);
+                    PostData(this, ApplicationScenario.UnLoad);
                     return null;
                 case ApplicationScenario.MainPage:
                     return new FluxPage();

@@ -1,13 +1,9 @@
 ﻿using AreaIconCore.Models;
 using AreaIconCore.Services;
+using AreaIconCore.Views;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using YFrameworkBase.Setting;
+using ToastHelper;
 
 namespace AreaIconCore {
     /// <summary>
@@ -20,9 +16,13 @@ namespace AreaIconCore {
             _manger = new InnerProcessAssemblyManager();
             _manger.Directorys.Add(GetDirectory(DirectoryKind.Bin));
             _manger.HockResolve(AppDomain.CurrentDomain);
+
             Startup += App_Startup;
         }
 
+        /// <summary>
+        /// 获得应用下的相对路径
+        /// </summary>
         public static String GetDirectory(DirectoryKind kind = DirectoryKind.Root) {
             switch (kind) {
                 case DirectoryKind.Root:
@@ -41,6 +41,8 @@ namespace AreaIconCore {
         }
 
         private void App_Startup(object sender, StartupEventArgs e) {
+            DesktopNotificationManagerCompat.RegisterAumidAndComServer<AreaIconToast>("Y_T" + nameof(AreaIconCore));
+            DesktopNotificationManagerCompat.RegisterActivator<AreaIconToast>();
             HostAdapter.Instance.PluginsPath = App.GetDirectory(DirectoryKind.Extension);
             MainWindow window = new MainWindow();
             window.Show();

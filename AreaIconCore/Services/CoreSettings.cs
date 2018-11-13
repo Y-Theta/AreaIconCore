@@ -9,23 +9,10 @@ using System.Threading.Tasks;
 using YFrameworkBase.Setting;
 
 namespace AreaIconCore.Services {
+    [SettingFile("settings", "core_set.xml")]
     [DataContract]
-    public class CoreSettings : ILocalSetting {
+    public class CoreSettings : ILocalSetting<CoreSettings> {
         #region Properties
-        private static CoreSettings _instence;
-        private static readonly object _slock = new object();
-        public static CoreSettings Instence {
-            get {
-                if (_instence is null) {
-                    lock (_slock) {
-                        if (_instence is null) {
-                            _instence = new CoreSettings();
-                        }
-                    }
-                }
-                return _instence;
-            }
-        }
 
         [DataMember]
         private Dictionary<String, bool> _extensions;
@@ -43,11 +30,6 @@ namespace AreaIconCore.Services {
         #endregion
 
         #region Methods
-        public override void LoadValue<T>(T setting) {
-            if (setting is CoreSettings)
-                _instence = setting as CoreSettings;
-        }
-
         public void Init() {
             Extensions = new Dictionary<String, bool>();
         }
