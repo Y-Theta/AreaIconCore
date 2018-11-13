@@ -16,7 +16,6 @@ namespace AreaIconCore {
             _manger = new InnerProcessAssemblyManager();
             _manger.Directorys.Add(GetDirectory(DirectoryKind.Bin));
             _manger.HockResolve(AppDomain.CurrentDomain);
-
             Startup += App_Startup;
         }
 
@@ -43,6 +42,7 @@ namespace AreaIconCore {
         private void App_Startup(object sender, StartupEventArgs e) {
             DesktopNotificationManagerCompat.RegisterAumidAndComServer<AreaIconToast>("Y_T" + nameof(AreaIconCore));
             DesktopNotificationManagerCompat.RegisterActivator<AreaIconToast>();
+
             HostAdapter.Instance.PluginsPath = App.GetDirectory(DirectoryKind.Extension);
             MainWindow window = new MainWindow();
             window.Show();

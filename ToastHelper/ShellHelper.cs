@@ -203,6 +203,10 @@ namespace ToastHelper {
         #endregion 
 
         #region Constructors
+        public void SetEnum(VarEnum enumtype) {
+            _valueType = (ushort)enumtype;
+        }
+
         public PropVariant(string value) {
             if (value == null) {
                 throw new ArgumentException();

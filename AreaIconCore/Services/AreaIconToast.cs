@@ -9,7 +9,7 @@ using ToastHelper;
 namespace AreaIconCore.Services {
     [ClassInterface(ClassInterfaceType.None)]
     [ComSourceInterfaces(typeof(INotificationActivationCallback))]
-    [Guid("F17B54EF-29FA-47F3-81B8-B47E434FE968"), ComVisible(true)]
+    [Guid("ad020b22-7654-472e-a172-C173E6ADF0C3"), ComVisible(true)]
     public class AreaIconToast : NotificationActivator {
 
         #region Methods

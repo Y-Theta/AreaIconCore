@@ -32,9 +32,6 @@ namespace ToastHelper {
 
             // If running as Desktop Bridge
             if (DesktopBridgeHelpers.IsRunningAsUwp()) {
-                // Clear the AUMID since Desktop Bridge doesn't use it, and then we're done.
-                // Desktop Bridge apps are registered with platform through their manifest.
-                // Their LocalServer32 key is also registered through their manifest.
                 _aumid = null;
                 _registeredAumidAndComServer = true;
                 return;
@@ -43,7 +40,8 @@ namespace ToastHelper {
             _aumid = aumid;
 
             String exePath = Process.GetCurrentProcess().MainModule.FileName;
-            RegisterComServer<T>(exePath);
+            // 不需要从通知打开则不需要这项操作
+            //  RegisterComServer<T>(exePath);
             var shortcut = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
                 $"\\Microsoft\\Windows\\Start Menu\\{_aumid}.lnk";
             if (!File.Exists(shortcut))
@@ -58,7 +56,7 @@ namespace ToastHelper {
         private static void RegisterComServer<T>(String exePath)
             where T : NotificationActivator {
             // We register the EXE to start up when the notification is activated
-            string regString = $"SOFTWARE\\Classes\\CLSID\\{{{typeof(T).GUID}}}\\LocalServer32";
+            string regString = $"SOFTWARE\\Classes\\CLSID\\{{{typeof(T).GUID.ToString()}}}\\LocalServer32";
             RegistryKey localKey;
             if (Environment.Is64BitOperatingSystem)
                 localKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
@@ -69,7 +67,6 @@ namespace ToastHelper {
 
             key.SetValue(null, '"' + exePath + '"' + " " + TOAST_ACTIVATED_LAUNCH_ARG);
         }
-
 
         /// <summary>
         /// Registers the activator type as a COM server client so that Windows can launch your activator.
@@ -104,10 +101,15 @@ namespace ToastHelper {
             IPropertyStore newShortcutProperties = (IPropertyStore)newShortcut;
 
             using (PropVariant appId = new PropVariant(_aumid)) {
-                ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(new Guid("{9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}"), 5), appId));
-                ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(new Guid("{9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}"),26), new PropVariant(typeof(T).GUID.ToString())));
-                ErrorHelper.VerifySucceeded(newShortcutProperties.Commit());
+                ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 5), appId));
             }
+
+            var toastclass = typeof(T).GUID.ToString();
+            using (PropVariant toastid = new PropVariant(toastclass)) {
+                toastid.SetEnum(VarEnum.VT_CLSID);
+                ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 26), toastid));
+            }
+            ErrorHelper.VerifySucceeded(newShortcutProperties.Commit());
 
             // Commit the shortcut to disk
             IPersistFile newShortcutSave = (IPersistFile)newShortcut;
@@ -210,8 +212,6 @@ namespace ToastHelper {
         }
         #endregion
 
-        #region Constructors
-        #endregion
     }
 
 }

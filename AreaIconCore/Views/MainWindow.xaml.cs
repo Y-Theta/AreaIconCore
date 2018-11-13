@@ -143,5 +143,6 @@ namespace AreaIconCore.Views {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
         }
+
     }
 }
