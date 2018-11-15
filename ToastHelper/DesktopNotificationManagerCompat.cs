@@ -7,7 +7,7 @@ using System.Text;
 using Windows.UI.Notifications;
 
 namespace ToastHelper {
-    public class DesktopNotificationManagerCompat {
+    internal class DesktopNotificationManagerCompat {
         #region Properties
         public const string TOAST_ACTIVATED_LAUNCH_ARG = "-ToastActivated";
 
@@ -18,12 +18,6 @@ namespace ToastHelper {
         #endregion
 
         #region Methods
-        /// <summary>
-        /// If not running under the Desktop Bridge, you must call this method to register your AUMID with the Compat library and to
-        /// register your COM CLSID and EXE in LocalServer32 registry. Feel free to call this regardless, and we will no-op if running
-        /// under Desktop Bridge. Call this upon application startup, before calling any other APIs.
-        /// </summary>
-        /// <param name="aumid">An AUMID that uniquely identifies your application.</param>
         public static void RegisterAumidAndComServer<T>(string aumid)
             where T : NotificationActivator {
             if (string.IsNullOrWhiteSpace(aumid)) {
@@ -40,12 +34,16 @@ namespace ToastHelper {
             _aumid = aumid;
 
             String exePath = Process.GetCurrentProcess().MainModule.FileName;
-            // 不需要从通知打开则不需要这项操作
-            //  RegisterComServer<T>(exePath);
-            var shortcut = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                $"\\Microsoft\\Windows\\Start Menu\\{_aumid}.lnk";
-            if (!File.Exists(shortcut))
+            // 不需要从通知打开程序则不需要这项操作
+            // RegisterComServer<T>(exePath);
+            var shortcut = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+                + $"\\Microsoft\\Windows\\Start Menu\\AreaIcon Core\\{_aumid}.lnk";
+            Console.WriteLine(shortcut);
+            if (!File.Exists(shortcut)) {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                    $"\\Microsoft\\Windows\\Start Menu\\AreaIcon Core");
                 CreatShortcut<T>(shortcut);
+            }
 
             _registeredAumidAndComServer = true;
         }
@@ -89,15 +87,12 @@ namespace ToastHelper {
         /// </summary>
         private static void CreatShortcut<T>(string shortcutPath) {
 
-            // Find the path to the current executable
             String exePath = Process.GetCurrentProcess().MainModule.FileName;
             IShellLinkW newShortcut = (IShellLinkW)new CShellLink();
 
-            // Create a shortcut to the exe
             ErrorHelper.VerifySucceeded(newShortcut.SetPath(exePath));
             ErrorHelper.VerifySucceeded(newShortcut.SetArguments(""));
 
-            // Open the shortcut property store, set the AppUserModelId property
             IPropertyStore newShortcutProperties = (IPropertyStore)newShortcut;
 
             using (PropVariant appId = new PropVariant(_aumid)) {

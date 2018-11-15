@@ -13,6 +13,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace IPGW_ex {
-
+namespace AreaIconCore.Views {
+    /// <summary>
+    /// MainPage.xaml 的交互逻辑
+    /// </summary>
+    public partial class MainPage : Page {
+        public MainPage() {
+            InitializeComponent();
+        }
+    }
 }

@@ -12,8 +12,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Media;
 using AreaIconCore.Models;
 using YControls.InterAction;
-using Windows.UI.Notifications;
-using Windows.Data.Xml.Dom;
 using ToastHelper;
 
 namespace AreaIconCore.Views {
@@ -101,7 +99,7 @@ namespace AreaIconCore.Views {
         private void Singleton_MainPageActions(object sender, CommandArgs args) {
             switch (args.Parameter) {
                 case "Close":
-                    Toast();
+                    App.ToastHelper.Notify(nameof(AreaIconCore), "Hellow");
                     break;
                 case "MainPage":
                     AreaIconDraw.Instance.LoadFont(ConstTable.RectNum, 6, ConstTable.MyFont);
@@ -111,32 +109,11 @@ namespace AreaIconCore.Views {
             }
         }
 
-        private void Toast() {
-            // Get a toast XML template
-            XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastImageAndText04);
-
-            // Fill in the text elements
-            XmlNodeList stringElements = toastXml.GetElementsByTagName("text");
-            for (int i = 0; i < stringElements.Length; i++) {
-                stringElements[i].AppendChild(toastXml.CreateTextNode("Line " + i));
-            }
-
-            // Create the toast and attach event listeners
-            ToastNotification toast = new ToastNotification(toastXml);
-
-            // Show the toast. Be sure to specify the AppUserModelId on your application's shortcut!
-            DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
-        }
-
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {
             if (Visibility == Visibility.Visible)
                 App.Current.MainWindow.Hide();
             else
                 App.Current.MainWindow.Show();
-        }
-
-        private void FIconToggleButton_Checked(object sender, RoutedEventArgs e) {
-
         }
 
         public MainWindow() {

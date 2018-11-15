@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.UI.Notifications;
 
 namespace ToastHelper {
-    public class DesktopNotificationHistoryCompat {
+    internal class DesktopNotificationHistoryCompat {
         #region Properties
         private string _aumid;
         private ToastNotificationHistory _history;
@@ -16,7 +16,7 @@ namespace ToastHelper {
         /// Do not call this. Instead, call <see cref="DesktopNotificationManagerCompat.History"/> to obtain an instance.
         /// </summary>
         /// <param name="aumid"></param>
-        internal DesktopNotificationHistoryCompat(string aumid) {
+        public DesktopNotificationHistoryCompat(string aumid) {
             _aumid = aumid;
             _history = ToastNotificationManager.History;
         }

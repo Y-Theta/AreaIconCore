@@ -14,31 +14,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using YFrameworkBase;
 
-namespace D6_ex {
+namespace IPGW_ex {
     [Export(typeof(IInnerDomainExtensionContract))]
-    public class D6Core : InnerDomainExtenesion<D6Core> {
-
-        public override object Run(ApplicationScenario c, object obj) {
-            switch (c) {
-                case ApplicationScenario.AreaIcon:
-                case ApplicationScenario.UnLoad:
-                    PostData(this, ApplicationScenario.UnLoad);
-                    return null;
-                case ApplicationScenario.MainPage:
-                    return new FluxPage();
-                default: return null;
-            }
+    public class IPGW_ex : InnerDomainExtenesion<IPGW_ex> {
+        public override object Run(ApplicationScenario c, object arg = null) {
+            throw new NotImplementedException();
         }
 
-        public D6Core() {
-            Name = "D6_ex";
+
+        public IPGW_ex() {
+            Name = "IPGW_ex";
             Author = "Y_Theta";
             Edition = "1";
-            Description = "用于六维空间的相关控件";
+            Description = "用于IPGW的相关控件";
             Application = new Dictionary<ApplicationScenario, int> {
-
+                { ApplicationScenario.AreaIcon ,1},
+                { ApplicationScenario.AreaContextMenu ,1},
+                { ApplicationScenario.AreaPopup ,1},
+                { ApplicationScenario.MainPage ,1},
+                { ApplicationScenario.MainWindowInit,1 },
             };
         }
     }

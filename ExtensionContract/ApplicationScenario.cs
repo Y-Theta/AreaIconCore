@@ -50,10 +50,26 @@ namespace ExtensionContract {
         AreaIcon,
 
         /// <summary>
-        /// 在宿主程序中申请托盘图标右键菜单项
+        /// 托盘图标右键菜单项
         /// </summary>
         AreaContextMenu,
+
+        /// <summary>
+        /// 托盘图标的弹出框
+        /// </summary>
+        AreaPopup,
+
         #endregion
+
+        #region Setting
+        /// <summary>
+        /// 当前程序拥有设置页
+        /// </summary>
+        SettingPage,
+
+
+        #endregion
+
         #endregion
     }
 }

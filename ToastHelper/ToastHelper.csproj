@@ -55,6 +55,7 @@
     <Compile Include="DesktopNotificationManagerCompat.cs" />
     <Compile Include="NotificationUserInput.cs" />
     <Compile Include="ShellHelper.cs" />
+    <Compile Include="NotificationService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

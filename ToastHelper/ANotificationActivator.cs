@@ -15,7 +15,6 @@ namespace ToastHelper {
 
         public abstract void OnActivated(string arguments, NotificationUserInput userInput, string appUserModelId);
 
-        // These are the new APIs for Windows 10
         #region NewAPIs
 
         [StructLayout(LayoutKind.Sequential), Serializable]

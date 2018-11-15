@@ -56,10 +56,12 @@
                 Value="3000" />
         <Setter Property="RelativeRect"
                 Value="8,8" />
+        <Setter Property="EnableBlur"
+                Value="True" />
         <Setter Property="Child">
             <Setter.Value>
                 <Border Width="320"
-                        Height="180"
+                        Height="160"
                         Background="#80000000">
 
                 </Border>

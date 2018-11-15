@@ -11,12 +11,20 @@ namespace AreaIconCore {
     /// </summary>
     public partial class App : Application {
         InnerProcessAssemblyManager _manger;
+        public static NotificationService ToastHelper;
+        static readonly string APP_ID = "Areaicon Core";
 
         public App() {
             _manger = new InnerProcessAssemblyManager();
             _manger.Directorys.Add(GetDirectory(DirectoryKind.Bin));
             _manger.HockResolve(AppDomain.CurrentDomain);
+            ToastHelper = new NotificationService();
             Startup += App_Startup;
+            SessionEnding += App_SessionEnding;
+        }
+
+        private void App_SessionEnding(object sender, SessionEndingCancelEventArgs e) {
+
         }
 
         /// <summary>
@@ -40,8 +48,7 @@ namespace AreaIconCore {
         }
 
         private void App_Startup(object sender, StartupEventArgs e) {
-            DesktopNotificationManagerCompat.RegisterAumidAndComServer<AreaIconToast>("Y_T" + nameof(AreaIconCore));
-            DesktopNotificationManagerCompat.RegisterActivator<AreaIconToast>();
+            ToastHelper.Init(APP_ID);
 
             HostAdapter.Instance.PluginsPath = App.GetDirectory(DirectoryKind.Extension);
             MainWindow window = new MainWindow();
