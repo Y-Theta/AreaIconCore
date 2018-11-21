@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -87,18 +88,22 @@
     <ProjectReference Include="..\..\SelfLibraries\YControls1.0\YControls1.0\YControls1.0\YControls.csproj">
       <Project>{11c8d3a8-f83f-4112-95c5-b61684af36a7}</Project>
       <Name>YControls</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\SelfLibraries\YMvvmBase\YMvvmBase\YFrameworkBase.csproj">
       <Project>{dc63e2d7-36b8-455e-9644-1fff2c95fa24}</Project>
       <Name>YFrameworkBase</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\ExtensionContract\ExtensionContract.csproj">
       <Project>{ceb7b8b5-afe5-42c8-9e7f-9ffe428768e0}</Project>
       <Name>ExtensionContract</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\ToastHelper\ToastHelper.csproj">
       <Project>{2ef101fa-3b8b-4e65-b42e-1a8db34aecd8}</Project>
       <Name>ToastHelper</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

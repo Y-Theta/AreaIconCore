@@ -27,6 +27,10 @@
         /// 配置目录
         /// </summary>
         Config,
+        /// <summary>
+        /// 主题
+        /// </summary>
+        Theme,
     }
 
 }

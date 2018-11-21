@@ -14,7 +14,6 @@ namespace ToastHelper {
     [ComSourceInterfaces(typeof(INotificationActivationCallback))]
     [Guid("9a88b91d-f9c4-4c63-91dd-175c2c2cb458"), ComVisible(true)]
     public class NotificationService : NotificationActivator {
-
         #region Methods
         public void Init(string appid) {
             DesktopNotificationManagerCompat.RegisterAumidAndComServer<NotificationService>(appid);
@@ -22,7 +21,7 @@ namespace ToastHelper {
         }
 
         public override void OnActivated(string arguments, NotificationUserInput userInput, string appUserModelId) {
-            
+
         }
 
         public void Notify(string title, string content) {
@@ -30,10 +29,17 @@ namespace ToastHelper {
 
             XmlNodeList lines = xml.GetElementsByTagName("text");
             lines[0].AppendChild(xml.CreateTextNode(title));
-            lines[0].AppendChild(xml.CreateTextNode(content));
+            lines[1].AppendChild(xml.CreateTextNode(content));
+
+            XmlElement binding = (XmlElement)xml.GetElementsByTagName("binding")[0];
+            binding.SetAttribute("template", "ToastGeneric");
 
             ToastNotification toast = new ToastNotification(xml);
             DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
+        }
+
+        public void ClearHistory(string appid) {
+            new DesktopNotificationHistoryCompat(appid).Clear();
         }
         #endregion
 

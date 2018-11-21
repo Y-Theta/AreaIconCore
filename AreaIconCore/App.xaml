@@ -6,6 +6,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/YControls;component/Themes/Styles.xaml" />
+                <ResourceDictionary Source="/Views/DefaultTheme/ThemeNow.xaml" />
                 <ResourceDictionary Source="/Views/AppRes.xaml" />
                 <ResourceDictionary Source="/Views/AppStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>

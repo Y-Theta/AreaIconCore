@@ -5,12 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AreaIconCore.Models {
-   public static class ConstTable {
+   public class ConstTable {
         #region Properties
-        public const string RectNum = "RectNum";
-        public const string MyFont = "FontLibrary";
+        public static string RectNum = "RectNum";
+        public static string MyFont = "FontLibrary";
 
 
+        public static string MainPageIcon {
+            get => "\uE80F";
+        }
+        public static string SettingPageIcon {
+            get => "\xE713";
+        }
+        public static string AboutPageIcon {
+            get => "\xE8F2";
+        }
         #endregion
     }
 

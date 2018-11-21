@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:AreaIconCore.ViewModels"
-                    xmlns:local="clr-namespace:AreaIconCore.Views">
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:service="clr-namespace:AreaIconCore.Services"
+                    xmlns:model="clr-namespace:AreaIconCore.Models">
     <!--#region                                                         -->
     <!--#endregion-->
     
@@ -12,7 +14,14 @@
     <!--#endregion-->
 
     <!--#region                                                         -->
-    <x:Static x:Key="MainPageViewModel"
-              Member="vm:MainPageViewModel.Singleton"/>
+
+    <!--#endregion-->
+
+    <!--#region                                                         ViewModel-->
+    <x:Static x:Key="MainWindowViewModel"
+              Member="vm:MainWindowViewModel.Singleton" />
+
+    <x:Static x:Key="CoreSetting"
+              Member="service:CoreSettings.Instance" />
     <!--#endregion-->
 </ResourceDictionary>

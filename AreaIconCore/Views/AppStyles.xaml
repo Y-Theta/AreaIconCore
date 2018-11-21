@@ -7,6 +7,8 @@
     <!--#endregion-->
 
     <!--#region                                                         ButtonStyles-->
+
+    <!--CloseButton-->
     <Style x:Key="CloseButton"
            TargetType="yt_button:FIconButton">
         <Setter Property="Background"
@@ -16,34 +18,76 @@
         <Setter Property="ToolTipString"
                 Value="关闭" />
         <Setter Property="FontSize"
-                Value="14" />
-        <Setter Property="Margin"
-                Value="1" />
+                Value="{DynamicResource TitleBarButton_IconSize}" />
         <Setter Property="Content"
-                Value="&#xE106;" />
+                Value="&#xE8BB;" />
         <Setter Property="IconMargin"
-                Value="2" />
+                Value="8,2" />
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
-        <Setter Property="IconFgNormal"
-                Value="#C0FFFFFF" />
-        <Setter Property="IconFgOver"
-                Value="#C0FFFFFF" />
-        <Setter Property="IconFgPressed"
-                Value="#C0FFFFFF" />
-        <Setter Property="IconBgNormal"
-                Value="Transparent" />
-        <Setter Property="IconBgOver"
-                Value="#8000aaff" />
-        <Setter Property="IconBgPressed"
-                Value="#c000aaff" />
 
+        <Setter Property="IconFgNormal"
+                Value="{DynamicResource TitleBarButton_IconFg_N}" />
+        <Setter Property="IconFgOver"
+                Value="{DynamicResource TitleBarButton_IconFg_O}" />
+        <Setter Property="IconFgPressed"
+                Value="{DynamicResource TitleBarButton_IconFg_P}" />
+
+        <Setter Property="IconBgNormal"
+                Value="{DynamicResource TitleBarButton_IconBg_N}" />
+        <Setter Property="IconBgOver"
+                Value="{DynamicResource TitleBarButton_IconBg_O}" />
+        <Setter Property="IconBgPressed"
+                Value="{DynamicResource TitleBarButton_IconBg_P}" />
+    </Style>
+
+    <!--NavigaterButton-->
+    <Style x:Key="NavigaterButton"
+           TargetType="yt_button:FIconToggleButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="LabelVisibility"
+                Value="Collapsed" />
+        <Setter Property="ToolTipString"
+                Value="选择页面" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource TitleBarButton_IconSize}" />
+        <Setter Property="IconMargin"
+                Value="8,2" />
+
+        <Setter Property="IconFgNormal"
+                Value="{DynamicResource TitleBarButton_IconFg_N}" />
+        <Setter Property="IconFgOver"
+                Value="{DynamicResource TitleBarButton_IconFg_O}" />
+        <Setter Property="IconFgPressed"
+                Value="{DynamicResource TitleBarButton_IconFg_P}" />
+
+        <Setter Property="IconBgNormal"
+                Value="{DynamicResource TitleBarButton_IconBg_N}" />
+        <Setter Property="IconBgOver"
+                Value="{DynamicResource TitleBarButton_IconBg_O}" />
+        <Setter Property="IconBgPressed"
+                Value="{DynamicResource TitleBarButton_IconBg_P}" />
+
+        <Setter Property="IconSelectFgNormal"
+                Value="{DynamicResource TitleBarButton_IconFg_S}" />
+        <Setter Property="IconSelectFgOver"
+                Value="{DynamicResource TitleBarButton_IconFg_SO}" />
+        <Setter Property="IconSelectFgPressed"
+                Value="{DynamicResource TitleBarButton_IconFg_SP}" />
+
+        <Setter Property="IconSelectBgNormal"
+                Value="{DynamicResource TitleBarButton_IconBg_S}" />
+        <Setter Property="IconSelectBgOver"
+                Value="{DynamicResource TitleBarButton_IconBg_SO}" />
+        <Setter Property="IconSelectBgPressed"
+                Value="{DynamicResource TitleBarButton_IconBg_SP}" />
     </Style>
     <!--#endregion-->
 
     <!--#region                                                         Popup-->
-    <Style TargetType="yt_flow:YT_PopupBase"
-           x:Key="AeroPopup">
+    <Style x:Key="AeroPopup"
+           TargetType="yt_flow:YT_PopupBase">
         <Setter Property="AllowsTransparency"
                 Value="True" />
         <Setter Property="RelativeMode"
@@ -55,13 +99,13 @@
         <Setter Property="AutoHideDelay"
                 Value="3000" />
         <Setter Property="RelativeRect"
-                Value="8,8" />
+                Value="16,12" />
         <Setter Property="EnableBlur"
-                Value="True" />
+                Value="{Binding EnableBlur, Source={StaticResource CoreSetting}}" />
         <Setter Property="Child">
             <Setter.Value>
-                <Border Width="320"
-                        Height="160"
+                <Border Width="364"
+                        Height="120"
                         Background="#80000000">
 
                 </Border>

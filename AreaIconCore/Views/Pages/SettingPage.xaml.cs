@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AreaIconCore.Views {
+namespace AreaIconCore.Views.Pages {
     /// <summary>
-    /// MainPage.xaml 的交互逻辑
+    /// SettingPage.xaml 的交互逻辑
     /// </summary>
-    public partial class MainPage : Page {
-        public MainPage() {
+    public partial class SettingPage : Page {
+        public SettingPage() {
             InitializeComponent();
         }
     }

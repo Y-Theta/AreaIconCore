@@ -18,7 +18,6 @@ namespace AreaIconCore {
             _manger = new InnerProcessAssemblyManager();
             _manger.Directorys.Add(GetDirectory(DirectoryKind.Bin));
             _manger.HockResolve(AppDomain.CurrentDomain);
-            ToastHelper = new NotificationService();
             Startup += App_Startup;
             SessionEnding += App_SessionEnding;
         }
@@ -42,12 +41,15 @@ namespace AreaIconCore {
                     return AppDomain.CurrentDomain.BaseDirectory + @"setting\";
                 case DirectoryKind.Config:
                     return AppDomain.CurrentDomain.BaseDirectory + @"data\";
+                case DirectoryKind.Theme:
+                    return AppDomain.CurrentDomain.BaseDirectory + @"data\theme\";
                 default:
                     return AppDomain.CurrentDomain.BaseDirectory;
             }
         }
 
         private void App_Startup(object sender, StartupEventArgs e) {
+            ToastHelper = new NotificationService();
             ToastHelper.Init(APP_ID);
 
             HostAdapter.Instance.PluginsPath = App.GetDirectory(DirectoryKind.Extension);
