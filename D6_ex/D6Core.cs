@@ -27,6 +27,8 @@ namespace D6_ex {
                     PostData(this, ApplicationScenario.UnLoad);
                     return null;
                 case ApplicationScenario.MainPage:
+                    if (obj.ToString() == "Uri")
+                        return new Uri(@"pack://application:,,,/D6_ex;component/PageAndControl/FluxPage.xaml");
                     return new FluxPage();
                 default: return null;
             }

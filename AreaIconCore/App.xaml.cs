@@ -43,6 +43,10 @@ namespace AreaIconCore {
                     return AppDomain.CurrentDomain.BaseDirectory + @"data\";
                 case DirectoryKind.Theme:
                     return AppDomain.CurrentDomain.BaseDirectory + @"data\theme\";
+                case DirectoryKind.Cache:
+                    return AppDomain.CurrentDomain.BaseDirectory + @"data\cache\";
+                case DirectoryKind.Lang:
+                    return AppDomain.CurrentDomain.BaseDirectory + @"data\lang\";
                 default:
                     return AppDomain.CurrentDomain.BaseDirectory;
             }

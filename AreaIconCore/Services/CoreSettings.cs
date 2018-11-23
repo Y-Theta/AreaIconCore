@@ -22,25 +22,24 @@ namespace AreaIconCore.Services {
         }
 
         [DataMember]
-        private Color _mainColor;
-        public Color MainColor {
-            get => _mainColor;
-            set => SetValue(out _mainColor, value, MainColor);
-        }
-
-        [DataMember]
         private bool _enableBlur;
         public bool EnableBlur {
             get => _enableBlur;
             set => SetValue(out _enableBlur, value, EnableBlur);
         }
 
-
+        [DataMember]
+        private double _mainOpacity;
+        public double MainOpacity {
+            get => _mainOpacity;
+            set => SetValue(out _mainOpacity, value, MainOpacity);
+        }
         #endregion
 
         #region Methods
         public void Init() {
             Extensions = new Dictionary<String, bool>();
+            MainOpacity = 1.0;
         }
         #endregion
 

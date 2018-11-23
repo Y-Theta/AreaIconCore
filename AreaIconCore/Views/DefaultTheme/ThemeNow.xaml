@@ -2,61 +2,114 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--#region                                                                DefaultTheme-->
-    <sys:String x:Key="ThemeDic">Default</sys:String>
     <!--#endregion-->
+    <sys:String x:Key="ThemeDic">Default</sys:String>
 
-    <!--MainColor-->
+    <!--                                                                       MainWindow-->
     <!--#region-->
 
+    <Color x:Key="C_MainTheme_Bg">#161616</Color>
+    
+    
+    <Color x:Key="C_MainTheme_Bc">#007ACC</Color>
+    <Color x:Key="C_MainTheme_Bc_D1">#0066AA</Color>
+    <Color x:Key="C_MainTheme_Bc_D2">#00538A</Color>
+    <Color x:Key="C_MainTheme_Bc_B1">#0088EE</Color>
+    
+    
+    <Color x:Key="C_MainTheme_Fg">#EFEFEF</Color>
+    
+    <Thickness x:Key="MainBorderThickness"
+               Left="1"
+               Right="1"
+               Top="1"
+               Bottom="1" />
+
     <SolidColorBrush x:Key="MainTheme_Bg_Aero"
-                     Color="#20000000" />
+                     Opacity="0.1"
+                     Color="{StaticResource C_MainTheme_Bg}" />
     <SolidColorBrush x:Key="MainTheme_Bc_Aero"
-                     Color="#007ACC" />
+                     Opacity="0.3"
+                     Color="{StaticResource C_MainTheme_Bc}" />
 
     <SolidColorBrush x:Key="MainTheme_Bg"
-                     Color="#1E1E1E" />
+                     Color="{StaticResource C_MainTheme_Bg}" />
     <SolidColorBrush x:Key="MainTheme_Bc"
-                     Color="#007ACC" />
+                     Color="{StaticResource C_MainTheme_Bc}" />
     <SolidColorBrush x:Key="MainTheme_Fg"
-                     Color="#EFEFEF" />
+                     Color="{StaticResource C_MainTheme_Fg}" />
 
     <!--#endregion-->
 
 
-    <!--Button-->
+    <!--                                                                       TitleBar-->
     <!--#region-->
     
     <!--TitleBar-->
     <sys:Double x:Key="TitleBarMinHeight">28</sys:Double>
-    <sys:Double x:Key="TitleBarButton_IconSize">16</sys:Double>
     
     <SolidColorBrush x:Key="TitleBarButton_IconFg_N"
-                     Color="#EFEFEF" />
+                     Color="{StaticResource C_MainTheme_Fg}" />
     <SolidColorBrush x:Key="TitleBarButton_IconFg_O"
-                     Color="#EFEFEF" />
+                     Color="{StaticResource C_MainTheme_Fg}" />
     <SolidColorBrush x:Key="TitleBarButton_IconFg_P"
-                     Color="#EFEFEF" />
+                     Color="{StaticResource C_MainTheme_Fg}" />
     <SolidColorBrush x:Key="TitleBarButton_IconFg_S"
-                     Color="#EFEFEF" />
+                     Color="{StaticResource C_MainTheme_Fg}" />
     <SolidColorBrush x:Key="TitleBarButton_IconFg_SO"
-                     Color="#EFEFEF" />
+                     Color="{StaticResource C_MainTheme_Fg}" />
     <SolidColorBrush x:Key="TitleBarButton_IconFg_SP"
-                     Color="#EFEFEF" />
+                     Color="{StaticResource C_MainTheme_Fg}" />
 
     <SolidColorBrush x:Key="TitleBarButton_IconBg_N"
                      Color="Transparent" />
     <SolidColorBrush x:Key="TitleBarButton_IconBg_O"
-                     Color="#20FFFFFF" />
+                     Opacity="0.125"
+                     Color="{StaticResource C_MainTheme_Fg}" />
     <SolidColorBrush x:Key="TitleBarButton_IconBg_P"
-                     Color="#007ACC" />
+                     Color="{StaticResource C_MainTheme_Bc_D1}" />
     <SolidColorBrush x:Key="TitleBarButton_IconBg_S"
-                     Color="#007ACC" />
+                     Color="{StaticResource C_MainTheme_Bc_D1}" />
     <SolidColorBrush x:Key="TitleBarButton_IconBg_SO"
-                     Color="#008EED" />
+                     Color="{StaticResource C_MainTheme_Bc_B1}" />
     <SolidColorBrush x:Key="TitleBarButton_IconBg_SP"
-                     Color="#0067AB" />
-
+                     Color="{StaticResource C_MainTheme_Bc_D2}" />
 
     <!--#endregion-->
+
+
+    <!--                                                                       SettingPage-->
+    <!--#region-->
+
+    <SolidColorBrush x:Key="SettingItem_ID_Normal"
+                     Opacity="0.05"
+                     Color="{StaticResource C_MainTheme_Fg}"/>
+    <SolidColorBrush x:Key="SettingItem_ID_Actived"
+                     Color="{StaticResource C_MainTheme_Bc}" />
+    <!--#endregion-->
+
+    <!--                                                                       ScrollViewer-->
+    <!--#region-->
+    <sys:Double x:Key="DefaultScrollViewerThumb_StrokeThickness">0</sys:Double>
+    <sys:Double x:Key="DefaultScrollViewer_ScrollbarThickness">12</sys:Double>
+    <sys:Double x:Key="DefaultScrollViewer_ScrollbarMiniThickness">4</sys:Double>
+    
+    <SolidColorBrush x:Key="DefaultScrollViewerThumb_IconFg_N"
+                     Opacity="0.3"
+                     Color="{StaticResource C_MainTheme_Bc}" />
+    <SolidColorBrush x:Key="DefaultScrollViewerThumb_IconFg_O"
+                     Opacity="0.5"
+                     Color="{StaticResource C_MainTheme_Bc}" />
+    <SolidColorBrush x:Key="DefaultScrollViewerThumb_IconFg_P"
+                     Opacity="0.8"
+                     Color="{StaticResource C_MainTheme_Bc}" />
+    <SolidColorBrush x:Key="DefaultScrollViewerThumb_IconBg_N"
+                     Color="Transparent" />
+    <SolidColorBrush x:Key="DefaultScrollViewerThumb_IconBg_O"
+                     Color="Transparent" />
+    <SolidColorBrush x:Key="DefaultScrollViewerThumb_IconBg_P"
+                     Color="Transparent" />
+    <!--#endregion-->
+
 
 </ResourceDictionary>

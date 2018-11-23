@@ -38,7 +38,8 @@ namespace AreaIconCore.Services {
             if (themefile == _tempdic)
                 return true;
             if (string.IsNullOrEmpty(themefile)) {
-                AppRes.Add(new ResourceDictionary { Source = new Uri(@"/Views/DefaultTheme/ThemeNow.xaml", UriKind.Relative) });
+                _themedic = new ResourceDictionary { Source = new Uri(@"/Views/DefaultTheme/ThemeNow.xaml", UriKind.Relative) };
+                AppRes.Add(_themedic);
                 _tempdic = null;
                 return true;
             }

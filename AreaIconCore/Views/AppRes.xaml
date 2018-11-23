@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:AreaIconCore.ViewModels"
+                    xmlns:conv="clr-namespace:AreaIconCore.Converter"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:service="clr-namespace:AreaIconCore.Services"
                     xmlns:model="clr-namespace:AreaIconCore.Models">
@@ -13,13 +14,16 @@
     </FontFamily>
     <!--#endregion-->
 
-    <!--#region                                                         -->
+    <!--#region                                                         Converter-->
+    <x:Static x:Key="DoubleConverter"
+              Member="conv:DoubleConverter.Instance" />
 
     <!--#endregion-->
 
     <!--#region                                                         ViewModel-->
     <x:Static x:Key="MainWindowViewModel"
               Member="vm:MainWindowViewModel.Singleton" />
+
 
     <x:Static x:Key="CoreSetting"
               Member="service:CoreSettings.Instance" />

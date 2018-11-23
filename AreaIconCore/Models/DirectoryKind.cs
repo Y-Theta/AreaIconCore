@@ -31,6 +31,10 @@
         /// 主题
         /// </summary>
         Theme,
+        /// <summary>
+        /// 语言
+        /// </summary>
+        Lang
     }
 
 }

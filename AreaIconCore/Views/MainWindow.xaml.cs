@@ -13,6 +13,7 @@ using System.Windows.Media;
 using AreaIconCore.Models;
 using YControls.InterAction;
 using ToastHelper;
+using AreaIconCore.Views.Pages;
 
 namespace AreaIconCore.Views {
     /// <summary>
@@ -52,7 +53,6 @@ namespace AreaIconCore.Views {
         #endregion
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e) {
-            MainWindowViewModel.Singleton.MainPageActions += Singleton_MainPageActions;
 
             #region
             //AllowAreaIcon = true;
@@ -93,43 +93,7 @@ namespace AreaIconCore.Views {
 
                 }
             }
-        }
-
-        private void Singleton_MainPageActions(object sender, CommandArgs args) {
-            if (args.Parameter is string) {
-                if (args.Command == "MainPage") {
-                    switch (args.Parameter) {
-                        case "Close":
-                            Close();
-                            break;
-                        default: break;
-                    }
-                }
-                else if(args.Command == "Navigate") {
-                    switch (args.Parameter) {
-                        case "Page_Main":
-                            MainWindowViewModel.Singleton.UpdateContentInfo(ConstTable.MainPageIcon, "主页");
-                            NavigateToLocal("MainPage");
-
-                            break;
-                        case "Page_Setting":
-                            MainWindowViewModel.Singleton.UpdateContentInfo(ConstTable.SettingPageIcon, "设置");
-                            NavigateToLocal("SettingPage");
-
-                            break;
-                        case "Page_About":
-                            MainWindowViewModel.Singleton.UpdateContentInfo(ConstTable.AboutPageIcon, "关于");
-                            NavigateToLocal("AboutPage");
-
-                            break;
-                        default: break;
-                    }
-                }
-            }
-        }
-
-        private void NavigateToLocal(string page) {
-            MainFrame.Navigate(new Uri(@"pack://application:,,,/AreaIconCore;component/Views/Pages/" + page + ".xaml"));
+            (DataContext as MainWindowViewModel).NavigateToLocal(new MainPage());
         }
 
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {

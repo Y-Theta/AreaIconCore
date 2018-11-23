@@ -3,9 +3,47 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:yt_slide="clr-namespace:YControls.SlideControls;assembly=YControls"
+      xmlns:ser="clr-namespace:AreaIconCore.Services"
+      xmlns:yt_wx="clr-namespace:YControls.WinXStyleControls;assembly=YControls"
+      xmlns:control="clr-namespace:AreaIconCore.Controls"
+      xmlns:conv="clr-namespace:AreaIconCore.Converter"
       xmlns:local="clr-namespace:AreaIconCore.Views.Pages"
+      MaxHeight="360"
       mc:Ignorable="d">
+    <Page.Resources>
+        <conv:DCArgs x:Key="OpacitySliderConvPara"
+                     Num="100"
+                     OpType="Mul" />
+    </Page.Resources>
     <Grid x:Name="rgrid">
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding Source={StaticResource TitleBarMinHeight},Mode=OneWay}" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="Controllayer"
+              Grid.Row="1">
+
+        </Grid>
+        <StackPanel x:Name="SettingItem"
+                    Grid.Row="2"
+                    Width="320">
+            <control:SettingItem SettingKey="启用Aero玻璃效果"
+                                 Style="{StaticResource DefaultSettingItem}">
+                <yt_wx:YT_WinXToggelSwitch OnString="开"
+                                           OffString="关"
+                                           IsChecked="{Binding EnableBlur, Source={x:Static ser:CoreSettings.Instance},Mode=TwoWay}"
+                                           Style="{StaticResource SettingItemToggelSwitch}" />
+            </control:SettingItem>
+            <control:SettingItem SettingKey="界面透明度"
+                                 Style="{StaticResource DefaultSettingItem}">
+                <yt_slide:YT_Slider Value="{Binding MainOpacity, Source={StaticResource CoreSetting},Mode=TwoWay,Converter={StaticResource DoubleConverter},ConverterParameter={StaticResource OpacitySliderConvPara}}" 
+                                    Style="{StaticResource DefaultSettingPageSlider}"
+                                    Maximum="100"
+                                    Minimum="40"
+                                    Width="120"/>
+            </control:SettingItem>
+        </StackPanel>
     </Grid>
 </Page>

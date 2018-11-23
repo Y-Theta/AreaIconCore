@@ -1,9 +1,31 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:yt_button="clr-namespace:YControls.FontIconButtons;assembly=YControls"
                     xmlns:yt_flow="clr-namespace:YControls.FlowControls;assembly=YControls"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:AreaIconCore.Views">
+                    xmlns:yt_slide="clr-namespace:YControls.SlideControls;assembly=YControls"
+                    xmlns:yt_wx="clr-namespace:YControls.WinXStyleControls;assembly=YControls"
+                    xmlns:control="clr-namespace:AreaIconCore.Controls">
     <!--#region                                                         -->
+    <!--#endregion-->
+    
+    
+    <!--#region                                                         TextBlocks-->
+
+    <!--SettingItemKeyString-->
+    <Style x:Key="SettingItemKeyString"
+           TargetType="TextBlock">
+        <Setter Property="FontSize"
+                Value="13" />
+        <Setter Property="FontWeight"
+                Value="Thin" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource MainTheme_Fg}" />
+        <Setter Property="Margin"
+                Value="4,0,0,0" />
+    </Style>
+        
     <!--#endregion-->
 
     <!--#region                                                         ButtonStyles-->
@@ -18,7 +40,7 @@
         <Setter Property="ToolTipString"
                 Value="关闭" />
         <Setter Property="FontSize"
-                Value="{DynamicResource TitleBarButton_IconSize}" />
+                Value="16" />
         <Setter Property="Content"
                 Value="&#xE8BB;" />
         <Setter Property="IconMargin"
@@ -51,7 +73,7 @@
         <Setter Property="ToolTipString"
                 Value="选择页面" />
         <Setter Property="FontSize"
-                Value="{DynamicResource TitleBarButton_IconSize}" />
+                Value="16" />
         <Setter Property="IconMargin"
                 Value="8,2" />
 
@@ -83,9 +105,156 @@
         <Setter Property="IconSelectBgPressed"
                 Value="{DynamicResource TitleBarButton_IconBg_SP}" />
     </Style>
+    
+    <!--SettingItemToggelSwitch-->
+    <Style x:Key="SettingItemToggelSwitch"
+           TargetType="yt_wx:YT_WinXToggelSwitch">
+        <Setter Property="Foreground"
+                Value="{DynamicResource TitleBarButton_IconFg_N}" />
+        <Setter Property="ForegroundPressed"
+                Value="{DynamicResource TitleBarButton_IconFg_O}" />
+        <Setter Property="Background"
+                Value="{DynamicResource TitleBarButton_IconBg_S}" />
+        <Setter Property="BackgroundPressed"
+                Value="{DynamicResource TitleBarButton_IconBg_SO}" />
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="ToggelThickness"
+                Value="2" />
+        <Setter Property="ThumbPadding"
+                Value="1" />
+        <Setter Property="LabelWidth"
+                Value="12" />
+        <Setter Property="Height"
+                Value="24" />
+        <Setter Property="Width"
+                Value="64" />
+        <Setter Property="LabelMargin"
+                Value="0,0,16,0" />
+        <Setter Property="LabelRight"
+                Value="False" />
+    </Style>
+    
+    <!--#endregion-->
+    
+    <!--#region                                                         UserControls-->
+    <Style x:Key="DefaultSettingItem"
+           TargetType="control:SettingItem">
+        <Setter Property="Height"
+                Value="32" />
+        <Setter Property="Padding"
+                Value="8,0" />
+        <Setter Property="IDnormal"
+                Value="{DynamicResource SettingItem_ID_Normal}" />
+        <Setter Property="IDactived"
+                Value="{DynamicResource SettingItem_ID_Actived}" />
+        <Setter Property="IDmargin"
+                Value="0,4" />
+        <Setter Property="IDthickness"
+                Value="3" />
+        <Setter Property="SettingKeyTemplate"
+                Value="{StaticResource SettingItemKeyString}" />
+    </Style>
+    <!--#endregion-->
+
+    <!--#region                                                         ScrollViewer-->
+    <Style x:Key="DefaultScrollThumb"
+           TargetType="yt_slide:YT_Thumb">
+        <Setter Property="StrokeThickness"
+                Value="{DynamicResource DefaultScrollViewerThumb_StrokeThickness}" />
+        <Setter Property="IconFgNormal"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconFg_N}" />
+        <Setter Property="IconFgOver"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconFg_O}" />
+        <Setter Property="IconFgPressed"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconFg_P}" />
+
+        <Setter Property="IconBgNormal"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconBg_N}" />
+        <Setter Property="IconBgOver"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconBg_O}" />
+        <Setter Property="IconBgPressed"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconBg_P}" />
+    </Style>
+
+    <Style x:Key="DefaultScrollViewer"
+           TargetType="yt_slide:YT_ScrollViewer">
+        <Setter Property="ScrollbarThickness"
+                Value="{DynamicResource DefaultScrollViewer_ScrollbarThickness}" />
+        <Setter Property="ScrollbarMiniThickness"
+                Value="{DynamicResource DefaultScrollViewer_ScrollbarMiniThickness}" />
+        <Setter Property="HorizontalScrollBarStyle">
+            <Setter.Value>
+                <Style TargetType="yt_slide:YT_Scrollbar">
+                    <Setter Property="ThumbHorizontal"
+                            Value="{StaticResource DefaultScrollThumb}" />
+                    <Setter Property="ThumbVertival"
+                            Value="{StaticResource DefaultScrollThumb}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalScrollBarStyle">
+            <Setter.Value>
+                <Style TargetType="yt_slide:YT_Scrollbar">
+                    <Setter Property="ThumbHorizontal"
+                            Value="{StaticResource DefaultScrollThumb}" />
+                    <Setter Property="ThumbVertival"
+                            Value="{StaticResource DefaultScrollThumb}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region                                                         Slider-->
+
+    <Style x:Key="DefaultSettingPageSlider_DecButton" 
+           TargetType="RepeatButton">
+        
+    </Style>
+    <Style x:Key="DefaultSettingPageSlider_IncButton"
+           TargetType="RepeatButton">
+
+    </Style>
+    <Style x:Key="DefaultSettingPageSlider_Thumb"
+           TargetType="yt_slide:YT_Thumb">
+        <Setter Property="Width"
+                Value="8" />
+        <Setter Property="Height"
+                Value="8" />
+        <Setter Property="IconMode"
+                Value="Ellipse" />
+        <Setter Property="StrokeThickness"
+                Value="1.5" />
+        <Setter Property="IconFgNormal"
+                Value="#c0c0c0" />
+        <Setter Property="IconFgOver"
+                Value="#00bbee" />
+        <Setter Property="IconFgPressed"
+                Value="#006688" />
+        <Setter Property="IconBgNormal"
+                Value="#c0c0c0" />
+        <Setter Property="IconBgOver"
+                Value="#ffffff" />
+        <Setter Property="IconBgPressed"
+                Value="#ffffff" />
+    </Style>
+    <Style x:Key="DefaultSettingPageSlider"
+           TargetType="yt_slide:YT_Slider">
+        <Setter Property="Orientation"
+                Value="Horizontal" />
+        <Setter Property="DecreaseButtonHorizontal"
+                Value="{StaticResource DefaultSettingPageSlider_DecButton}" />
+        <Setter Property="IncreaseButtonHorizontal"
+                Value="{StaticResource DefaultSettingPageSlider_IncButton}" />
+        <Setter Property="ThumbHorizontal"
+                Value="{StaticResource DefaultSettingPageSlider_Thumb}" />
+    </Style>
     <!--#endregion-->
 
     <!--#region                                                         Popup-->
+
+    <!--AeroPopupBase-->
     <Style x:Key="AeroPopup"
            TargetType="yt_flow:YT_PopupBase">
         <Setter Property="AllowsTransparency"
@@ -102,19 +271,11 @@
                 Value="16,12" />
         <Setter Property="EnableBlur"
                 Value="{Binding EnableBlur, Source={StaticResource CoreSetting}}" />
-        <Setter Property="Child">
-            <Setter.Value>
-                <Border Width="364"
-                        Height="120"
-                        Background="#80000000">
-
-                </Border>
-            </Setter.Value>
-        </Setter>
     </Style>
     <!--#endregion-->
 
     <!--#region                                                         ContextMenu-->
+    <!--AreaContextMenuSeperator-->
     <Style x:Key="AreaContextMenuSeperator"
            TargetType="{x:Type Separator}">
         <Setter Property="Margin"
@@ -147,5 +308,30 @@
     </yt_flow:YT_ContextMenu>
     <!--#endregion-->
 
+    <!--#region                                                         CollectionControls-->
+    <Style x:Key="SettingPageExtensionComboBox"
+           TargetType="ComboBox">
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
 
 </ResourceDictionary>

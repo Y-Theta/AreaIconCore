@@ -14,9 +14,15 @@ namespace AreaIconCore.Models {
         public static string MainPageIcon {
             get => "\uE80F";
         }
+
         public static string SettingPageIcon {
             get => "\xE713";
         }
+
+        public static string ExtensionPageIcon {
+            get => "\xE74C";
+        }
+
         public static string AboutPageIcon {
             get => "\xE8F2";
         }

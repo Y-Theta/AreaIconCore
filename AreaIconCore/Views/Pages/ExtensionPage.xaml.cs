@@ -1,5 +1,4 @@
-﻿using AreaIconCore.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AreaIconCore.Views.Pages {
+namespace AreaIconCore.Views.Pages
+{
     /// <summary>
-    /// AboutPage.xaml 的交互逻辑
+    /// ExtensionPage.xaml 的交互逻辑
     /// </summary>
-    public partial class AboutPage : Page {
-        public AboutPage() {
+    public partial class ExtensionPage : Page
+    {
+        public ExtensionPage()
+        {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            LanguageManager.Singleton.UpdataSource();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e) {
-            LanguageManager.Singleton.Save();
         }
     }
 }

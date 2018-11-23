@@ -5,8 +5,10 @@
                      xmlns:yt_button="clr-namespace:YControls.FontIconButtons;assembly=YControls"
                      xmlns:winx="clr-namespace:YControls.WinXStyleControls;assembly=YControls"
                      xmlns:yt_flow="clr-namespace:YControls.FlowControls;assembly=YControls"
+                     xmlns:yt_coll="clr-namespace:YControls.CollectionControls;assembly=YControls"
                      xmlns:service="clr-namespace:AreaIconCore.Services"
                      xmlns:model="clr-namespace:AreaIconCore.Models"
+                     xmlns:yt_slide="clr-namespace:YControls.SlideControls;assembly=YControls"
                      xmlns:sys="clr-namespace:System;assembly=mscorlib"
                      DataContext="{StaticResource MainWindowViewModel}"
                      ExtendToTitleBar="True"
@@ -14,24 +16,25 @@
                      DragingMode="FullWindow"
                      TitleHeight="24"
                      EnableAeroGlass="{Binding EnableBlur, Source={StaticResource CoreSetting}}"
-                     BorderThickness="1"
+                     BorderThickness="{DynamicResource MainBorderThickness}"
+                     Opacity="{Binding MainOpacity, Source={StaticResource CoreSetting}}"
                      Foreground="{DynamicResource MainTheme_Fg}"
                      Background="{DynamicResource MainTheme_Bg}"
                      BorderBrush="{DynamicResource MainTheme_Bc}"
                      AeroModeBackground="{DynamicResource MainTheme_Bg_Aero}"
                      AeroModeBorderBrush="{DynamicResource MainTheme_Bc_Aero}"
                      ResizeMode="NoResize"
-                     Width="320"
-                     SizeToContent="Height">
+                     SizeToContent="Height"
+                     MaxHeight="360"
+                     Width="320">
     <yt_window:YT_Window.Resources>
         <sys:String x:Key="NavigaterToolTipStyle"
                     xml:space="preserve">当前页: {0}</sys:String>
     </yt_window:YT_Window.Resources>
     <yt_window:YT_Window.TitleArea>
-        <Grid x:Name="Title_Root"
-              ShowGridLines="False">
+        <Grid x:Name="Title_Root">
             <Grid.RowDefinitions>
-                <RowDefinition Height="{Binding Source={StaticResource TitleBarMinHeight}}" />
+                <RowDefinition Height="{Binding Source={StaticResource TitleBarMinHeight},Mode=OneWay}" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid x:Name="Title_Control">
@@ -52,25 +55,36 @@
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <yt_button:FIconButton x:Name="Page_About"
-                                               Content="{x:Static model:ConstTable.AboutPageIcon}"
+                        <yt_button:FIconButton x:Name="Page_Main"
+                                               Content="{x:Static model:ConstTable.MainPageIcon}"
                                                Command="{Binding NavigateCommands}"
-                                               CommandParameter="Page_About"
+                                               CommandParameter="Page_Main"
+                                               ToolTipString="{Binding IconTable.Keys[0]}"
                                                Style="{StaticResource CloseButton}"
                                                Grid.Column="1" />
                         <yt_button:FIconButton x:Name="Page_Setting"
                                                Content="{x:Static model:ConstTable.SettingPageIcon}"
                                                Command="{Binding NavigateCommands}"
                                                CommandParameter="Page_Setting"
+                                               ToolTipString="{Binding IconTable.Keys[1]}"
                                                Style="{StaticResource CloseButton}"
                                                Grid.Column="2" />
-                        <yt_button:FIconButton x:Name="Page_Main"
-                                               Content="{x:Static model:ConstTable.MainPageIcon}"
+                        <yt_button:FIconButton x:Name="Page_Extension"
+                                               Content="{x:Static model:ConstTable.ExtensionPageIcon}"
                                                Command="{Binding NavigateCommands}"
-                                               CommandParameter="Page_Main"
+                                               CommandParameter="Page_Extension"
+                                               ToolTipString="{Binding IconTable.Keys[2]}"
                                                Style="{StaticResource CloseButton}"
                                                Grid.Column="3" />
+                        <yt_button:FIconButton x:Name="Page_About"
+                                               Content="{x:Static model:ConstTable.AboutPageIcon}"
+                                               Command="{Binding NavigateCommands}"
+                                               CommandParameter="Page_About"
+                                               ToolTipString="{Binding IconTable.Keys[3]}"
+                                               Style="{StaticResource CloseButton}"
+                                               Grid.Column="4" />
                     </Grid>
                 </yt_flow:YT_InlineMenuPanel>
                 <yt_button:FIconToggleButton x:Name="Navigater"
@@ -90,6 +104,9 @@
             </Grid>
         </Grid>
     </yt_window:YT_Window.TitleArea>
-    <Frame x:Name="MainFrame" 
-           Style="{StaticResource DefaultFrame}" />
+    <Grid x:Name="rgrid">
+        <yt_coll:YT_Frame x:Name="MainFrame"
+                          NavigateCommand="{Binding NavigateTO}" />
+    </Grid>
+
 </yt_window:YT_Window>
