@@ -115,8 +115,7 @@
     <Compile Include="Models\ConstTable.cs" />
     <Compile Include="Services\CoreSettings.cs" />
     <Compile Include="Services\HostAdapter.cs" />
-    <Compile Include="Services\LanguageManager.cs" />
-    <Compile Include="Services\ThemeManager.cs" />
+    <Compile Include="Services\AppearanceManager.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingPageViewModel.cs" />
     <Compile Include="Views\Pages\AboutPage.xaml.cs">
@@ -132,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Appearance\default_language.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AppRes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,7 +143,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DefaultTheme\ThemeNow.xaml">
+    <Page Include="Views\Appearance\default_theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

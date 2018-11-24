@@ -4,11 +4,44 @@
                     xmlns:yt_flow="clr-namespace:YControls.FlowControls;assembly=YControls"
                     xmlns:yt_slide="clr-namespace:YControls.SlideControls;assembly=YControls"
                     xmlns:yt_wx="clr-namespace:YControls.WinXStyleControls;assembly=YControls"
-                    xmlns:control="clr-namespace:AreaIconCore.Controls">
-    <!--#region                                                         -->
+                    xmlns:yt_conv="clr-namespace:YControls.Converters;assembly=YControls"
+                    xmlns:yt_dialog="clr-namespace:YControls.Dialogs;assembly=YControls"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:control="clr-namespace:AreaIconCore.Controls"
+                    xmlns:app="clr-namespace:AreaIconCore">
+    <!--#region                                                         Icons-->
+    <sys:String x:Key="Icon_MainPage">&#xE80F;</sys:String>
+    <sys:String x:Key="Icon_SettingPage">&#xE713;</sys:String>
+    <sys:String x:Key="Icon_ExtensionPage">&#xE74C;</sys:String>
+    <sys:String x:Key="Icon_AboutPage">&#xE8F2;</sys:String>
+
+    <!--#endregion-->
+
+    <!--#region                                                         SizeConfig-->
+    <sys:Double x:Key="WXnotifypopupwidth">364</sys:Double>
+    <sys:Double x:Key="DefaultSliderThumb_Size">8</sys:Double>
+    <sys:Double x:Key="TitleBarMinHeight">28</sys:Double>
+    <sys:Double x:Key="DefaultSlider_TrackThickness">2</sys:Double>
+    <Thickness x:Key="MainBorderThickness"
+               Left="1"
+               Right="1"
+               Top="1"
+               Bottom="1" />
+
     <!--#endregion-->
     
-    
+    <!--#region                                                         ConvertArgs-->
+
+    <yt_conv:StringConverterArgs x:Key="NavigaterToolTipText"
+                                 Format="Label_ToolTipStyle"
+                                 FindRes="True"
+                                 ResourceDic="{Binding Resources, Source={x:Static app:App.Current}}" />
+    <yt_conv:StringConverterArgs x:Key="MainOpacityToolTipText"
+                                 FindRes="False">
+        <yt_conv:StringConverterArgs.Format>{0:F0}%</yt_conv:StringConverterArgs.Format>
+    </yt_conv:StringConverterArgs>
+    <!--#endregion-->
+
     <!--#region                                                         TextBlocks-->
 
     <!--SettingItemKeyString-->
@@ -25,7 +58,7 @@
         <Setter Property="Margin"
                 Value="4,0,0,0" />
     </Style>
-        
+
     <!--#endregion-->
 
     <!--#region                                                         ButtonStyles-->
@@ -38,7 +71,7 @@
         <Setter Property="LabelVisibility"
                 Value="Collapsed" />
         <Setter Property="ToolTipString"
-                Value="关闭" />
+                Value="{DynamicResource Label_CloseButton}" />
         <Setter Property="FontSize"
                 Value="16" />
         <Setter Property="Content"
@@ -70,8 +103,6 @@
                 Value="Transparent" />
         <Setter Property="LabelVisibility"
                 Value="Collapsed" />
-        <Setter Property="ToolTipString"
-                Value="选择页面" />
         <Setter Property="FontSize"
                 Value="16" />
         <Setter Property="IconMargin"
@@ -105,7 +136,48 @@
         <Setter Property="IconSelectBgPressed"
                 Value="{DynamicResource TitleBarButton_IconBg_SP}" />
     </Style>
-    
+
+    <!--SettingItemSliderToggelButton-->
+    <Style x:Key="SettingItemSliderToggelButton"
+           TargetType="yt_button:FIconToggleButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="IconVisibility"
+                Value="Collapsed" />
+        <Setter Property="LabelFontSize"
+                Value="12" />
+        <Setter Property="LabelMargin"
+                Value="0,4,0,3" />
+
+        <Setter Property="LabelFgNormal"
+                Value="{DynamicResource TitleBarButton_IconFg_N}" />
+        <Setter Property="LabelFgOver"
+                Value="{DynamicResource TitleBarButton_IconFg_O}" />
+        <Setter Property="LabelFgPressed"
+                Value="{DynamicResource TitleBarButton_IconFg_P}" />
+
+        <Setter Property="LabelBgNormal"
+                Value="{DynamicResource TitleBarButton_IconBg_N}" />
+        <Setter Property="LabelBgOver"
+                Value="{DynamicResource TitleBarButton_IconBg_O}" />
+        <Setter Property="LabelBgPressed"
+                Value="{DynamicResource TitleBarButton_IconBg_P}" />
+
+        <Setter Property="LabelSelectFgNormal"
+                Value="{DynamicResource TitleBarButton_IconFg_S}" />
+        <Setter Property="LabelSelectFgOver"
+                Value="{DynamicResource TitleBarButton_IconFg_SO}" />
+        <Setter Property="LabelSelectFgPressed"
+                Value="{DynamicResource TitleBarButton_IconFg_SP}" />
+
+        <Setter Property="LabelSelectBgNormal"
+                Value="{DynamicResource TitleBarButton_IconBg_S}" />
+        <Setter Property="LabelSelectBgOver"
+                Value="{DynamicResource TitleBarButton_IconBg_SO}" />
+        <Setter Property="LabelSelectBgPressed"
+                Value="{DynamicResource TitleBarButton_IconBg_SP}" />
+    </Style>
+
     <!--SettingItemToggelSwitch-->
     <Style x:Key="SettingItemToggelSwitch"
            TargetType="yt_wx:YT_WinXToggelSwitch">
@@ -124,19 +196,23 @@
         <Setter Property="ThumbPadding"
                 Value="1" />
         <Setter Property="LabelWidth"
-                Value="12" />
+                Value="24" />
         <Setter Property="Height"
                 Value="24" />
         <Setter Property="Width"
                 Value="64" />
+        <Setter Property="ToggelWidth"
+                Value="36" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Right" />
         <Setter Property="LabelMargin"
-                Value="0,0,16,0" />
+                Value="0,0,8,0" />
         <Setter Property="LabelRight"
                 Value="False" />
     </Style>
-    
+
     <!--#endregion-->
-    
+
     <!--#region                                                         UserControls-->
     <Style x:Key="DefaultSettingItem"
            TargetType="control:SettingItem">
@@ -207,37 +283,51 @@
     <!--#endregion-->
 
     <!--#region                                                         Slider-->
-
-    <Style x:Key="DefaultSettingPageSlider_DecButton" 
+    <ControlTemplate x:Key="DefaultSettingPageSlider_RepeatButton"
+                     TargetType="RepeatButton">
+        <Grid>
+            <Rectangle Fill="{TemplateBinding Background}" 
+                       Height="{StaticResource DefaultSlider_TrackThickness}"
+                       RadiusX="1"
+                       RadiusY="1" />
+        </Grid>
+    </ControlTemplate>
+    <Style x:Key="DefaultSettingPageSlider_DecButton"
            TargetType="RepeatButton">
-        
+        <Setter Property="Background"
+                Value="{DynamicResource DefaultSliderThumb_Track_D}" />
+        <Setter Property="Template"
+                Value="{StaticResource DefaultSettingPageSlider_RepeatButton}" />
     </Style>
     <Style x:Key="DefaultSettingPageSlider_IncButton"
            TargetType="RepeatButton">
-
+        <Setter Property="Background"
+                Value="{DynamicResource DefaultSliderThumb_Track_I}" />
+        <Setter Property="Template"
+                Value="{StaticResource DefaultSettingPageSlider_RepeatButton}" />
     </Style>
     <Style x:Key="DefaultSettingPageSlider_Thumb"
            TargetType="yt_slide:YT_Thumb">
         <Setter Property="Width"
-                Value="8" />
+                Value="{StaticResource DefaultSliderThumb_Size}" />
         <Setter Property="Height"
-                Value="8" />
+                Value="{StaticResource DefaultSliderThumb_Size}" />
         <Setter Property="IconMode"
                 Value="Ellipse" />
         <Setter Property="StrokeThickness"
-                Value="1.5" />
+                Value="1.6" />
         <Setter Property="IconFgNormal"
-                Value="#c0c0c0" />
+                Value="{DynamicResource DefaultSliderThumb_IconFg_N}" />
         <Setter Property="IconFgOver"
-                Value="#00bbee" />
+                Value="{DynamicResource DefaultSliderThumb_IconFg_O}" />
         <Setter Property="IconFgPressed"
-                Value="#006688" />
+                Value="{DynamicResource DefaultSliderThumb_IconFg_P}" />
         <Setter Property="IconBgNormal"
-                Value="#c0c0c0" />
+                Value="{DynamicResource DefaultSliderThumb_IconBg_N}" />
         <Setter Property="IconBgOver"
-                Value="#ffffff" />
+                Value="{DynamicResource DefaultSliderThumb_IconBg_O}" />
         <Setter Property="IconBgPressed"
-                Value="#ffffff" />
+                Value="{DynamicResource DefaultSliderThumb_IconBg_P}" />
     </Style>
     <Style x:Key="DefaultSettingPageSlider"
            TargetType="yt_slide:YT_Slider">
@@ -271,6 +361,15 @@
                 Value="16,12" />
         <Setter Property="EnableBlur"
                 Value="{Binding EnableBlur, Source={StaticResource CoreSetting}}" />
+        <Setter Property="Child">
+            <Setter.Value>
+                <Grid Width="{StaticResource WXnotifypopupwidth}"
+                      Height="120"
+                      Background="#20000000">
+
+                </Grid>
+            </Setter.Value>
+        </Setter>
     </Style>
     <!--#endregion-->
 
@@ -297,15 +396,109 @@
 
     <yt_flow:YT_ContextMenu x:Key="AreaIconContextMenu"
                             Style="{StaticResource WinXTaskBarContextMenuStyle}">
-        <yt_flow:YT_MenuItem LabelString="显示主页面"
+        <yt_flow:YT_MenuItem LabelString="{DynamicResource AICM_ShowMainWindow}"
+                             CommandParameter="Show"
+                             Command="{Binding AreaContextMenuCommands,Source={StaticResource MainWindowViewModel}}"
                              Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
-        <yt_flow:YT_MenuItem LabelString="设置"
+        <yt_flow:YT_MenuItem LabelString="{DynamicResource AICM_Setting}"
+                             CommandParameter="Setting"
+                             Command="{Binding AreaContextMenuCommands,Source={StaticResource MainWindowViewModel}}"
                              Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
         <Separator Background="#808080"
                    Style="{StaticResource AreaContextMenuSeperator}" />
-        <yt_flow:YT_MenuItem LabelString="退出程序"
+        <yt_flow:YT_MenuItem LabelString="{DynamicResource AICM_Exit}"
+                             CommandParameter="Exit"
+                             Command="{Binding AreaContextMenuCommands,Source={StaticResource MainWindowViewModel}}"
                              Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
     </yt_flow:YT_ContextMenu>
+    <!--#endregion-->
+
+    <!--#region                                                         Dialog-->
+    <Style x:Key="EnsureDialog_CancelButton"
+           TargetType="yt_button:FIconButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="LabelVisibility"
+                Value="Collapsed" />
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="FontWeight"
+                Value="Thin" />
+        <Setter Property="Content"
+                Value="&#xE8BB;" />
+        <Setter Property="IconMargin"
+                Value="8,6" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+
+        <Setter Property="IconFgNormal"
+                Value="{DynamicResource EnsureDialogBotton_Fg_N}" />
+        <Setter Property="IconFgOver"
+                Value="{DynamicResource EnsureDialogBotton_Fg_O}" />
+        <Setter Property="IconFgPressed"
+                Value="{DynamicResource EnsureDialogBotton_Fg_P}" />
+
+        <Setter Property="IconBgNormal"
+                Value="{DynamicResource EnsureDialogBotton_Bg_N}" />
+        <Setter Property="IconBgOver"
+                Value="{DynamicResource EnsureDialogBotton_Bg_O}" />
+        <Setter Property="IconBgPressed"
+                Value="{DynamicResource EnsureDialogBotton_Bg_P}" />
+    </Style>
+    <Style x:Key="EnsureDialog_BottomButton"
+           TargetType="yt_button:FIconButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="IconVisibility"
+                Value="Collapsed" />
+        <Setter Property="FontSize"
+                Value="16" />
+        <Setter Property="Margin"
+                Value="6,0,4,4" />
+        <Setter Property="LabelMargin"
+                Value="12,4" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+
+        <Setter Property="LabelFgNormal"
+                Value="{DynamicResource EnsureDialogBotton_Fg_N}" />
+        <Setter Property="LabelFgOver"
+                Value="{DynamicResource EnsureDialogBotton_Fg_O}" />
+        <Setter Property="LabelFgPressed"
+                Value="{DynamicResource EnsureDialogBotton_Fg_P}" />
+
+        <Setter Property="LabelBgNormal"
+                Value="{DynamicResource EnsureDialogBotton_Bg_N}" />
+        <Setter Property="LabelBgOver"
+                Value="{DynamicResource EnsureDialogBotton_Bg_O}" />
+        <Setter Property="LabelBgPressed"
+                Value="{DynamicResource EnsureDialogBotton_Bg_P}" />
+    </Style>
+    <Style x:Key="EnsureDialog"
+           TargetType="yt_dialog:YT_DialogBase">
+        <Setter Property="EnableBlur"
+                Value="{Binding EnableBlur, Source={StaticResource CoreSetting}}" />
+        <Setter Property="AeroModeBackground"
+                Value="{DynamicResource MainTheme_Bg_Aero}" />
+        <Setter Property="AeroModeBorderBrush"
+                Value="{DynamicResource MainTheme_Bc_Aero}" />
+        <Setter Property="Background"
+                Value="{DynamicResource MainTheme_Bg}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource MainTheme_Bc}" />
+        <Setter Property="CancelButtonStyle"
+                Value="{StaticResource EnsureDialog_CancelButton}" />
+        <Setter Property="BottomButtonStyle"
+                Value="{StaticResource EnsureDialog_BottomButton}" />
+        <Setter Property="YesButtonLabel"
+                Value="{DynamicResource EnsureDialog_Yes}" />
+        <Setter Property="NoButtonLabel"
+                Value="{DynamicResource EnsureDialog_No}" />
+        <Setter Property="Width"
+                Value="248" />
+        <Setter Property="Height"
+                Value="124" />
+    </Style>
     <!--#endregion-->
 
     <!--#region                                                         CollectionControls-->
@@ -317,7 +510,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                
+
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -327,7 +520,7 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    
+
                 </DataTemplate>
             </Setter.Value>
         </Setter>

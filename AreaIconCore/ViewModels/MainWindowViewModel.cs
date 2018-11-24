@@ -17,17 +17,6 @@ namespace AreaIconCore.ViewModels {
     public class MainWindowViewModel : ViewModelBase<MainWindowViewModel> {
 
         #region Properties
-        private Dictionary<Type, KeyValuePair<string, string>> _iconTable = new Dictionary<Type, KeyValuePair<string, string>> {
-            { typeof(MainPage),     new KeyValuePair<string, string>(ConstTable.MainPageIcon,"主页") },
-            { typeof(SettingPage),  new KeyValuePair<string, string>(ConstTable.SettingPageIcon,"设置") },
-            { typeof(ExtensionPage),new KeyValuePair<string, string>(ConstTable.ExtensionPageIcon,"插件") },
-            { typeof(AboutPage),    new KeyValuePair<string, string>(ConstTable.AboutPageIcon,"关于") },
-
-        };
-        public Dictionary<Type, KeyValuePair<string, string>> IconTable {
-            get => _iconTable;
-            set => _iconTable = value;
-        }
 
         #region 
         /// <summary>
@@ -51,23 +40,36 @@ namespace AreaIconCore.ViewModels {
 
         public CommandBase MainPageCommands { get; set; }
         public CommandBase NavigateCommands { get; set; }
-        public CommandBase NavigateTO { get; set; }
+        public CommandBase AreaContextMenuCommands { get; set; }
+
+        public CommandBase FrameCommand { get; set; }
         #endregion
 
         #region Methods
-        public void UpdateContentInfo(string icon, string name) {
-            ContentIconNow = icon;
-            ContentPageNow = name;
+        /// <summary>
+        /// 托盘右键菜单的命令
+        /// </summary>
+        private void AreaContextMenuCommands_Execution(object para = null) {
+            switch (para.ToString()) {
+                case "Show":
+                    if (App.Current.MainWindow.Visibility == System.Windows.Visibility.Visible)
+                        App.Current.MainWindow.Hide();
+                    else
+                        App.Current.MainWindow.Show();
+                    break;
+                case "Setting":
+                    NavigateToLocal(new SettingPage());
+                    break;
+                case "Exit":
+                    App.Current.Shutdown();
+                    break;
+                default: break;
+            }
         }
 
-        private void InitCommand() {
-            MainPageCommands = new CommandBase();
-            MainPageCommands.Execution += MainPageCommands_Execution;
-            NavigateCommands = new CommandBase();
-            NavigateCommands.Execution += NavigateCommands_Execution;
-            NavigateTO = new CommandBase();
-        }
-
+        /// <summary>
+        /// 导航菜单的命令
+        /// </summary>
         private void NavigateCommands_Execution(object para = null) {
             switch (para.ToString()) {
                 case "Page_Main":
@@ -78,23 +80,21 @@ namespace AreaIconCore.ViewModels {
                     NavigateToLocal(new SettingPage());
 
                     break;
-
                 case "Page_Extension":
                     NavigateToLocal(new ExtensionPage());
 
                     break;
                 case "Page_About":
                     NavigateToLocal(new AboutPage());
-                    //if (ThemeManager.Instance.ThemeNow["ThemeDic"].ToString() == "Default")
-                    //    ThemeManager.Instance.SwitchTheme(App.GetDirectory(DirectoryKind.Theme) + "TestTheme.xaml");
-                    //else
-                    //    ThemeManager.Instance.SwitchTheme(null);
 
                     break;
                 default: break;
             }
         }
 
+        /// <summary>
+        /// 其它标题栏菜单的命令
+        /// </summary>
         private void MainPageCommands_Execution(object para = null) {
             switch (para) {
                 case "Close":
@@ -105,12 +105,34 @@ namespace AreaIconCore.ViewModels {
         }
 
         public void NavigateToLocal(Page page) {
-            MainWindowViewModel.Singleton.UpdateContentInfo(IconTable[page.GetType()].Key, IconTable[page.GetType()].Value);
-            NavigateTO.Execute(new NavigateArgs(page, null));
+            if (page.GetType() == typeof(MainPage))
+                UpdateContentInfo(App.Current.Resources["Icon_MainPage"] as String, App.Current.Resources["Label_MainPage"] as String);
+            else if (page.GetType() == typeof(SettingPage))
+                UpdateContentInfo(App.Current.Resources["Icon_SettingPage"] as String, App.Current.Resources["Label_SettingPage"] as String);
+            else if (page.GetType() == typeof(ExtensionPage))
+                UpdateContentInfo(App.Current.Resources["Icon_ExtensionPage"] as String, App.Current.Resources["Label_ExtensionPage"] as String);
+            else if (page.GetType() == typeof(AboutPage))
+                UpdateContentInfo(App.Current.Resources["Icon_AboutPage"] as String, App.Current.Resources["Label_AboutPage"] as String);
+            FrameCommand.Execute(new NavigateArgs(page, null));
         }
 
         public void NavigateTo(Uri page) {
-            NavigateTO.Execute(new NavigateArgs(page, null));
+            FrameCommand.Execute(new NavigateArgs(page, null));
+        }
+
+        private void UpdateContentInfo(string icon, string name) {
+            ContentIconNow = icon;
+            ContentPageNow = name;
+        }
+
+        private void InitCommand() {
+            MainPageCommands = new CommandBase();
+            MainPageCommands.Execution += MainPageCommands_Execution;
+            NavigateCommands = new CommandBase();
+            NavigateCommands.Execution += NavigateCommands_Execution;
+            FrameCommand = new CommandBase();
+            AreaContextMenuCommands = new CommandBase();
+            AreaContextMenuCommands.Execution += AreaContextMenuCommands_Execution;
         }
         #endregion
 

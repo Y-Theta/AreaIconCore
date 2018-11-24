@@ -4,8 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:yt_slide="clr-namespace:YControls.SlideControls;assembly=YControls"
-      xmlns:ser="clr-namespace:AreaIconCore.Services"
+      xmlns:yt_flow="clr-namespace:YControls.FlowControls;assembly=YControls"
+      xmlns:yt_button="clr-namespace:YControls.FontIconButtons;assembly=YControls"
       xmlns:yt_wx="clr-namespace:YControls.WinXStyleControls;assembly=YControls"
+      xmlns:ser="clr-namespace:AreaIconCore.Services"
       xmlns:control="clr-namespace:AreaIconCore.Controls"
       xmlns:conv="clr-namespace:AreaIconCore.Converter"
       xmlns:local="clr-namespace:AreaIconCore.Views.Pages"
@@ -29,20 +31,34 @@
         <StackPanel x:Name="SettingItem"
                     Grid.Row="2"
                     Width="320">
-            <control:SettingItem SettingKey="启用Aero玻璃效果"
+            <control:SettingItem SettingKey="{DynamicResource SettingPage_EnableAeroGlass}"
                                  Style="{StaticResource DefaultSettingItem}">
-                <yt_wx:YT_WinXToggelSwitch OnString="开"
-                                           OffString="关"
+                <yt_wx:YT_WinXToggelSwitch OnString="{DynamicResource SettingPage_ToggelSwitchOn}"
+                                           OffString="{DynamicResource SettingPage_ToggelSwitchOff}"
                                            IsChecked="{Binding EnableBlur, Source={x:Static ser:CoreSettings.Instance},Mode=TwoWay}"
                                            Style="{StaticResource SettingItemToggelSwitch}" />
             </control:SettingItem>
-            <control:SettingItem SettingKey="界面透明度"
+            <control:SettingItem SettingKey="{DynamicResource SettingPage_MainOpacity}"
                                  Style="{StaticResource DefaultSettingItem}">
-                <yt_slide:YT_Slider Value="{Binding MainOpacity, Source={StaticResource CoreSetting},Mode=TwoWay,Converter={StaticResource DoubleConverter},ConverterParameter={StaticResource OpacitySliderConvPara}}" 
-                                    Style="{StaticResource DefaultSettingPageSlider}"
-                                    Maximum="100"
-                                    Minimum="40"
-                                    Width="120"/>
+                <yt_button:FIconToggleButton Style="{StaticResource SettingItemSliderToggelButton}"
+                                             Width="36"
+                                             LabelString="{Binding Value, ElementName=OpacitySlider,Converter={StaticResource StringConverter},ConverterParameter={StaticResource MainOpacityToolTipText}}"
+                                             LabelSelect="{Binding Value, ElementName=OpacitySlider,Converter={StaticResource StringConverter},ConverterParameter={StaticResource MainOpacityToolTipText}}">
+                    <yt_button:FIconToggleButton.PopupMenu>
+                        <yt_flow:YT_PopupBase AutoHide="False"
+                                              Message="False"
+                                              HorizontalOffset="-92"
+                                              VerticalOffset="6.4"
+                                              Width="92">
+                            <yt_slide:YT_Slider x:Name="OpacitySlider"
+                                                Value="{Binding MainOpacity, Source={StaticResource CoreSetting},Mode=TwoWay,Converter={StaticResource DoubleConverter},ConverterParameter={StaticResource OpacitySliderConvPara}}"
+                                                Style="{StaticResource DefaultSettingPageSlider}"
+                                                Maximum="100"
+                                                Minimum="40"
+                                                Width="84" />
+                        </yt_flow:YT_PopupBase>
+                    </yt_button:FIconToggleButton.PopupMenu>
+                </yt_button:FIconToggleButton>
             </control:SettingItem>
         </StackPanel>
     </Grid>

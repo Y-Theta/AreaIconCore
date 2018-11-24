@@ -7,20 +7,20 @@
                     xmlns:model="clr-namespace:AreaIconCore.Models">
     <!--#region                                                         -->
     <!--#endregion-->
-    
-    <!--#region                                                         Font-->
+
+    <!--#region                                                                       Font-->
     <FontFamily x:Key="Questrial">
         pack://application:,,,/FontLibrary;component/Questrial.ttf#Questrial
     </FontFamily>
     <!--#endregion-->
 
-    <!--#region                                                         Converter-->
+    <!--#region                                                                       Converter-->
     <x:Static x:Key="DoubleConverter"
               Member="conv:DoubleConverter.Instance" />
 
     <!--#endregion-->
 
-    <!--#region                                                         ViewModel-->
+    <!--#region                                                                       ViewModel-->
     <x:Static x:Key="MainWindowViewModel"
               Member="vm:MainWindowViewModel.Singleton" />
 
@@ -28,4 +28,5 @@
     <x:Static x:Key="CoreSetting"
               Member="service:CoreSettings.Instance" />
     <!--#endregion-->
+
 </ResourceDictionary>

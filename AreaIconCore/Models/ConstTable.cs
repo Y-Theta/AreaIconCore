@@ -9,23 +9,9 @@ namespace AreaIconCore.Models {
         #region Properties
         public static string RectNum = "RectNum";
         public static string MyFont = "FontLibrary";
+        public static string DefaultThemeUri = @"/Views/Appearance/default_theme.xaml";
+        public static string DefaultLangUri = @"/Views/Appearance/default_language.xaml";
 
-
-        public static string MainPageIcon {
-            get => "\uE80F";
-        }
-
-        public static string SettingPageIcon {
-            get => "\xE713";
-        }
-
-        public static string ExtensionPageIcon {
-            get => "\xE74C";
-        }
-
-        public static string AboutPageIcon {
-            get => "\xE8F2";
-        }
         #endregion
     }
 

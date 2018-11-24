@@ -27,10 +27,6 @@
                      SizeToContent="Height"
                      MaxHeight="360"
                      Width="320">
-    <yt_window:YT_Window.Resources>
-        <sys:String x:Key="NavigaterToolTipStyle"
-                    xml:space="preserve">当前页: {0}</sys:String>
-    </yt_window:YT_Window.Resources>
     <yt_window:YT_Window.TitleArea>
         <Grid x:Name="Title_Root">
             <Grid.RowDefinitions>
@@ -58,31 +54,31 @@
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <yt_button:FIconButton x:Name="Page_Main"
-                                               Content="{x:Static model:ConstTable.MainPageIcon}"
+                                               Content="{StaticResource Icon_MainPage}"
                                                Command="{Binding NavigateCommands}"
                                                CommandParameter="Page_Main"
-                                               ToolTipString="{Binding IconTable.Keys[0]}"
+                                               ToolTipString="{DynamicResource Label_MainPage}"
                                                Style="{StaticResource CloseButton}"
                                                Grid.Column="1" />
                         <yt_button:FIconButton x:Name="Page_Setting"
-                                               Content="{x:Static model:ConstTable.SettingPageIcon}"
+                                               Content="{StaticResource Icon_SettingPage}"
                                                Command="{Binding NavigateCommands}"
                                                CommandParameter="Page_Setting"
-                                               ToolTipString="{Binding IconTable.Keys[1]}"
+                                               ToolTipString="{DynamicResource Label_SettingPage}"
                                                Style="{StaticResource CloseButton}"
                                                Grid.Column="2" />
                         <yt_button:FIconButton x:Name="Page_Extension"
-                                               Content="{x:Static model:ConstTable.ExtensionPageIcon}"
+                                               Content="{StaticResource Icon_ExtensionPage}"
                                                Command="{Binding NavigateCommands}"
                                                CommandParameter="Page_Extension"
-                                               ToolTipString="{Binding IconTable.Keys[2]}"
+                                               ToolTipString="{DynamicResource Label_ExtensionPage}"
                                                Style="{StaticResource CloseButton}"
                                                Grid.Column="3" />
                         <yt_button:FIconButton x:Name="Page_About"
-                                               Content="{x:Static model:ConstTable.AboutPageIcon}"
+                                               Content="{StaticResource Icon_AboutPage}"
                                                Command="{Binding NavigateCommands}"
                                                CommandParameter="Page_About"
-                                               ToolTipString="{Binding IconTable.Keys[3]}"
+                                               ToolTipString="{DynamicResource Label_AboutPage}"
                                                Style="{StaticResource CloseButton}"
                                                Grid.Column="4" />
                     </Grid>
@@ -93,7 +89,7 @@
                                              CommandParameter="Navigate"
                                              Content="{Binding ContentIconNow}"
                                              IconSelect="{Binding ContentIconNow}"
-                                             ToolTipString="{Binding ContentPageNow,Converter={StaticResource StringConverter},ConverterParameter={StaticResource NavigaterToolTipStyle}}"
+                                             ToolTipString="{Binding ContentPageNow,Converter={StaticResource StringConverter},ConverterParameter={StaticResource NavigaterToolTipText}}"
                                              Grid.Column="3" />
                 <yt_button:FIconButton x:Name="Close"
                                        FontSize="14"
@@ -106,7 +102,7 @@
     </yt_window:YT_Window.TitleArea>
     <Grid x:Name="rgrid">
         <yt_coll:YT_Frame x:Name="MainFrame"
-                          NavigateCommand="{Binding NavigateTO}" />
+                          NavigateCommand="{Binding FrameCommand}" />
     </Grid>
 
 </yt_window:YT_Window>

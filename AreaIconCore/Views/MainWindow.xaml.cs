@@ -14,6 +14,7 @@ using AreaIconCore.Models;
 using YControls.InterAction;
 using ToastHelper;
 using AreaIconCore.Views.Pages;
+using YControls.Dialogs;
 
 namespace AreaIconCore.Views {
     /// <summary>
@@ -53,6 +54,7 @@ namespace AreaIconCore.Views {
         #endregion
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e) {
+            AreaIconDraw.Instance.LoadFont(ConstTable.RectNum, 6, ConstTable.MyFont);
 
             #region
             //AllowAreaIcon = true;
@@ -84,6 +86,7 @@ namespace AreaIconCore.Views {
                         AllowAreaIcon = true;
                     RegisterAreaIcon(ext.Name);
                     AreaIcons[ext.Name].IconMouseDoubleClick += MainWindow_IconMouseDoubleClick;
+                    AreaIcons[ext.Name].Areaicon = AreaIconDraw.Instance.StringIcon("33", ColorD.White);
                     AreaIcons[ext.Name].DContextmenu = App.Current.Resources["AreaIconContextMenu"] as YT_ContextMenu;
                     var popup = new YT_PopupBase();
                     popup.Style = App.Current.Resources["AeroPopup"] as Style;
@@ -97,15 +100,22 @@ namespace AreaIconCore.Views {
         }
 
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {
-            if (Visibility == Visibility.Visible)
-                App.Current.MainWindow.Hide();
-            else
-                App.Current.MainWindow.Show();
+            App.ToastHelper.Notify("hello","new toast");
+            //if (Visibility == Visibility.Visible)
+            //    App.Current.MainWindow.Hide();
+            //else
+            //    App.Current.MainWindow.Show();
         }
 
         public MainWindow() {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            var dialog = new YT_DialogBase();
+            dialog.Style = App.Current.Resources["EnsureDialog"] as Style;
+            dialog.ShowDialog(App.Current.MainWindow);
         }
     }
 }

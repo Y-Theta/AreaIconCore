@@ -1,0 +1,43 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--#region-->
+    <!--#endregion-->
+
+    <sys:String x:Key="LangDic">zh_cn</sys:String>
+
+    <!--TitleBar-->
+    <!--#region-->
+    <sys:String x:Key="Label_MainPage">主页</sys:String>
+    <sys:String x:Key="Label_SettingPage">设置</sys:String>
+    <sys:String x:Key="Label_ExtensionPage">插件</sys:String>
+    <sys:String x:Key="Label_AboutPage">关于</sys:String>
+    
+    <sys:String x:Key="Label_CloseButton">关闭</sys:String>
+    
+    <sys:String x:Key="Label_ToolTipStyle">当前页: {0}</sys:String>
+    <!--#endregion-->
+
+    <!--AreaIconContextMenu-->
+    <!--#region-->
+    <sys:String x:Key="AICM_ShowMainWindow">显示主页面</sys:String>
+    <sys:String x:Key="AICM_Setting">设置</sys:String>
+    <sys:String x:Key="AICM_Exit">退出</sys:String>
+    <!--#endregion-->
+
+    <!--SettingPage-->
+    <!--#region-->
+    <sys:String x:Key="SettingPage_EnableAeroGlass">启用毛玻璃效果</sys:String>
+    <sys:String x:Key="SettingPage_MainOpacity">窗体透明度</sys:String>
+    <sys:String x:Key="SettingPage_ToggelSwitchOn">开</sys:String>
+    <sys:String x:Key="SettingPage_ToggelSwitchOff">关</sys:String>
+    <!--#endregion-->
+
+    <!--Dialog-->
+    <!--#region-->
+    <sys:String x:Key="EnsureDialog_Yes">是</sys:String>
+    <sys:String x:Key="EnsureDialog_No">否</sys:String>
+    <!--#endregion-->
+
+
+</ResourceDictionary>

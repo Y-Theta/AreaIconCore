@@ -7,17 +7,10 @@
       xmlns:manager="clr-namespace:AreaIconCore.Services"
       xmlns:local="clr-namespace:AreaIconCore.Views.Pages"
       mc:Ignorable="d">
-    <Grid>
-        <StackPanel Margin="0,24"
-                    DataContext="{Binding LanguageRes, Source={x:Static manager:LanguageManager.Singleton}}">
-            <yt_text:YT_TextBox Text="{Binding XPath=MainPage,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-            <yt_text:YT_TextBox Text="{Binding XPath=SettingPage,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-            <yt_text:YT_TextBox Text="{Binding XPath=ExtensionPage,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-            <yt_text:YT_TextBox Text="{Binding XPath=AboutPage,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-            <StackPanel Orientation="Horizontal">
-                <Button Click="Button_Click">Refresh</Button>
-                <Button Click="Button_Click_1">Save</Button>
-            </StackPanel>
+    <Grid Margin="0,24,0,0">
+        <StackPanel Orientation="Horizontal">
+            <Button Click="Button_Click">ChangeTheme</Button>
+            <Button Click="Button_Click_1">ChangeLang</Button>
         </StackPanel>
 
     </Grid>
