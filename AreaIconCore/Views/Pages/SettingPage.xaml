@@ -11,7 +11,6 @@
       xmlns:control="clr-namespace:AreaIconCore.Controls"
       xmlns:conv="clr-namespace:AreaIconCore.Converter"
       xmlns:local="clr-namespace:AreaIconCore.Views.Pages"
-      MaxHeight="360"
       mc:Ignorable="d">
     <Page.Resources>
         <conv:DCArgs x:Key="OpacitySliderConvPara"
@@ -21,45 +20,65 @@
     <Grid x:Name="rgrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="{Binding Source={StaticResource TitleBarMinHeight},Mode=OneWay}" />
-            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="Controllayer"
-              Grid.Row="1">
+              Height="32"
+              Grid.Row="2">
 
         </Grid>
-        <StackPanel x:Name="SettingItem"
-                    Grid.Row="2"
-                    Width="320">
-            <control:SettingItem SettingKey="{DynamicResource SettingPage_EnableAeroGlass}"
-                                 Style="{StaticResource DefaultSettingItem}">
-                <yt_wx:YT_WinXToggelSwitch OnString="{DynamicResource SettingPage_ToggelSwitchOn}"
-                                           OffString="{DynamicResource SettingPage_ToggelSwitchOff}"
-                                           IsChecked="{Binding EnableBlur, Source={x:Static ser:CoreSettings.Instance},Mode=TwoWay}"
-                                           Style="{StaticResource SettingItemToggelSwitch}" />
-            </control:SettingItem>
-            <control:SettingItem SettingKey="{DynamicResource SettingPage_MainOpacity}"
-                                 Style="{StaticResource DefaultSettingItem}">
-                <yt_button:FIconToggleButton Style="{StaticResource SettingItemSliderToggelButton}"
-                                             Width="36"
-                                             LabelString="{Binding Value, ElementName=OpacitySlider,Converter={StaticResource StringConverter},ConverterParameter={StaticResource MainOpacityToolTipText}}"
-                                             LabelSelect="{Binding Value, ElementName=OpacitySlider,Converter={StaticResource StringConverter},ConverterParameter={StaticResource MainOpacityToolTipText}}">
-                    <yt_button:FIconToggleButton.PopupMenu>
-                        <yt_flow:YT_PopupBase AutoHide="False"
-                                              Message="False"
-                                              HorizontalOffset="-92"
-                                              VerticalOffset="6.4"
-                                              Width="92">
-                            <yt_slide:YT_Slider x:Name="OpacitySlider"
-                                                Value="{Binding MainOpacity, Source={StaticResource CoreSetting},Mode=TwoWay,Converter={StaticResource DoubleConverter},ConverterParameter={StaticResource OpacitySliderConvPara}}"
-                                                Style="{StaticResource DefaultSettingPageSlider}"
-                                                Maximum="100"
-                                                Minimum="40"
-                                                Width="84" />
-                        </yt_flow:YT_PopupBase>
-                    </yt_button:FIconToggleButton.PopupMenu>
-                </yt_button:FIconToggleButton>
-            </control:SettingItem>
-        </StackPanel>
+        <yt_slide:YT_ScrollViewer x:Name="SettingItem"
+                                  Grid.Row="1"
+                                  Style="{StaticResource DefaultScrollViewer}"
+                                  HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Width="320">
+                <control:SettingItem SettingKey="{DynamicResource SettingPage_EnableAeroGlass}"
+                                     Style="{StaticResource DefaultSettingItem}">
+                    <yt_wx:YT_WinXToggelSwitch OnString="{DynamicResource SettingPage_ToggelSwitchOn}"
+                                               OffString="{DynamicResource SettingPage_ToggelSwitchOff}"
+                                               IsChecked="{Binding EnableBlur, Source={x:Static ser:CoreSettings.Instance},Mode=TwoWay}"
+                                               Style="{StaticResource SettingItemToggelSwitch}" />
+                </control:SettingItem>
+                <control:SettingItem SettingKey="{DynamicResource SettingPage_MainOpacity}"
+                                     Style="{StaticResource DefaultSettingItem}">
+                    <yt_button:FIconToggleButton Style="{StaticResource SettingItemSliderToggelButton}"
+                                                 Width="36"
+                                                 LabelString="{Binding Value, ElementName=OpacitySlider,Converter={StaticResource StringConverter},ConverterParameter={StaticResource MainOpacityToolTipText}}"
+                                                 LabelSelect="{Binding Value, ElementName=OpacitySlider,Converter={StaticResource StringConverter},ConverterParameter={StaticResource MainOpacityToolTipText}}">
+                        <yt_button:FIconToggleButton.PopupMenu>
+                            <yt_flow:YT_PopupBase AutoHide="False"
+                                                  Message="False"
+                                                  HorizontalOffset="-108">
+                                <Grid Width="108"
+                                      Height="22">
+                                    <yt_slide:YT_Slider x:Name="OpacitySlider"
+                                                        Value="{Binding MainOpacity, Source={StaticResource CoreSetting},Mode=TwoWay,Converter={StaticResource DoubleConverter},ConverterParameter={StaticResource OpacitySliderConvPara}}"
+                                                        Style="{StaticResource DefaultSettingPageSlider}"
+                                                        Maximum="100"
+                                                        Minimum="40"
+                                                        Width="84" />
+                                </Grid>
+                            </yt_flow:YT_PopupBase>
+                        </yt_button:FIconToggleButton.PopupMenu>
+                    </yt_button:FIconToggleButton>
+                </control:SettingItem>
+                <control:SettingItem SettingKey="{DynamicResource SettingPage_Theme}"
+                                     Style="{StaticResource DefaultSettingItem}">
+                    <ComboBox DataContext="{Binding Source={x:Static ser:AppearanceManager.Singleton}}"
+                              SelectedItem="{Binding SelectTheme,Mode=TwoWay}"
+                              ItemsSource="{Binding ThemeDics}"
+                              Style="{StaticResource SettingPageExtensionComboBox}" />
+                </control:SettingItem>
+                <control:SettingItem SettingKey="{DynamicResource SettingPage_Lang}"
+                                     Style="{StaticResource DefaultSettingItem}">
+                    <ComboBox DataContext="{Binding Source={x:Static ser:AppearanceManager.Singleton}}"
+                              SelectedItem="{Binding SelectLanguage,Mode=TwoWay}"
+                              ItemsSource="{Binding LanguageDics}"
+                              Style="{StaticResource SettingPageExtensionComboBox}" />
+                </control:SettingItem>
+                
+            </StackPanel>
+        </yt_slide:YT_ScrollViewer>
     </Grid>
 </Page>

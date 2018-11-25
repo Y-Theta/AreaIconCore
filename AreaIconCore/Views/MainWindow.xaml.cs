@@ -15,6 +15,7 @@ using YControls.InterAction;
 using ToastHelper;
 using AreaIconCore.Views.Pages;
 using YControls.Dialogs;
+using System.Windows.Controls;
 
 namespace AreaIconCore.Views {
     /// <summary>
@@ -55,7 +56,7 @@ namespace AreaIconCore.Views {
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e) {
             AreaIconDraw.Instance.LoadFont(ConstTable.RectNum, 6, ConstTable.MyFont);
-
+            AppearanceManager.Singleton.LanguageChanged += Singleton_LanguageChanged;
             #region
             //AllowAreaIcon = true;
             //RegisterAreaIcon(_iconName);
@@ -87,10 +88,10 @@ namespace AreaIconCore.Views {
                     RegisterAreaIcon(ext.Name);
                     AreaIcons[ext.Name].IconMouseDoubleClick += MainWindow_IconMouseDoubleClick;
                     AreaIcons[ext.Name].Areaicon = AreaIconDraw.Instance.StringIcon("33", ColorD.White);
-                    AreaIcons[ext.Name].DContextmenu = App.Current.Resources["AreaIconContextMenu"] as YT_ContextMenu;
-                    var popup = new YT_PopupBase();
-                    popup.Style = App.Current.Resources["AeroPopup"] as Style;
-                    AreaIcons[ext.Name].CheckPop = popup;
+                    AreaIcons[ext.Name].DContextmenu = CreateAreaIconMenu();
+                    // var popup = new YT_PopupBase();
+                    //popup.Style = App.Current.Resources["AeroPopup"] as Style;
+                    //AreaIcons[ext.Name].CheckPop = popup;
                 }
                 if (ext.Application.ContainsKey(ExtensionContract.ApplicationScenario.MainPage)) {
 
@@ -99,12 +100,35 @@ namespace AreaIconCore.Views {
             (DataContext as MainWindowViewModel).NavigateToLocal(new MainPage());
         }
 
+        private bool Singleton_LanguageChanged(object op, object np) {
+            AreaIcons["IPGW_ex"].DContextmenu = null;
+            AreaIcons["IPGW_ex"].DContextmenu = CreateAreaIconMenu();
+            return true;
+        }
+
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {
-            App.ToastHelper.Notify("hello","new toast");
-            //if (Visibility == Visibility.Visible)
-            //    App.Current.MainWindow.Hide();
-            //else
-            //    App.Current.MainWindow.Show();
+            App.ToastHelper.Notify("", "hello", "new toast");
+        }
+
+        /// <summary>
+        /// 从资源构造一个托盘图标的右键菜单
+        /// </summary>
+        private YT_ContextMenu CreateAreaIconMenu() {
+            YT_ContextMenu menu = new YT_ContextMenu();
+            menu.Style = App.Current.Resources["WinXTaskBarContextMenuStyle"] as Style;
+            var item1 = new YT_MenuItem();
+            item1.Style = App.Current.Resources["AreaContextMenu_ShowMainWindow"] as Style;
+            menu.Items.Add(item1);
+            var item2 = new YT_MenuItem();
+            item2.Style = App.Current.Resources["AreaContextMenu_Setting"] as Style;
+            menu.Items.Add(item2);
+            var sep1 = new Separator();
+            sep1.Style = App.Current.Resources["AreaContextMenuSeperator"] as Style;
+            menu.Items.Add(sep1);
+            var item3 = new YT_MenuItem();
+            item3.Style = App.Current.Resources["AreaContextMenu_Exit"] as Style;
+            menu.Items.Add(item3);
+            return menu;
         }
 
         public MainWindow() {

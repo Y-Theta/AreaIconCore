@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:AreaIconCore.Views"
       Height="360"
       mc:Ignorable="d">
-    <Grid>
-        
+    <Grid Margin="0,24,0,0">
+        <Button Click="Button_Click" Width="120" Height="24">Connect</Button>
     </Grid>
 </Page>

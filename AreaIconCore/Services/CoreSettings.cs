@@ -13,7 +13,9 @@ namespace AreaIconCore.Services {
     [DataContract]
     public class CoreSettings : ILocalSetting<CoreSettings> {
         #region Properties
-
+        /// <summary>
+        /// 插件列表
+        /// </summary>
         [DataMember]
         private Dictionary<String, bool> _extensions;
         public Dictionary<String, bool> Extensions {
@@ -21,6 +23,9 @@ namespace AreaIconCore.Services {
             set => SetValue(out _extensions, value, Extensions);
         }
 
+        /// <summary>
+        /// 是否启用毛玻璃效果
+        /// </summary>
         [DataMember]
         private bool _enableBlur;
         public bool EnableBlur {
@@ -28,11 +33,34 @@ namespace AreaIconCore.Services {
             set => SetValue(out _enableBlur, value, EnableBlur);
         }
 
+        /// <summary>
+        /// 主窗口透明度
+        /// </summary>
         [DataMember]
         private double _mainOpacity;
         public double MainOpacity {
             get => _mainOpacity;
             set => SetValue(out _mainOpacity, value, MainOpacity);
+        }
+
+        /// <summary>
+        /// 主题
+        /// </summary>
+        [DataMember]
+        private string _maintheme;
+        public string MainTheme {
+            get => _maintheme;
+            set => SetValue(out _maintheme, value, MainTheme);
+        }
+
+        /// <summary>
+        /// 语言
+        /// </summary>
+        [DataMember]
+        private string _mainlang;
+        public string MainLang {
+            get => _mainlang;
+            set => SetValue(out _mainlang, value, MainLang);
         }
         #endregion
 

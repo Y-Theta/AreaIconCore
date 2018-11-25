@@ -4,7 +4,7 @@
     <!--#region-->
     <!--#endregion-->
 
-    <sys:String x:Key="LangDic">zh_cn</sys:String>
+    <sys:String x:Key="LangDic">简体中文</sys:String>
 
     <!--TitleBar-->
     <!--#region-->
@@ -28,7 +28,9 @@
     <!--SettingPage-->
     <!--#region-->
     <sys:String x:Key="SettingPage_EnableAeroGlass">启用毛玻璃效果</sys:String>
-    <sys:String x:Key="SettingPage_MainOpacity">窗体透明度</sys:String>
+    <sys:String x:Key="SettingPage_MainOpacity">窗体不透明度</sys:String>
+    <sys:String x:Key="SettingPage_Theme">当前主题</sys:String>
+    <sys:String x:Key="SettingPage_Lang">当前语言</sys:String>
     <sys:String x:Key="SettingPage_ToggelSwitchOn">开</sys:String>
     <sys:String x:Key="SettingPage_ToggelSwitchOff">关</sys:String>
     <!--#endregion-->

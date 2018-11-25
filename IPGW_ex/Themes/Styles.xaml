@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:yt_flow="clr-namespace:YControls.FlowControls;assembly=YControls"
+                    xmlns:main_ser="clr-namespace:IPGW_ex"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    
+    <!--FluxPopup-->
+    <Style x:Key="FluxPopup"
+           TargetType="yt_flow:YT_PopupBase">
+        <Setter Property="AllowsTransparency"
+                Value="True" />
+        <Setter Property="RelativeMode"
+                Value="RightBottom" />
+        <Setter Property="Placement"
+                Value="AbsolutePoint" />
+        <Setter Property="AutoHide"
+                Value="True" />
+        <Setter Property="AutoHideDelay"
+                Value="3000" />
+        <Setter Property="RelativeRect"
+                Value="16,12" />
+        <Setter Property="EnableBlur"
+                Value="{Binding MainWindowBlur, Source={x:Static main_ser:IPGW_ex_Main.Instence}}" />
+        <Setter Property="Child">
+            <Setter.Value>
+                <Grid Width="364"
+                      Height="120"
+                      Background="#20000000">
+
+                </Grid>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

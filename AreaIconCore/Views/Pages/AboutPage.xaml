@@ -9,8 +9,7 @@
       mc:Ignorable="d">
     <Grid Margin="0,24,0,0">
         <StackPanel Orientation="Horizontal">
-            <Button Click="Button_Click">ChangeTheme</Button>
-            <Button Click="Button_Click_1">ChangeLang</Button>
+       
         </StackPanel>
 
     </Grid>

@@ -47,8 +47,12 @@ namespace AreaIconCore.Services {
             }
         }
 
-        private void Extension_Notify(object sender, ApplicationScenario scenario, object obj) {
-            Console.WriteLine(sender.ToString() + scenario);
+        private object Extension_Notify(object sender, ApplicationScenario scenario, object obj) {
+            switch (scenario) {
+                case ApplicationScenario.AreaIcon:
+                    return null;
+                default: return null;
+            }
         }
 
         private void Init() {

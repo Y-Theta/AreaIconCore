@@ -20,6 +20,11 @@ namespace AreaIconCore.Views.Pages {
     public partial class SettingPage : Page {
         public SettingPage() {
             InitializeComponent();
+            Loaded += SettingPage_Loaded;
+        }
+
+        private void SettingPage_Loaded(object sender, RoutedEventArgs e) {
+
         }
     }
 }

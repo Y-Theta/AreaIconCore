@@ -42,6 +42,10 @@ namespace ExtensionContract {
         /// </summary>
         MainPage,
 
+        /// <summary>
+        /// 当前窗体是否开启透明
+        /// </summary>
+        BlurState,
         #region AreaIcon
 
         /// <summary>

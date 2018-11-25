@@ -35,8 +35,8 @@ namespace ExtensionContract {
                                 $"Description :  {Description}\n");
         }
 
-        public void PostData(object sender, ApplicationScenario scenario, object para = null) {
-            Notify?.Invoke(sender, scenario, para);
+        public object PostData(object sender, ApplicationScenario scenario, object para = null) {
+           return Notify?.Invoke(sender, scenario, para);
         }
 
         public abstract object Run(ApplicationScenario c, object arg = null);

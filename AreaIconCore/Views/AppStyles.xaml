@@ -29,7 +29,7 @@
                Bottom="1" />
 
     <!--#endregion-->
-    
+
     <!--#region                                                         ConvertArgs-->
 
     <yt_conv:StringConverterArgs x:Key="NavigaterToolTipText"
@@ -37,9 +37,12 @@
                                  FindRes="True"
                                  ResourceDic="{Binding Resources, Source={x:Static app:App.Current}}" />
     <yt_conv:StringConverterArgs x:Key="MainOpacityToolTipText"
-                                 FindRes="False">
-        <yt_conv:StringConverterArgs.Format>{0:F0}%</yt_conv:StringConverterArgs.Format>
-    </yt_conv:StringConverterArgs>
+                                 Format="{}{0:F0}%"
+                                 FindRes="False" />
+    <yt_conv:StringConverterArgs x:Key="ContextMenu_MainPage"
+                                 Format="AICM_ShowMainWindow"
+                                 FindRes="True"
+                                 ResourceDic="{Binding Resources, Source={x:Static app:App.Current}}" />
     <!--#endregion-->
 
     <!--#region                                                         TextBlocks-->
@@ -57,6 +60,21 @@
                 Value="{DynamicResource MainTheme_Fg}" />
         <Setter Property="Margin"
                 Value="4,0,0,0" />
+    </Style>
+
+    <!--SettingItemComboboxItem-->
+    <Style x:Key="SettingItemComboboxItem"
+           TargetType="TextBlock">
+        <Setter Property="FontSize"
+                Value="10.8" />
+        <Setter Property="FontWeight"
+                Value="Thin" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource MainTheme_Fg}" />
+        <Setter Property="Margin"
+                Value="8,4" />
     </Style>
 
     <!--#endregion-->
@@ -147,7 +165,7 @@
         <Setter Property="LabelFontSize"
                 Value="12" />
         <Setter Property="LabelMargin"
-                Value="0,4,0,3" />
+                Value="0,4,0,4" />
 
         <Setter Property="LabelFgNormal"
                 Value="{DynamicResource TitleBarButton_IconFg_N}" />
@@ -286,7 +304,7 @@
     <ControlTemplate x:Key="DefaultSettingPageSlider_RepeatButton"
                      TargetType="RepeatButton">
         <Grid>
-            <Rectangle Fill="{TemplateBinding Background}" 
+            <Rectangle Fill="{TemplateBinding Background}"
                        Height="{StaticResource DefaultSlider_TrackThickness}"
                        RadiusX="1"
                        RadiusY="1" />
@@ -331,6 +349,10 @@
     </Style>
     <Style x:Key="DefaultSettingPageSlider"
            TargetType="yt_slide:YT_Slider">
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
         <Setter Property="Orientation"
                 Value="Horizontal" />
         <Setter Property="DecreaseButtonHorizontal"
@@ -381,6 +403,8 @@
                 Value="4,1" />
         <Setter Property="Focusable"
                 Value="false" />
+        <Setter Property="Background"
+                Value="#808080" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Separator}">
@@ -394,23 +418,39 @@
         </Setter>
     </Style>
 
-    <yt_flow:YT_ContextMenu x:Key="AreaIconContextMenu"
-                            Style="{StaticResource WinXTaskBarContextMenuStyle}">
-        <yt_flow:YT_MenuItem LabelString="{DynamicResource AICM_ShowMainWindow}"
-                             CommandParameter="Show"
-                             Command="{Binding AreaContextMenuCommands,Source={StaticResource MainWindowViewModel}}"
-                             Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
-        <yt_flow:YT_MenuItem LabelString="{DynamicResource AICM_Setting}"
-                             CommandParameter="Setting"
-                             Command="{Binding AreaContextMenuCommands,Source={StaticResource MainWindowViewModel}}"
-                             Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
-        <Separator Background="#808080"
-                   Style="{StaticResource AreaContextMenuSeperator}" />
-        <yt_flow:YT_MenuItem LabelString="{DynamicResource AICM_Exit}"
-                             CommandParameter="Exit"
-                             Command="{Binding AreaContextMenuCommands,Source={StaticResource MainWindowViewModel}}"
-                             Style="{StaticResource WinXTaskBarContextMenuItemStyle}" />
-    </yt_flow:YT_ContextMenu>
+    <Style x:Key="AreaContextMenu_ShowMainWindow"
+           BasedOn="{StaticResource WinXTaskBarContextMenuItemStyle}"
+           TargetType="yt_flow:YT_MenuItem">
+        <Setter Property="LabelString"
+                Value="{DynamicResource AICM_ShowMainWindow}" />
+        <Setter Property="CommandParameter"
+                Value="Show" />
+        <Setter Property="Command"
+                Value="{Binding AreaContextMenuCommands,Source={StaticResource MainWindowViewModel}}" />
+    </Style>
+
+    <Style x:Key="AreaContextMenu_Setting"
+           BasedOn="{StaticResource WinXTaskBarContextMenuItemStyle}"
+           TargetType="yt_flow:YT_MenuItem">
+        <Setter Property="LabelString"
+                Value="{DynamicResource AICM_Setting}" />
+        <Setter Property="CommandParameter"
+                Value="Setting" />
+        <Setter Property="Command"
+                Value="{Binding AreaContextMenuCommands,Source={StaticResource MainWindowViewModel}}" />
+    </Style>
+
+    <Style x:Key="AreaContextMenu_Exit"
+           BasedOn="{StaticResource WinXTaskBarContextMenuItemStyle}"
+           TargetType="yt_flow:YT_MenuItem">
+        <Setter Property="LabelString"
+                Value="{DynamicResource AICM_Exit}" />
+        <Setter Property="CommandParameter"
+                Value="Exit" />
+        <Setter Property="Command"
+                Value="{Binding AreaContextMenuCommands,Source={StaticResource MainWindowViewModel}}" />
+    </Style>
+    
     <!--#endregion-->
 
     <!--#region                                                         Dialog-->
@@ -509,8 +549,28 @@
                 <Style TargetType="ComboBoxItem">
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate>
-
+                            <ControlTemplate TargetType="ComboBoxItem">
+                                <Grid x:Name="rgrid">
+                                    <ContentPresenter x:Name="Content"
+                                                      VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                      Margin="0" />
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                                             Value="True">
+                                        <Setter TargetName="rgrid"
+                                                Property="Background"
+                                                Value="{DynamicResource SettingItem_ComboboxItem_Bg_O}" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected"
+                                             Value="True">
+                                        <Setter TargetName="rgrid"
+                                                Property="Background"
+                                                Value="{DynamicResource SettingItem_ComboboxItem_Bg_P }" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -520,8 +580,44 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-
+                    <TextBlock x:Name="TextHolder"
+                               Text="{Binding}"
+                               Style="{StaticResource SettingItemComboboxItem}" />
                 </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid x:Name="rgrid"
+                          SnapsToDevicePixels="True">
+                        <Popup x:Name="PART_Popup"
+                               AllowsTransparency="True"
+                               IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                               Placement="Bottom">
+                            <Grid MaxHeight="120"
+                                  Background="{DynamicResource SettingItem_ComboboxItem_Bg_N}">
+                                <yt_slide:YT_ScrollViewer x:Name="DropDownScrollViewer"
+                                                          ScrollbarLayout="Dock"
+                                                          ScrollbarThickness="4"
+                                                          HorizontalScrollBarVisibility="Disabled"
+                                                          Style="{StaticResource DefaultScrollViewer}">
+                                    <Grid RenderOptions.ClearTypeHint="Enabled">
+                                        <ItemsPresenter x:Name="ItemsPresenter"
+                                                        KeyboardNavigation.DirectionalNavigation="Contained"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </Grid>
+                                </yt_slide:YT_ScrollViewer>
+                            </Grid>
+                        </Popup>
+                        <yt_button:FIconToggleButton x:Name="SwitchButton"
+                                                     LabelMargin="8,4"
+                                                     IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                                     LabelSelect="{Binding SelectedItem,RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                     LabelString="{Binding SelectedItem,RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                     Style="{StaticResource SettingItemSliderToggelButton}" />
+                    </Grid>
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>

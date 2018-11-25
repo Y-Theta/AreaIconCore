@@ -1,4 +1,5 @@
 ﻿using AreaIconCore.Models;
+using AreaIconCore.Services;
 using AreaIconCore.Views.Pages;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,9 @@ namespace AreaIconCore.ViewModels {
         #endregion
 
         public CommandBase MainPageCommands { get; set; }
+
         public CommandBase NavigateCommands { get; set; }
+
         public CommandBase AreaContextMenuCommands { get; set; }
 
         public CommandBase FrameCommand { get; set; }
@@ -53,7 +56,7 @@ namespace AreaIconCore.ViewModels {
             switch (para.ToString()) {
                 case "Show":
                     if (App.Current.MainWindow.Visibility == System.Windows.Visibility.Visible)
-                        App.Current.MainWindow.Hide();
+                        return;
                     else
                         App.Current.MainWindow.Show();
                     break;
@@ -85,7 +88,7 @@ namespace AreaIconCore.ViewModels {
 
                     break;
                 case "Page_About":
-                    NavigateToLocal(new AboutPage());
+                    NavigateTo(HostAdapter.Instance.ExtensionDirectory["IPGW_ex"].Run(ExtensionContract.ApplicationScenario.MainPage));
 
                     break;
                 default: break;
@@ -98,7 +101,7 @@ namespace AreaIconCore.ViewModels {
         private void MainPageCommands_Execution(object para = null) {
             switch (para) {
                 case "Close":
-                    App.Current.MainWindow.Close();
+                    App.Current.MainWindow.Hide();
                     break;
                 default: break;
             }
@@ -118,6 +121,10 @@ namespace AreaIconCore.ViewModels {
 
         public void NavigateTo(Uri page) {
             FrameCommand.Execute(new NavigateArgs(page, null));
+        }
+
+        public void NavigateTo(object content) {
+            FrameCommand.Execute(new NavigateArgs(content, null));
         }
 
         private void UpdateContentInfo(string icon, string name) {

@@ -1,4 +1,5 @@
 ﻿using ExtensionContract;
+using IPGW_ex.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -14,16 +15,33 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using YControls.FlowControls;
 
 namespace IPGW_ex {
     [Export(typeof(IInnerDomainExtensionContract))]
-    public class IPGW_ex : InnerDomainExtenesion<IPGW_ex> {
+    public class IPGW_ex_Main : InnerDomainExtenesion<IPGW_ex_Main> {
+
+        public bool MainWindowBlur {
+            get {
+                return (bool)PostData(this, ApplicationScenario.BlurState);
+            }
+        }
+
         public override object Run(ApplicationScenario c, object arg = null) {
-            throw new NotImplementedException();
+            switch (c) {
+                case ApplicationScenario.AreaIcon:
+                    return null;
+                case ApplicationScenario.MainPage:
+                    return new MainPage();
+                case ApplicationScenario.AreaPopup:
+                    return null;
+                default:
+                    return null;
+            }
         }
 
 
-        public IPGW_ex() {
+        public IPGW_ex_Main() {
             Name = "IPGW_ex";
             Author = "Y_Theta";
             Edition = "1";

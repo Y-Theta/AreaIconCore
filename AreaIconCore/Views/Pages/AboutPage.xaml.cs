@@ -24,15 +24,10 @@ namespace AreaIconCore.Views.Pages {
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            if (AppearanceManager.Instance.ThemeNow["ThemeDic"].ToString() == "Default")
-                AppearanceManager.Instance.SwitchTheme(App.GetDirectory(Models.DirectoryKind.Theme) + "TestTheme.xaml");
-            else
-                AppearanceManager.Instance.SwitchTheme(null);
+         
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e) {
-
-            AppearanceManager.Instance.SwitchLanguage(App.GetDirectory(Models.DirectoryKind.Lang) + "en_us.xaml");
 
         }
     }

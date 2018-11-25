@@ -55,8 +55,15 @@ namespace AreaIconCore {
         private void App_Startup(object sender, StartupEventArgs e) {
             ToastHelper = new NotificationService();
             ToastHelper.Init(APP_ID);
-
             HostAdapter.Instance.PluginsPath = App.GetDirectory(DirectoryKind.Extension);
+            InitWindow();
+            AppearanceManager.Singleton.Init();
+        }
+
+        /// <summary>
+        /// 初始化窗体操作
+        /// </summary>
+        protected void InitWindow() {
             MainWindow window = new MainWindow();
             window.Show();
         }

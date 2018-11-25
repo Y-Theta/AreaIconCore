@@ -8,7 +8,7 @@
     <!--                                                                       MainWindow-->
     <!--#region-->
 
-    <Color x:Key="C_MainTheme_Bg">#161616</Color>
+    <Color x:Key="C_MainTheme_Bg">#1E1E1E</Color>
 
     <Color x:Key="C_MainTheme_Bc">#007ACC</Color>
     <Color x:Key="C_MainTheme_Bc_D1">#0066AA</Color>
@@ -78,6 +78,15 @@
                      Opacity="0.05"
                      Color="{StaticResource C_MainTheme_Fg}" />
     <SolidColorBrush x:Key="SettingItem_ID_Actived"
+                     Color="{StaticResource C_MainTheme_Bc}" />
+    <SolidColorBrush x:Key="SettingItem_ComboboxItem_Bg_N"
+                     Opacity="0.8"
+                     Color="{StaticResource C_MainTheme_Bg}" />
+    <SolidColorBrush x:Key="SettingItem_ComboboxItem_Bg_O"
+                     Opacity="0.4"
+                     Color="{StaticResource C_MainTheme_Fg_B1}" />
+    <SolidColorBrush x:Key="SettingItem_ComboboxItem_Bg_P"
+                     Opacity="0.6"
                      Color="{StaticResource C_MainTheme_Bc}" />
     <!--#endregion-->
 

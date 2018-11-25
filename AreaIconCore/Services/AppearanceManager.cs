@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,11 @@ namespace AreaIconCore.Services {
     /// <summary>
     /// 主题管理
     /// </summary>
-    public class AppearanceManager : SingletonBase<AppearanceManager> {
+    public class AppearanceManager : ViewModelBase<AppearanceManager> {
         #region Properties
+        private const string __ThemeKey = "ThemeDic";
+        private const string __LangKey = "LangDic";
+
         private ResourceDictionary _themedic { get; set; }
         /// <summary>
         /// 当前主题资源字典
@@ -32,6 +36,50 @@ namespace AreaIconCore.Services {
             get => _langdic;
         }
 
+        /// <summary>
+        /// 主题文件列表
+        /// </summary>
+        public ObservableCollection<String> ThemeDics { get; set; }
+
+        /// <summary>
+        /// 选中的主题
+        /// </summary>
+        private string _selectTheme;
+        public string SelectTheme {
+            get => _selectTheme;
+            set => SetValue(out _selectTheme, value, SelectTheme, OnSelectThemeChanged);
+        }
+        private bool OnSelectThemeChanged(object op, object np) {
+            SwitchTheme(np.ToString());
+            return true;
+        }
+
+        /// <summary>
+        /// 语言文件列表
+        /// </summary>
+        public ObservableCollection<String> LanguageDics { get; set; }
+
+        /// <summary>
+        /// 选中的语言
+        /// </summary>
+        private string _selectLanguage;
+        public string SelectLanguage {
+            get => _selectLanguage;
+            set => SetValue(out _selectLanguage, value, SelectLanguage, OnSelectLanguageChanged);
+        }
+        private bool OnSelectLanguageChanged(object op, object np) {
+            SwitchLanguage(np.ToString());
+            LanguageChanged?.Invoke(op, np);
+            return true;
+        }
+
+        /// <summary>
+        /// 配置文件的名称与其对应路径
+        /// </summary>
+        private Dictionary<string, string> DicMap { get; set; }
+
+        public event YPropertyChangedEventHandler LanguageChanged; 
+
         private string _temptheme;
 
         private string _templang;
@@ -45,32 +93,40 @@ namespace AreaIconCore.Services {
         /// 切换主题
         /// </summary>
         /// <param name="themefile">主题文件路径</param>
-        public bool SwitchTheme(string themefile) {
+        public bool SwitchTheme(string themename) {
+            var themefile = DicMap[themename];
             if (themefile == _temptheme)
                 return true;
-            if (string.IsNullOrEmpty(themefile)) {
+            else if (themename == ThemeDics[0]) {
+                if (AppRes.Contains(_themedic))
+                    AppRes.Remove(_themedic);
                 _themedic = new ResourceDictionary { Source = new Uri(ConstTable.DefaultThemeUri, UriKind.Relative) };
                 AppRes.Add(_themedic);
-                _temptheme = null;
+                _temptheme = ConstTable.DefaultThemeUri;
                 return true;
             }
-            return SwitchRes(themefile, ref _temptheme, _themedic);
+            else
+                return SwitchRes(themefile, ref _temptheme, _themedic);
         }
 
         /// <summary>
         /// 切换语言文件
         /// </summary>
         /// <param name="langfile">语言文件路径</param>
-        public bool SwitchLanguage(string langfile) {
+        public bool SwitchLanguage(string langname) {
+            var langfile = DicMap[langname];
             if (langfile == _templang)
                 return true;
-            if (string.IsNullOrEmpty(langfile)) {
+            else if (langname == LanguageDics[0]) {
+                if (AppRes.Contains(_langdic))
+                    AppRes.Remove(_langdic);
                 _langdic = new ResourceDictionary { Source = new Uri(ConstTable.DefaultLangUri, UriKind.Relative) };
                 AppRes.Add(_langdic);
-                _templang = null;
+                _templang = ConstTable.DefaultLangUri;
                 return true;
             }
-            return SwitchRes(langfile, ref _templang, _langdic);
+            else
+                return SwitchRes(langfile, ref _templang, _langdic);
         }
 
         private bool SwitchRes(string filename, ref string tempfile, ResourceDictionary resdic) {
@@ -87,12 +143,63 @@ namespace AreaIconCore.Services {
             tempfile = filename;
             return true;
         }
+
+        private void AddListener() {
+            App.Current.MainWindow.IsVisibleChanged += MainWindow_IsVisibleChanged;
+        }
+
+        private void MainWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e) {
+            //后台时销毁单例
+            if (!(bool)e.NewValue)
+                Singleton = null;
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public void Init() {
+            ThemeDics.Clear();
+            LanguageDics.Clear();
+            DicMap.Clear();
+            //设置主题资源
+            _themedic = AppRes.FirstOrDefault(e => { return e.Contains(__ThemeKey); }) as ResourceDictionary;
+            _temptheme = ConstTable.DefaultThemeUri;
+            _selectTheme = _themedic[__ThemeKey].ToString();
+            ThemeDics.Add(SelectTheme);
+            DicMap.Add(SelectTheme, _temptheme);
+            foreach (var themes in Directory.GetFiles(App.GetDirectory(DirectoryKind.Theme))) {
+                ResourceDictionary dic;
+                using (FileStream fs = new FileStream(themes, FileMode.Open)) {
+                    dic = (ResourceDictionary)XamlReader.Load(fs);
+                }
+                ThemeDics.Add(dic[__ThemeKey].ToString());
+                DicMap.Add(dic[__ThemeKey].ToString(), themes);
+                dic = null;
+            }
+            //设置语言资源
+            _langdic = AppRes.FirstOrDefault(e => { return e.Contains(__LangKey); }) as ResourceDictionary;
+            _templang = ConstTable.DefaultLangUri;
+            _selectLanguage = _langdic[__LangKey].ToString();
+            LanguageDics.Add(SelectLanguage);
+            DicMap.Add(SelectLanguage, _templang);
+            foreach (var langs in Directory.GetFiles(App.GetDirectory(DirectoryKind.Lang))) {
+                ResourceDictionary dic;
+                using (FileStream fs = new FileStream(langs, FileMode.Open)) {
+                    dic = (ResourceDictionary)XamlReader.Load(fs);
+                }
+                LanguageDics.Add(dic[__LangKey].ToString());
+                DicMap.Add(dic[__LangKey].ToString(), langs);
+                dic = null;
+            }
+            AddListener();
+        }
         #endregion
 
         #region Constructors
         public AppearanceManager() {
-            _themedic = AppRes.FirstOrDefault(e => { return e.Contains("ThemeDic"); }) as ResourceDictionary;
-            _langdic = AppRes.FirstOrDefault(e => { return e.Contains("LangDic"); }) as ResourceDictionary;
+            ThemeDics = new ObservableCollection<string>();
+            LanguageDics = new ObservableCollection<string>();
+            DicMap = new Dictionary<string, string>();
         }
         #endregion
     }
