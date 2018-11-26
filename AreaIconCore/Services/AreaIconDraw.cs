@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using YFrameworkBase;
+using Color = System.Drawing.Color;
+using Pen = System.Drawing.Pen;
+using Point = System.Drawing.Point;
 
 namespace AreaIconCore.Services {
     /// <summary>
@@ -30,6 +38,10 @@ namespace AreaIconCore.Services {
         #endregion
 
         #region Methods
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        private static extern bool DeleteObject(IntPtr hObject);
+
         /// <summary>
         /// 加载字体
         /// </summary>
@@ -132,10 +144,35 @@ namespace AreaIconCore.Services {
 
             return Icon.FromHandle(_ico);
         }
+
+        /// <summary>
+        /// 将icon转化为ImageSource
+        /// </summary>
+        public static ImageSource ToImageSource(Icon icon) {
+            Bitmap bitmap = icon.ToBitmap();
+            IntPtr hBitmap = bitmap.GetHbitmap();
+
+            ImageSource wpfBitmap = Imaging.CreateBitmapSourceFromHBitmap(
+                hBitmap,
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+
+            DeleteObject(hBitmap);
+            return wpfBitmap;
+        }
+
+        /// <summary>
+        /// 关闭时释放_ico
+        /// </summary>
+        private void Current_SessionEnding(object sender, SessionEndingCancelEventArgs e) {
+            DeleteObject(_ico);
+        }
         #endregion
 
         #region Constructors
         public AreaIconDraw() {
+            App.Current.SessionEnding += Current_SessionEnding;
             _privateFontDictionary = new Dictionary<string, PrivateFontCollection>();
         }
         #endregion

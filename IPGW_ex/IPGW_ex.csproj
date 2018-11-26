@@ -105,6 +105,11 @@
       <Name>YFrameworkBase</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\AreaIconCore\AreaIconCore.csproj">
+      <Project>{f17b54ef-29fa-47f3-81b8-b47e434fe968}</Project>
+      <Name>AreaIconCore</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\ExtensionContract\ExtensionContract.csproj">
       <Project>{ceb7b8b5-afe5-42c8-9e7f-9ffe428768e0}</Project>
       <Name>ExtensionContract</Name>

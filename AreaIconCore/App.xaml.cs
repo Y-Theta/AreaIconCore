@@ -2,29 +2,30 @@
 using AreaIconCore.Services;
 using AreaIconCore.Views;
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ToastHelper;
+using YControls.FlowControls;
+using Icon = System.Drawing.Icon;
 
 namespace AreaIconCore {
     /// <summary>
     /// App.xaml 的交互逻辑
     /// </summary>
     public partial class App : Application {
-        InnerProcessAssemblyManager _manger;
+        private InnerProcessAssemblyManager _manger;
+        private static readonly string APP_ID = "Areaicon Core";
+        private static readonly string _basedir = Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf('\\') + 1);
         public static NotificationService ToastHelper;
-        static readonly string APP_ID = "Areaicon Core";
-
-        public App() {
-            _manger = new InnerProcessAssemblyManager();
-            _manger.Directorys.Add(GetDirectory(DirectoryKind.Bin));
-            _manger.HockResolve(AppDomain.CurrentDomain);
-            Startup += App_Startup;
-            SessionEnding += App_SessionEnding;
-        }
-
-        private void App_SessionEnding(object sender, SessionEndingCancelEventArgs e) {
-
-        }
 
         /// <summary>
         /// 获得应用下的相对路径
@@ -32,32 +33,96 @@ namespace AreaIconCore {
         public static String GetDirectory(DirectoryKind kind = DirectoryKind.Root) {
             switch (kind) {
                 case DirectoryKind.Root:
-                    return AppDomain.CurrentDomain.BaseDirectory;
+                    return _basedir;
                 case DirectoryKind.Bin:
-                    return AppDomain.CurrentDomain.BaseDirectory + @"bin\";
+                    return _basedir + @"bin\";
                 case DirectoryKind.Extension:
-                    return AppDomain.CurrentDomain.BaseDirectory + @"extensions\";
+                    return _basedir + @"extensions\";
                 case DirectoryKind.Setting:
-                    return AppDomain.CurrentDomain.BaseDirectory + @"setting\";
+                    return _basedir + @"settings\";
                 case DirectoryKind.Config:
-                    return AppDomain.CurrentDomain.BaseDirectory + @"data\";
+                    return _basedir + @"data\";
                 case DirectoryKind.Theme:
-                    return AppDomain.CurrentDomain.BaseDirectory + @"data\theme\";
+                    return _basedir + @"data\theme\";
                 case DirectoryKind.Cache:
-                    return AppDomain.CurrentDomain.BaseDirectory + @"data\cache\";
+                    return _basedir + @"data\cache\";
                 case DirectoryKind.Lang:
-                    return AppDomain.CurrentDomain.BaseDirectory + @"data\lang\";
+                    return _basedir + @"data\lang\";
                 default:
-                    return AppDomain.CurrentDomain.BaseDirectory;
+                    return null;
             }
         }
 
+        /// <summary>
+        /// 在首次运行时创建需要文件夹
+        /// 完善路径文件夹
+        /// </summary>
+        public static void CompleteDirectory() {
+            Directory.CreateDirectory(GetDirectory());
+            Directory.CreateDirectory(GetDirectory(DirectoryKind.Bin));
+            Directory.CreateDirectory(GetDirectory(DirectoryKind.Cache));
+            Directory.CreateDirectory(GetDirectory(DirectoryKind.Config));
+            Directory.CreateDirectory(GetDirectory(DirectoryKind.Extension));
+            Directory.CreateDirectory(GetDirectory(DirectoryKind.Lang));
+            Directory.CreateDirectory(GetDirectory(DirectoryKind.Setting));
+            Directory.CreateDirectory(GetDirectory(DirectoryKind.Theme));
+        }
+
+        /// <summary>
+        /// 统一调用此方法生成托盘菜单的Popup
+        /// 可在应用程序内部获得统一风格
+        /// </summary>
+        public static YT_PopupBase CreatAreaPopup(UIElement content) {
+            YT_PopupBase popup = new YT_PopupBase();
+            popup.Child = content;
+            popup.Style = Current.FindResource("AreaPopup") as Style;
+            popup.PlacementTarget = Current.MainWindow;
+            return popup;
+        }
+
+        /// <summary>
+        /// 从资源构造一个托盘图标的右键菜单
+        /// </summary>
+        public static YT_ContextMenu CreateAreaIconMenu() {
+            YT_ContextMenu menu = new YT_ContextMenu { Style = Current.Resources["WinXTaskBarContextMenuStyle"] as Style };
+            var item1 = new YT_MenuItem { Style = Current.Resources["AreaContextMenu_ShowMainWindow"] as Style };
+            menu.Items.Add(item1);
+            var item2 = new YT_MenuItem { Style = Current.Resources["AreaContextMenu_Setting"] as Style };
+            menu.Items.Add(item2);
+            var sep1 = new Separator { Style = Current.Resources["AreaContextMenuSeperator"] as Style };
+            menu.Items.Add(sep1);
+            var item3 = new YT_MenuItem { Style = Current.Resources["AreaContextMenu_Exit"] as Style };
+            menu.Items.Add(item3);
+            return menu;
+        }
+
+        private bool Singleton_LanguageChanged(object op, object np) {
+            return true;
+        }
+
+        /// <summary>
+        /// 主程序启动操作
+        /// </summary>
         private void App_Startup(object sender, StartupEventArgs e) {
+            //启用Win10消息通知
             ToastHelper = new NotificationService();
             ToastHelper.Init(APP_ID);
+            //加载插件
             HostAdapter.Instance.PluginsPath = App.GetDirectory(DirectoryKind.Extension);
+            //初始化主窗口
             InitWindow();
+            //初始化样式资源
             AppearanceManager.Singleton.Init();
+            //监听语言设置变更
+            AppearanceManager.Singleton.LanguageChanged += Singleton_LanguageChanged;
+
+        }
+
+        /// <summary>
+        /// 主程序退出操作
+        /// </summary>
+        private void App_SessionEnding(object sender, SessionEndingCancelEventArgs e) {
+
         }
 
         /// <summary>
@@ -66,6 +131,16 @@ namespace AreaIconCore {
         protected void InitWindow() {
             MainWindow window = new MainWindow();
             window.Show();
+        }
+
+
+        public App() {
+            CompleteDirectory();
+            _manger = new InnerProcessAssemblyManager();
+            _manger.Directorys.Add(GetDirectory(DirectoryKind.Bin));
+            _manger.HockResolve(AppDomain.CurrentDomain);
+            Startup += App_Startup;
+            SessionEnding += App_SessionEnding;
         }
     }
 }

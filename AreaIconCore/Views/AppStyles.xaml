@@ -6,6 +6,7 @@
                     xmlns:yt_wx="clr-namespace:YControls.WinXStyleControls;assembly=YControls"
                     xmlns:yt_conv="clr-namespace:YControls.Converters;assembly=YControls"
                     xmlns:yt_dialog="clr-namespace:YControls.Dialogs;assembly=YControls"
+                    xmlns:ct="clr-namespace:ExtensionContract;assembly=ExtensionContract"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:control="clr-namespace:AreaIconCore.Controls"
                     xmlns:app="clr-namespace:AreaIconCore">
@@ -39,10 +40,6 @@
     <yt_conv:StringConverterArgs x:Key="MainOpacityToolTipText"
                                  Format="{}{0:F0}%"
                                  FindRes="False" />
-    <yt_conv:StringConverterArgs x:Key="ContextMenu_MainPage"
-                                 Format="AICM_ShowMainWindow"
-                                 FindRes="True"
-                                 ResourceDic="{Binding Resources, Source={x:Static app:App.Current}}" />
     <!--#endregion-->
 
     <!--#region                                                         TextBlocks-->
@@ -60,6 +57,58 @@
                 Value="{DynamicResource MainTheme_Fg}" />
         <Setter Property="Margin"
                 Value="4,0,0,0" />
+    </Style>
+
+    <!--ExtensionKeyString-->
+    <Style x:Key="ExtensionKeyString"
+           TargetType="TextBlock">
+        <Setter Property="FontSize"
+                Value="18" />
+        <Setter Property="MaxWidth"
+                Value="200" />
+        <Setter Property="Margin"
+                Value="8,2,0,0" />
+        <Setter Property="TextTrimming"
+                Value="CharacterEllipsis" />
+        <Setter Property="FontWeight"
+                Value="UltraLight" />
+        <Setter Property="TextAlignment"
+                Value="Left" />
+        <Setter Property="HorizontalAlignment"
+                Value="Left" />
+        <Setter Property="VerticalAlignment"
+                Value="Top" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource ExtensionItem_Fg_N}" />
+    </Style>
+
+    <!--ExtensionDescription-->
+    <Style x:Key="ExtensionDescription"
+           TargetType="TextBlock">
+        <Setter Property="FontSize"
+                Value="10.6" />
+        <Setter Property="MaxWidth"
+                Value="200" />
+        <Setter Property="MaxHeight"
+                Value="40" />
+        <Setter Property="Margin"
+                Value="8,0,0,2" />
+        <Setter Property="TextWrapping"
+                Value="Wrap" />
+        <Setter Property="TextTrimming"
+                Value="CharacterEllipsis" />
+        <Setter Property="FontWeight"
+                Value="Thin" />
+        <Setter Property="FontStretch"
+                Value="UltraExpanded" />
+        <Setter Property="TextAlignment"
+                Value="Left" />
+        <Setter Property="HorizontalAlignment"
+                Value="Left" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource ExtensionItem_Fg_N}" />
     </Style>
 
     <!--SettingItemComboboxItem-->
@@ -114,6 +163,43 @@
                 Value="{DynamicResource TitleBarButton_IconBg_P}" />
     </Style>
 
+    <!--SettingPageSaveButton-->
+    <Style x:Key="SettingPageSaveButton"
+           TargetType="yt_button:FIconButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="IconVisibility"
+                Value="Collapsed" />
+        <Setter Property="LabelString"
+                Value="{DynamicResource SettingPage_Save}" />
+        <Setter Property="LabelFontSize"
+                Value="10.6" />
+        <Setter Property="Margin"
+                Value="4,4" />
+        <Setter Property="LabelHorizontalAlignment"
+                Value="Center" />
+        <Setter Property="Width"
+                Value="108" />
+        <Setter Property="Height"
+                Value="32" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+
+        <Setter Property="LabelFgNormal"
+                Value="{DynamicResource SettingPageBottomButton_IconFg_N}" />
+        <Setter Property="LabelFgOver"
+                Value="{DynamicResource SettingPageBottomButton_IconFg_O}" />
+        <Setter Property="LabelFgPressed"
+                Value="{DynamicResource SettingPageBottomButton_IconFg_P}" />
+
+        <Setter Property="LabelBgNormal"
+                Value="{DynamicResource SettingPageBottomButton_IconBg_N}" />
+        <Setter Property="LabelBgOver"
+                Value="{DynamicResource SettingPageBottomButton_IconBg_O}" />
+        <Setter Property="LabelBgPressed"
+                Value="{DynamicResource SettingPageBottomButton_IconBg_P}" />
+    </Style>
+
     <!--NavigaterButton-->
     <Style x:Key="NavigaterButton"
            TargetType="yt_button:FIconToggleButton">
@@ -165,7 +251,7 @@
         <Setter Property="LabelFontSize"
                 Value="12" />
         <Setter Property="LabelMargin"
-                Value="0,4,0,4" />
+                Value="0,4" />
 
         <Setter Property="LabelFgNormal"
                 Value="{DynamicResource TitleBarButton_IconFg_N}" />
@@ -232,6 +318,7 @@
     <!--#endregion-->
 
     <!--#region                                                         UserControls-->
+    <!--DefaultSettingItem-->
     <Style x:Key="DefaultSettingItem"
            TargetType="control:SettingItem">
         <Setter Property="Height"
@@ -248,6 +335,25 @@
                 Value="3" />
         <Setter Property="SettingKeyTemplate"
                 Value="{StaticResource SettingItemKeyString}" />
+    </Style>
+
+    <!--DefaultExtensionItem-->
+    <Style x:Key="DefaultExtensionItem"
+           TargetType="control:ExtensionItem">
+        <Setter Property="Height"
+                Value="64" />
+        <Setter Property="Padding"
+                Value="8,0" />
+        <Setter Property="IDnormal"
+                Value="{DynamicResource ExtensionItem_ID_Normal}" />
+        <Setter Property="IDactived"
+                Value="{DynamicResource ExtensionItem_ID_Actived}" />
+        <Setter Property="IDthickness"
+                Value="6" />
+        <Setter Property="SettingKeyTemplate"
+                Value="{StaticResource ExtensionKeyString}" />
+        <Setter Property="ExtensionDescriptionStyle"
+                Value="{StaticResource ExtensionDescription}" />
     </Style>
     <!--#endregion-->
 
@@ -366,33 +472,32 @@
 
     <!--#region                                                         Popup-->
 
-    <!--AeroPopupBase-->
-    <Style x:Key="AeroPopup"
+    <!--AreaPopup-->
+    <Style x:Key="AreaPopup"
            TargetType="yt_flow:YT_PopupBase">
         <Setter Property="AllowsTransparency"
                 Value="True" />
         <Setter Property="RelativeMode"
                 Value="RightBottom" />
         <Setter Property="Placement"
-                Value="AbsolutePoint" />
+                Value="RelativePoint" />
         <Setter Property="AutoHide"
                 Value="True" />
         <Setter Property="AutoHideDelay"
-                Value="3000" />
+                Value="5000" />
         <Setter Property="RelativeRect"
                 Value="16,12" />
-        <Setter Property="EnableBlur"
-                Value="{Binding EnableBlur, Source={StaticResource CoreSetting}}" />
-        <Setter Property="Child">
-            <Setter.Value>
-                <Grid Width="{StaticResource WXnotifypopupwidth}"
-                      Height="120"
-                      Background="#20000000">
-
-                </Grid>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Message"
+                Value="True" />
+        <Setter Property="Width"
+                Value="{StaticResource WXnotifypopupwidth}" />
     </Style>
+
+    <Grid x:Key="TextKey"
+          Background="DarkBlue"
+          Height="64">
+
+    </Grid>
     <!--#endregion-->
 
     <!--#region                                                         ContextMenu-->
@@ -450,7 +555,7 @@
         <Setter Property="Command"
                 Value="{Binding AreaContextMenuCommands,Source={StaticResource MainWindowViewModel}}" />
     </Style>
-    
+
     <!--#endregion-->
 
     <!--#region                                                         Dialog-->
@@ -596,7 +701,7 @@
                                IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                Placement="Bottom">
                             <Grid MaxHeight="120"
-                                  Background="{DynamicResource SettingItem_ComboboxItem_Bg_N}">
+                                  Background="{DynamicResource MainTheme_Bg}">
                                 <yt_slide:YT_ScrollViewer x:Name="DropDownScrollViewer"
                                                           ScrollbarLayout="Dock"
                                                           ScrollbarThickness="4"
@@ -617,6 +722,112 @@
                                                      LabelString="{Binding SelectedItem,RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                      Style="{StaticResource SettingItemSliderToggelButton}" />
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ExtensionPageExtensionList"
+           TargetType="ListView">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="ScrollViewer.CanContentScroll"
+                Value="False" />
+        <Setter Property="SelectionMode"
+                Value="Single" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin"
+                            Value="0,0,0,8" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Grid x:Name="rgrid"
+                                      RenderTransformOrigin=".5 .5"
+                                      Background="{DynamicResource ExtensionItem_Bg_N}">
+                                    <Grid.RenderTransform>
+                                        <ScaleTransform x:Name="rgrid_ScaleTransform"
+                                                        ScaleX="1"
+                                                        ScaleY="1" />
+                                    </Grid.RenderTransform>
+                                    <ContentPresenter x:Name="Content"
+                                                      VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                      Margin="0" />
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                                             Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="rgrid_ScaleTransform"
+                                                                                   Storyboard.TargetProperty="ScaleX">
+                                                        <SplineDoubleKeyFrame KeyTime="0:0:0.1"
+                                                                              KeySpline="0.5,0 1,0.2"
+                                                                              Value=".98" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="rgrid_ScaleTransform"
+                                                                                   Storyboard.TargetProperty="ScaleY">
+                                                        <SplineDoubleKeyFrame KeyTime="0:0:0.1"
+                                                                              KeySpline="0.5,0 1,0.2"
+                                                                              Value=".98" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="rgrid_ScaleTransform"
+                                                                                   Storyboard.TargetProperty="ScaleX">
+                                                        <SplineDoubleKeyFrame KeyTime="0:0:0.1"
+                                                                              KeySpline="0.5,0 1,0.2"
+                                                                              Value="1" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="rgrid_ScaleTransform"
+                                                                                   Storyboard.TargetProperty="ScaleY">
+                                                        <SplineDoubleKeyFrame KeyTime="0:0:0.1"
+                                                                              KeySpline="0.5,0 1,0.2"
+                                                                              Value="1" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.ExitActions>
+                                        <Setter TargetName="rgrid"
+                                                Property="Background"
+                                                Value="{DynamicResource ExtensionItem_Bg_O}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <control:ExtensionItem ExtensionKey="{Binding}"
+                                           Background="Transparent"
+                                           Style="{StaticResource DefaultExtensionItem}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListView">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="true">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

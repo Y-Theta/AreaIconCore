@@ -3,6 +3,7 @@ using AreaIconCore.Services;
 using AreaIconCore.Views.Pages;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,7 +89,7 @@ namespace AreaIconCore.ViewModels {
 
                     break;
                 case "Page_About":
-                    NavigateTo(HostAdapter.Instance.ExtensionDirectory["IPGW_ex"].Run(ExtensionContract.ApplicationScenario.MainPage));
+                    NavigateToLocal(new AboutPage());
 
                     break;
                 default: break;

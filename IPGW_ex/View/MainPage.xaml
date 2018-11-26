@@ -4,16 +4,5 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:IPGW_ex.View">
-    <Grid Margin="0,24,0,0">
-        <Button Click="Button_Click"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Left"
-                Width="120"
-                Height="24">Save</Button>
-        <Button Click="Button_Click_1"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right"
-                Width="120"
-                Height="24">Load</Button>
-    </Grid>
+
 </Page>

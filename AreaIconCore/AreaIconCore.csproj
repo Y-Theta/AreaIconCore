@@ -40,11 +40,18 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
-    <NoWin32Manifest>true</NoWin32Manifest>
+    <ApplicationIcon>Icon_128.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <Win32Resource>
+    </Win32Resource>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ICO.ico</ApplicationIcon>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -105,11 +112,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ExtensionItem.cs" />
     <Compile Include="Controls\PageCollection.cs" />
     <Compile Include="Controls\SettingItem.cs" />
     <Compile Include="Converter\DoubleConverter.cs" />
     <Compile Include="Models\DirectoryKind.cs" />
-    <Compile Include="Models\Extension.cs" />
+    <Compile Include="Models\ExtensionInfo.cs" />
     <Compile Include="Services\AreaIconDraw.cs" />
     <Compile Include="Services\AssemblyManager.cs" />
     <Compile Include="Models\ConstTable.cs" />
@@ -212,7 +220,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ICO.ico" />
+    <None Include="Icon_128.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

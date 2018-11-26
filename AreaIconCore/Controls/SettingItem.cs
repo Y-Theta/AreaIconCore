@@ -24,7 +24,7 @@ namespace AreaIconCore.Controls {
         }
         public static readonly DependencyProperty SettingKeyProperty =
             DependencyProperty.Register("SettingKey", typeof(string),
-                typeof(SettingItem), new PropertyMetadata(""));
+                typeof(SettingItem), new FrameworkPropertyMetadata(""));
 
         /// <summary>
         /// 设置项标签的样式
@@ -35,7 +35,8 @@ namespace AreaIconCore.Controls {
         }
         public static readonly DependencyProperty SettingKeyTemplateProperty =
             DependencyProperty.Register("SettingKeyTemplate", typeof(Style),
-                typeof(SettingItem), new PropertyMetadata(null));
+                typeof(SettingItem), new FrameworkPropertyMetadata(null, 
+                    FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// 设置项控件区域
@@ -46,7 +47,7 @@ namespace AreaIconCore.Controls {
         }
         public static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register("Content", typeof(object),
-                typeof(SettingItem), new PropertyMetadata(null));
+                typeof(SettingItem), new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// 指示标在一般状态下的颜色
@@ -57,7 +58,8 @@ namespace AreaIconCore.Controls {
         }
         public static readonly DependencyProperty IDnormalProperty =
             DependencyProperty.Register("IDnormal", typeof(Brush), 
-                typeof(SettingItem), new PropertyMetadata(null));
+                typeof(SettingItem), new FrameworkPropertyMetadata(null, 
+                    FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// 指示标激活时的颜色
@@ -68,7 +70,8 @@ namespace AreaIconCore.Controls {
         }
         public static readonly DependencyProperty IDactivedProperty =
             DependencyProperty.Register("IDactived", typeof(Brush),
-                typeof(SettingItem), new PropertyMetadata(null));
+                typeof(SettingItem), new FrameworkPropertyMetadata(null, 
+                    FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// 指示标的宽度
@@ -79,7 +82,8 @@ namespace AreaIconCore.Controls {
         }
         public static readonly DependencyProperty IDthicknessProperty =
             DependencyProperty.Register("IDthickness", typeof(double),
-                typeof(SettingItem), new PropertyMetadata(2.0));
+                typeof(SettingItem), new FrameworkPropertyMetadata(2.0, 
+                    FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// 指示标的间隙
@@ -90,12 +94,8 @@ namespace AreaIconCore.Controls {
         }
         public static readonly DependencyProperty IDmarginProperty =
             DependencyProperty.Register("IDmargin", typeof(Thickness), 
-                typeof(SettingItem), new PropertyMetadata(null));
-
-        #endregion
-
-        #region Methods
-
+                typeof(SettingItem), new FrameworkPropertyMetadata(new Thickness(0), 
+                    FrameworkPropertyMetadataOptions.Inherits));
         #endregion
 
         #region Constructors

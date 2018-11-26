@@ -3,12 +3,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--#region                                                                DefaultTheme-->
     <!--#endregion-->
-    <sys:String x:Key="ThemeDic">Default</sys:String>
+    <sys:String x:Key="ThemeDic">VS_Blue</sys:String>
 
     <!--                                                                       MainWindow-->
     <!--#region-->
 
     <Color x:Key="C_MainTheme_Bg">#1E1E1E</Color>
+    <Color x:Key="C_MainTheme_Bg_D1">#000000</Color>
 
     <Color x:Key="C_MainTheme_Bc">#007ACC</Color>
     <Color x:Key="C_MainTheme_Bc_D1">#0066AA</Color>
@@ -33,7 +34,13 @@
                      Color="{StaticResource C_MainTheme_Bc}" />
     <SolidColorBrush x:Key="MainTheme_Fg"
                      Color="{StaticResource C_MainTheme_Fg}" />
-    
+    <SolidColorBrush x:Key="MainTheme_Fg_B1"
+                     Color="{StaticResource C_MainTheme_Fg_B1}" />
+    <SolidColorBrush x:Key="MainTheme_Fg_D1"
+                     Color="{StaticResource C_MainTheme_Fg_D1}" />
+    <SolidColorBrush x:Key="MainTheme_Fg_D2"
+                     Color="{StaticResource C_MainTheme_Fg_D2}" />
+
     <!--#endregion-->
 
     <!--TitleBar-->
@@ -58,7 +65,7 @@
                      Color="Transparent" />
     <SolidColorBrush x:Key="TitleBarButton_IconBg_O"
                      Opacity="0.125"
-                     Color="{StaticResource C_MainTheme_Fg}" />
+                     Color="{StaticResource C_MainTheme_Fg_B1}" />
     <SolidColorBrush x:Key="TitleBarButton_IconBg_P"
                      Color="{StaticResource C_MainTheme_Bc_D1}" />
     <SolidColorBrush x:Key="TitleBarButton_IconBg_S"
@@ -83,11 +90,76 @@
                      Opacity="0.8"
                      Color="{StaticResource C_MainTheme_Bg}" />
     <SolidColorBrush x:Key="SettingItem_ComboboxItem_Bg_O"
-                     Opacity="0.4"
+                     Opacity="0.2"
                      Color="{StaticResource C_MainTheme_Fg_B1}" />
     <SolidColorBrush x:Key="SettingItem_ComboboxItem_Bg_P"
+                     Opacity="0.2"
+                     Color="{StaticResource C_MainTheme_Bc}" />
+
+    <SolidColorBrush x:Key="SettingPageBottomButton_IconFg_N"
+                     Color="{StaticResource C_MainTheme_Fg}" />
+    <SolidColorBrush x:Key="SettingPageBottomButton_IconFg_O"
+                     Color="{StaticResource C_MainTheme_Fg}" />
+    <SolidColorBrush x:Key="SettingPageBottomButton_IconFg_P"
+                     Color="{StaticResource C_MainTheme_Fg}" />
+
+    <SolidColorBrush x:Key="SettingPageBottomButton_IconBg_N"
+                     Opacity="0.075"
+                     Color="{StaticResource C_MainTheme_Fg_B1}" />
+    <SolidColorBrush x:Key="SettingPageBottomButton_IconBg_O"
+                     Opacity="0.25"
+                     Color="{StaticResource C_MainTheme_Fg_B1}" />
+    <SolidColorBrush x:Key="SettingPageBottomButton_IconBg_P"
+                     Color="{StaticResource C_MainTheme_Bc_D1}" />
+    <!--#endregion-->
+
+
+    <!--ExtensionPage-->
+    <!--#region-->
+    <SolidColorBrush x:Key="ExtensionItem_ID_Normal"
+                     Opacity="0.1"
+                     Color="{StaticResource C_MainTheme_Fg_B1}" />
+    <SolidColorBrush x:Key="ExtensionItem_ID_Actived"
                      Opacity="0.6"
                      Color="{StaticResource C_MainTheme_Bc}" />
+    <SolidColorBrush x:Key="ExtensionItem_Fg_N"
+                     Opacity="0.6"
+                     Color="{StaticResource C_MainTheme_Fg_B1}" />
+    <SolidColorBrush x:Key="ExtensionItem_Bc_N"
+                     Color="{StaticResource C_MainTheme_Bc}" />
+    <SolidColorBrush x:Key="ExtensionItem_Bg_N"
+                     Color="Transparent" />
+    <SolidColorBrush x:Key="ExtensionItem_Bg_O"
+                     Opacity="0.2"
+                     Color="{StaticResource C_MainTheme_Bg_D1}" />
+
+    <SolidColorBrush x:Key="ExtensionItemButton_IconFg_N"
+                     Color="{StaticResource C_MainTheme_Fg_D1}" />
+    <SolidColorBrush x:Key="ExtensionItemButton_IconFg_O"
+                     Color="{StaticResource C_MainTheme_Fg_D1}" />
+    <SolidColorBrush x:Key="ExtensionItemButton_IconFg_P"
+                     Color="{StaticResource C_MainTheme_Fg_D1}" />
+    <SolidColorBrush x:Key="ExtensionItemButton_IconFg_S"
+                     Color="{StaticResource C_MainTheme_Fg}" />
+    <SolidColorBrush x:Key="ExtensionItemButton_IconFg_SO"
+                     Color="{StaticResource C_MainTheme_Fg}" />
+    <SolidColorBrush x:Key="ExtensionItemButton_IconFg_SP"
+                     Color="{StaticResource C_MainTheme_Fg}" />
+
+    <SolidColorBrush x:Key="ExtensionItemButton_IconBg_N"
+                     Color="Transparent" />
+    <SolidColorBrush x:Key="ExtensionItemButton_IconBg_O"
+                     Opacity="0.125"
+                     Color="{StaticResource C_MainTheme_Fg_B1}" />
+    <SolidColorBrush x:Key="ExtensionItemButton_IconBg_P"
+                     Opacity="0.4"
+                     Color="{StaticResource C_MainTheme_Bc}" />
+    <SolidColorBrush x:Key="ExtensionItemButton_IconBg_S"
+                     Color="{StaticResource C_MainTheme_Bc}" />
+    <SolidColorBrush x:Key="ExtensionItemButton_IconBg_SO"
+                     Color="{StaticResource C_MainTheme_Bc_B1}" />
+    <SolidColorBrush x:Key="ExtensionItemButton_IconBg_SP"
+                     Color="{StaticResource C_MainTheme_Bc_D1}" />
     <!--#endregion-->
 
     <!--EnsureDialog-->

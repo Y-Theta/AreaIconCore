@@ -28,7 +28,8 @@
                      MaxHeight="360"
                      Width="320">
     <yt_window:YT_Window.TitleArea>
-        <Grid x:Name="Title_Root">
+        <Grid x:Name="Title_Root"
+              Margin="0,1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="{Binding Source={StaticResource TitleBarMinHeight},Mode=OneWay}" />
                 <RowDefinition Height="auto" />
@@ -104,5 +105,4 @@
         <yt_coll:YT_Frame x:Name="MainFrame"
                           NavigateCommand="{Binding FrameCommand}" />
     </Grid>
-
 </yt_window:YT_Window>

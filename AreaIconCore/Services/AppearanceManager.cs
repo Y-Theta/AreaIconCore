@@ -20,6 +20,11 @@ namespace AreaIconCore.Services {
         private const string __ThemeKey = "ThemeDic";
         private const string __LangKey = "LangDic";
 
+        private const string __DefaultTheme = "VS_Blue";
+        private const string __DefaultLanguage = "简体中文";
+
+        private bool _inited { get; set; }
+
         private ResourceDictionary _themedic { get; set; }
         /// <summary>
         /// 当前主题资源字典
@@ -51,6 +56,7 @@ namespace AreaIconCore.Services {
         }
         private bool OnSelectThemeChanged(object op, object np) {
             SwitchTheme(np.ToString());
+            CoreSettings.Instance.MainTheme = np.ToString();
             return true;
         }
 
@@ -69,6 +75,7 @@ namespace AreaIconCore.Services {
         }
         private bool OnSelectLanguageChanged(object op, object np) {
             SwitchLanguage(np.ToString());
+            CoreSettings.Instance.MainLang = np.ToString();
             LanguageChanged?.Invoke(op, np);
             return true;
         }
@@ -129,6 +136,9 @@ namespace AreaIconCore.Services {
                 return SwitchRes(langfile, ref _templang, _langdic);
         }
 
+        /// <summary>
+        /// 切换资源
+        /// </summary>
         private bool SwitchRes(string filename, ref string tempfile, ResourceDictionary resdic) {
             AppRes.Remove(resdic);
             resdic = null;
@@ -144,10 +154,16 @@ namespace AreaIconCore.Services {
             return true;
         }
 
+        /// <summary>
+        /// 添加窗体监听
+        /// </summary>
         private void AddListener() {
             App.Current.MainWindow.IsVisibleChanged += MainWindow_IsVisibleChanged;
         }
 
+        /// <summary>
+        /// 在窗体后台时销毁单例
+        /// </summary>
         private void MainWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e) {
             //后台时销毁单例
             if (!(bool)e.NewValue)
@@ -155,18 +171,29 @@ namespace AreaIconCore.Services {
         }
 
         /// <summary>
+        /// 切换到上次的主题
+        /// </summary>
+        private void SwitchToLastSelected() {
+
+        }
+
+        /// <summary>
         /// 初始化
         /// </summary>
         public void Init() {
+            if (_inited)
+                return;
             ThemeDics.Clear();
             LanguageDics.Clear();
             DicMap.Clear();
             //设置主题资源
-            _themedic = AppRes.FirstOrDefault(e => { return e.Contains(__ThemeKey); }) as ResourceDictionary;
-            _temptheme = ConstTable.DefaultThemeUri;
+            //加载默认主题
+            _themedic = AppRes.FirstOrDefault(e => { return e.Contains(__ThemeKey); });
             _selectTheme = _themedic[__ThemeKey].ToString();
-            ThemeDics.Add(SelectTheme);
-            DicMap.Add(SelectTheme, _temptheme);
+            _temptheme = _selectTheme;
+            ThemeDics.Add(__DefaultTheme);
+            DicMap.Add(__DefaultTheme, ConstTable.DefaultThemeUri);
+            //加载其它主题
             foreach (var themes in Directory.GetFiles(App.GetDirectory(DirectoryKind.Theme))) {
                 ResourceDictionary dic;
                 using (FileStream fs = new FileStream(themes, FileMode.Open)) {
@@ -177,11 +204,13 @@ namespace AreaIconCore.Services {
                 dic = null;
             }
             //设置语言资源
-            _langdic = AppRes.FirstOrDefault(e => { return e.Contains(__LangKey); }) as ResourceDictionary;
-            _templang = ConstTable.DefaultLangUri;
+            //加载默认语言
+            _langdic = AppRes.FirstOrDefault(e => { return e.Contains(__LangKey); });
             _selectLanguage = _langdic[__LangKey].ToString();
-            LanguageDics.Add(SelectLanguage);
-            DicMap.Add(SelectLanguage, _templang);
+            _templang = _selectLanguage;
+            LanguageDics.Add(__DefaultLanguage);
+            DicMap.Add(__DefaultLanguage, ConstTable.DefaultLangUri);
+            //加载其它文件
             foreach (var langs in Directory.GetFiles(App.GetDirectory(DirectoryKind.Lang))) {
                 ResourceDictionary dic;
                 using (FileStream fs = new FileStream(langs, FileMode.Open)) {
@@ -191,7 +220,9 @@ namespace AreaIconCore.Services {
                 DicMap.Add(dic[__LangKey].ToString(), langs);
                 dic = null;
             }
+            //
             AddListener();
+            _inited = true;
         }
         #endregion
 
@@ -200,6 +231,7 @@ namespace AreaIconCore.Services {
             ThemeDics = new ObservableCollection<string>();
             LanguageDics = new ObservableCollection<string>();
             DicMap = new Dictionary<string, string>();
+            Init();
         }
         #endregion
     }

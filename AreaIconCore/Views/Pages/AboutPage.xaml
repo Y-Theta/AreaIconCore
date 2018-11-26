@@ -7,10 +7,9 @@
       xmlns:manager="clr-namespace:AreaIconCore.Services"
       xmlns:local="clr-namespace:AreaIconCore.Views.Pages"
       mc:Ignorable="d">
-    <Grid Margin="0,24,0,0">
+    <Grid Margin="0,30,0,0">
         <StackPanel Orientation="Horizontal">
-       
-        </StackPanel>
 
+        </StackPanel>
     </Grid>
 </Page>

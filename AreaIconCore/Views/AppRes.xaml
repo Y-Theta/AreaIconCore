@@ -23,7 +23,8 @@
     <!--#region                                                                       ViewModel-->
     <x:Static x:Key="MainWindowViewModel"
               Member="vm:MainWindowViewModel.Singleton" />
-
+    <x:Static x:Key="SettingPageViewModel"
+              Member="vm:SettingPageViewModel.Singleton" />
 
     <x:Static x:Key="CoreSetting"
               Member="service:CoreSettings.Instance" />

@@ -1,6 +1,7 @@
 ﻿using AreaIconCore.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -17,8 +18,8 @@ namespace AreaIconCore.Services {
         /// 插件列表
         /// </summary>
         [DataMember]
-        private Dictionary<String, bool> _extensions;
-        public Dictionary<String, bool> Extensions {
+        private Dictionary<String, ExtensionInfo> _extensions;
+        public Dictionary<String, ExtensionInfo> Extensions {
             get => _extensions;
             set => SetValue(out _extensions, value, Extensions);
         }
@@ -66,7 +67,7 @@ namespace AreaIconCore.Services {
 
         #region Methods
         public void Init() {
-            Extensions = new Dictionary<String, bool>();
+            Extensions = new Dictionary<String, ExtensionInfo>();
             MainOpacity = 1.0;
         }
         #endregion

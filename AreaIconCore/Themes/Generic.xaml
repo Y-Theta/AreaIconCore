@@ -1,12 +1,14 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:yt_button="clr-namespace:YControls.FontIconButtons;assembly=YControls"
                     xmlns:controls="clr-namespace:AreaIconCore.Controls"
+                    xmlns:ct="clr-namespace:ExtensionContract;assembly=ExtensionContract"
                     xmlns:local="clr-namespace:AreaIconCore">
 
     <!--#region                                                         -->
 
     <!--#endregion-->
-
 
     <!--PageCollection-->
     <Style TargetType="controls:PageCollection">
@@ -34,14 +36,14 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
-                            Margin="{TemplateBinding Margin}" >
+                            Margin="{TemplateBinding Margin}">
                         <Grid x:Name="rgrid">
                             <Rectangle x:Name="L_id"
                                        Grid.Column="0"
                                        Margin="{TemplateBinding IDmargin}"
                                        HorizontalAlignment="Left"
                                        Fill="{TemplateBinding IDnormal}"
-                                       Width="{TemplateBinding IDthickness}"/>
+                                       Width="{TemplateBinding IDthickness}" />
                             <Grid Margin="{TemplateBinding Padding}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -70,6 +72,195 @@
                                         Property="Fill"
                                         Value="{Binding IDactived, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <Setter TargetName="R_id"
+                                        Property="Fill"
+                                        Value="{Binding IDactived, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            </Trigger.Setters>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--SettingItem-->
+    <sys:String x:Key="Icon_Extension_Setting">&#xE90F;</sys:String>
+    <sys:String x:Key="Icon_Extension_Enable">&#xE930;</sys:String>
+    <sys:String x:Key="Icon_Extension_Disable">&#xEA3A;</sys:String>
+    <!--ExtensionItem_EnableButton-->
+    <Style x:Key="ExtensionItem_EnableButton"
+           TargetType="yt_button:FIconToggleButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="LabelVisibility"
+                Value="Collapsed" />
+        <Setter Property="ToolTipString"
+                Value="{DynamicResource ExtensionPage_ExtensionItemEnable}" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Width"
+                Value="30" />
+        <Setter Property="Height"
+                Value="30" />
+        <Setter Property="IconMargin"
+                Value="8" />
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="Content"
+                Value="{StaticResource Icon_Extension_Disable}" />
+        <Setter Property="IconSelect"
+                Value="{StaticResource Icon_Extension_Enable}" />
+
+        <Setter Property="IconFgNormal"
+                Value="{DynamicResource ExtensionItemButton_IconFg_N}" />
+        <Setter Property="IconFgOver"
+                Value="{DynamicResource ExtensionItemButton_IconFg_O}" />
+        <Setter Property="IconFgPressed"
+                Value="{DynamicResource ExtensionItemButton_IconFg_P}" />
+
+        <Setter Property="IconBgNormal"
+                Value="{DynamicResource ExtensionItemButton_IconBg_N}" />
+        <Setter Property="IconBgOver"
+                Value="{DynamicResource ExtensionItemButton_IconBg_O}" />
+        <Setter Property="IconBgPressed"
+                Value="{DynamicResource ExtensionItemButton_IconBg_P}" />
+
+        <Setter Property="IconSelectFgNormal"
+                Value="{DynamicResource ExtensionItemButton_IconFg_S}" />
+        <Setter Property="IconSelectFgOver"
+                Value="{DynamicResource ExtensionItemButton_IconFg_SO}" />
+        <Setter Property="IconSelectFgPressed"
+                Value="{DynamicResource ExtensionItemButton_IconFg_SP}" />
+
+        <Setter Property="IconSelectBgNormal"
+                Value="{DynamicResource ExtensionItemButton_IconBg_S}" />
+        <Setter Property="IconSelectBgOver"
+                Value="{DynamicResource ExtensionItemButton_IconBg_SO}" />
+        <Setter Property="IconSelectBgPressed"
+                Value="{DynamicResource ExtensionItemButton_IconBg_SP}" />
+    </Style>
+
+    <!--CloseButton-->
+    <Style x:Key="ExtensionItem_SettingButton"
+           TargetType="yt_button:FIconButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="LabelVisibility"
+                Value="Collapsed" />
+        <Setter Property="Width"
+                Value="30" />
+        <Setter Property="Height"
+                Value="30" />
+        <Setter Property="ToolTipString"
+                Value="{DynamicResource ExtensionPage_ExtensionItemSetting}" />
+        <Setter Property="IconMargin"
+                Value="8" />
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="Content"
+                Value="{StaticResource Icon_Extension_Setting}" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+
+        <Setter Property="IconFgNormal"
+                Value="{DynamicResource ExtensionItemButton_IconFg_N}" />
+        <Setter Property="IconFgOver"
+                Value="{DynamicResource ExtensionItemButton_IconFg_O}" />
+        <Setter Property="IconFgPressed"
+                Value="{DynamicResource ExtensionItemButton_IconFg_P}" />
+
+        <Setter Property="IconBgNormal"
+                Value="{DynamicResource ExtensionItemButton_IconBg_N}" />
+        <Setter Property="IconBgOver"
+                Value="{DynamicResource ExtensionItemButton_IconBg_O}" />
+        <Setter Property="IconBgPressed"
+                Value="{DynamicResource ExtensionItemButton_IconBg_P}" />
+    </Style>
+    
+    <Style TargetType="controls:ExtensionItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ExtensionItem">
+                    <Border x:Name="rborder"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            Margin="{TemplateBinding Margin}">
+                        <Grid x:Name="rgrid">
+                            <Rectangle x:Name="L_id"
+                                       Grid.Column="0"
+                                       Margin="{TemplateBinding  IDmargin}"
+                                       HorizontalAlignment="Left"
+                                       Fill="{TemplateBinding IDnormal}"
+                                       Width="{TemplateBinding IDthickness}" />
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid x:Name="DescriptionLayer"
+                                      Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0"
+                                               Style="{TemplateBinding SettingKeyTemplate}"
+                                               Text="{Binding ExtensionKey.Name, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                    <TextBlock Grid.Row="1"
+                                               Style="{TemplateBinding ExtensionDescriptionStyle}"
+                                               Text="{Binding ExtensionKey.Description, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                </Grid>
+                                <Grid x:Name="ControlLayer"
+                                      Visibility="Collapsed"
+                                      Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="48" />
+                                        <ColumnDefinition Width="32" />
+                                    </Grid.ColumnDefinitions>
+                                    <yt_button:FIconButton Grid.Column="0"
+                                                           Style="{StaticResource ExtensionItem_SettingButton}"
+                                                           CommandParameter="SETTING"
+                                                           Command="{Binding Operation, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                        <yt_button:FIconButton.Clip>
+                                            <EllipseGeometry RadiusX="15"
+                                                             RadiusY="15"
+                                                             Center="15,15" />
+                                        </yt_button:FIconButton.Clip>
+                                    </yt_button:FIconButton>
+                                    <yt_button:FIconToggleButton Grid.Column="1"
+                                                                 Style="{StaticResource ExtensionItem_EnableButton}"
+                                                                 IsChecked="{Binding ExtensionEnable,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}"
+                                                                 CommandParameter="ENABLE"
+                                                                 Command="{Binding Operation, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                        <yt_button:FIconToggleButton.Clip>
+                                            <EllipseGeometry RadiusX="15"
+                                                             RadiusY="15"
+                                                             Center="15,15" />
+                                        </yt_button:FIconToggleButton.Clip>
+                                    </yt_button:FIconToggleButton>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Trigger.Setters>
+                                <Setter TargetName="ControlLayer"
+                                        Property="Visibility"
+                                        Value="Visible" />
+                            </Trigger.Setters>
+                        </Trigger>
+                        <Trigger Property="ExtensionEnable"
+                                 Value="True">
+                            <Trigger.Setters>
+                                <Setter TargetName="L_id"
                                         Property="Fill"
                                         Value="{Binding IDactived, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             </Trigger.Setters>

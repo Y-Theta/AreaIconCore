@@ -42,10 +42,10 @@ namespace IPGW_ex {
 
 
         public IPGW_ex_Main() {
-            Name = "IPGW_ex";
+            Name = "IPGW控件";
             Author = "Y_Theta";
             Edition = "1";
-            Description = "用于IPGW的相关控件";
+            Description = "用于东北大学IPGW网关的登录和流量监控";
             Application = new Dictionary<ApplicationScenario, int> {
                 { ApplicationScenario.AreaIcon ,1},
                 { ApplicationScenario.AreaContextMenu ,1},

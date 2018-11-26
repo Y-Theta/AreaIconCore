@@ -35,10 +35,10 @@ namespace D6_ex {
         }
 
         public D6Core() {
-            Name = "D6_ex";
+            Name = "Neu6";
             Author = "Y_Theta";
             Edition = "1";
-            Description = "用于六维空间的相关控件";
+            Description = "用于六维空间的流量查询/计算的相关控件";
             Application = new Dictionary<ApplicationScenario, int> {
 
             };

@@ -10,26 +10,31 @@
       xmlns:ser="clr-namespace:AreaIconCore.Services"
       xmlns:control="clr-namespace:AreaIconCore.Controls"
       xmlns:conv="clr-namespace:AreaIconCore.Converter"
-      xmlns:local="clr-namespace:AreaIconCore.Views.Pages"
+      DataContext="{Binding Source={StaticResource SettingPageViewModel}}"
       mc:Ignorable="d">
     <Page.Resources>
         <conv:DCArgs x:Key="OpacitySliderConvPara"
                      Num="100"
                      OpType="Mul" />
     </Page.Resources>
-    <Grid x:Name="rgrid">
+    <Grid x:Name="rgrid"
+          Margin="0,30,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="{Binding Source={StaticResource TitleBarMinHeight},Mode=OneWay}" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="Controllayer"
-              Height="32"
-              Grid.Row="2">
-
+              Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <yt_button:FIconButton Style="{StaticResource SettingPageSaveButton}"
+                                   CommandParameter="Save"
+                                   Command="{Binding SettingPageCommands}"/>
         </Grid>
         <yt_slide:YT_ScrollViewer x:Name="SettingItem"
-                                  Grid.Row="1"
+                                  Grid.Row="0"
                                   Style="{StaticResource DefaultScrollViewer}"
                                   HorizontalScrollBarVisibility="Disabled">
             <StackPanel Width="320">
@@ -77,7 +82,6 @@
                               ItemsSource="{Binding LanguageDics}"
                               Style="{StaticResource SettingPageExtensionComboBox}" />
                 </control:SettingItem>
-                
             </StackPanel>
         </yt_slide:YT_ScrollViewer>
     </Grid>
