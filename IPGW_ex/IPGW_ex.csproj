@@ -36,6 +36,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -50,8 +52,16 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\FlowPanel.cs" />
+    <Compile Include="Model\FlowPackage.cs" />
+    <Compile Include="Services\FormatService.cs" />
+    <Compile Include="Services\IpgwSetting.cs" />
+    <Compile Include="ViewModels\FlowInfoViewModel.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -68,9 +78,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\SettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\FluxInfo.cs" />
+    <Compile Include="Model\FlowInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -103,6 +117,11 @@
     <ProjectReference Include="..\..\SelfLibraries\YMvvmBase\YMvvmBase\YFrameworkBase.csproj">
       <Project>{dc63e2d7-36b8-455e-9644-1fff2c95fa24}</Project>
       <Name>YFrameworkBase</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SimpleHttpFrameWork\HttpServices\HttpServices.csproj">
+      <Project>{13b56f09-8884-48b7-abc6-b9840f819fd5}</Project>
+      <Name>HttpServices</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AreaIconCore\AreaIconCore.csproj">

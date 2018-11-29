@@ -6,6 +6,13 @@
 
     <sys:String x:Key="LangDic">简体中文</sys:String>
 
+
+    <!--Error-->
+    <!--#region-->
+    <sys:String x:Key="ResourceNotFound">主题文件错误,可能原因:缺少键值/XAML格式错误</sys:String>
+    <!--#endregion-->
+
+
     <!--TitleBar-->
     <!--#region-->
     <sys:String x:Key="Label_MainPage">主页</sys:String>
@@ -28,11 +35,14 @@
     <!--SettingPage-->
     <!--#region-->
     <sys:String x:Key="SettingPage_EnableAeroGlass">启用毛玻璃效果</sys:String>
+    <sys:String x:Key="SettingPage_AutoRun">开机自动运行</sys:String>
     <sys:String x:Key="SettingPage_MainOpacity">窗体不透明度</sys:String>
     <sys:String x:Key="SettingPage_Theme">当前主题</sys:String>
     <sys:String x:Key="SettingPage_Lang">当前语言</sys:String>
 
     <sys:String x:Key="SettingPage_Save">保存当前设置</sys:String>
+    <sys:String x:Key="SettingPage_Save_OKMessage">设置已保存.</sys:String>
+    <sys:String x:Key="SettingPage_Save_FailedMessage">设置保存失败!</sys:String>
     
     <sys:String x:Key="SettingPage_ToggelSwitchOn">开</sys:String>
     <sys:String x:Key="SettingPage_ToggelSwitchOff">关</sys:String>
@@ -42,6 +52,8 @@
     <!--#region-->
     <sys:String x:Key="ExtensionPage_ExtensionItemEnable">启用/关闭控件</sys:String>
     <sys:String x:Key="ExtensionPage_ExtensionItemSetting">控件设置</sys:String>
+
+    <sys:String x:Key="ExtensionPage_ExtensionEdition">[版本：{0} ]</sys:String>
     <!--#endregion-->
 
     <!--Dialog-->

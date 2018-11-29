@@ -17,6 +17,9 @@ namespace AreaIconCore.Models {
         public string Description { get; set; }
 
         [DataMember]
+        public string Edition { get; set; }
+
+        [DataMember]
         public bool Enabled { get; set; }
         #endregion
 

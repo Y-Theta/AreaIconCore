@@ -4,7 +4,8 @@
                     xmlns:yt_button="clr-namespace:YControls.FontIconButtons;assembly=YControls"
                     xmlns:controls="clr-namespace:AreaIconCore.Controls"
                     xmlns:ct="clr-namespace:ExtensionContract;assembly=ExtensionContract"
-                    xmlns:local="clr-namespace:AreaIconCore">
+                    xmlns:app="clr-namespace:AreaIconCore"
+                    xmlns:yt_conv="clr-namespace:YControls.Converters;assembly=YControls">
 
     <!--#region                                                         -->
 
@@ -181,7 +182,12 @@
         <Setter Property="IconBgPressed"
                 Value="{DynamicResource ExtensionItemButton_IconBg_P}" />
     </Style>
-    
+
+    <yt_conv:StringConverterArgs x:Key="EditionFormat"
+                                 Format="ExtensionPage_ExtensionEdition"
+                                 FindRes="True"
+                                 ResourceDic="{Binding Resources, Source={x:Static app:App.Current}}" />
+
     <Style TargetType="controls:ExtensionItem">
         <Setter Property="Template">
             <Setter.Value>
@@ -209,9 +215,11 @@
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="auto" />
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0"
-                                               Style="{TemplateBinding SettingKeyTemplate}"
-                                               Text="{Binding ExtensionKey.Name, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                    <StackPanel Grid.Row="0"
+                                                Orientation="Horizontal">
+                                        <TextBlock Style="{TemplateBinding SettingKeyTemplate}"
+                                                   Text="{Binding ExtensionKey.Name, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                    </StackPanel>
                                     <TextBlock Grid.Row="1"
                                                Style="{TemplateBinding ExtensionDescriptionStyle}"
                                                Text="{Binding ExtensionKey.Description, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
@@ -244,6 +252,11 @@
                                                              Center="15,15" />
                                         </yt_button:FIconToggleButton.Clip>
                                     </yt_button:FIconToggleButton>
+                                    <TextBlock Grid.ColumnSpan="2"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Right"
+                                               Style="{TemplateBinding ExtensionDescriptionStyle}"
+                                               Text="{Binding ExtensionKey.Edition, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static yt_conv:StringConverter.Singleton},ConverterParameter={StaticResource EditionFormat}}" />
                                 </Grid>
                             </Grid>
                         </Grid>

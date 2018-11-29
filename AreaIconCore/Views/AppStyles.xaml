@@ -20,6 +20,7 @@
 
     <!--#region                                                         SizeConfig-->
     <sys:Double x:Key="WXnotifypopupwidth">364</sys:Double>
+    <sys:Double x:Key="MessagePopupWidth">288</sys:Double>
     <sys:Double x:Key="DefaultSliderThumb_Size">8</sys:Double>
     <sys:Double x:Key="TitleBarMinHeight">28</sys:Double>
     <sys:Double x:Key="DefaultSlider_TrackThickness">2</sys:Double>
@@ -37,6 +38,7 @@
                                  Format="Label_ToolTipStyle"
                                  FindRes="True"
                                  ResourceDic="{Binding Resources, Source={x:Static app:App.Current}}" />
+    
     <yt_conv:StringConverterArgs x:Key="MainOpacityToolTipText"
                                  Format="{}{0:F0}%"
                                  FindRes="False" />
@@ -124,6 +126,29 @@
                 Value="{DynamicResource MainTheme_Fg}" />
         <Setter Property="Margin"
                 Value="8,4" />
+    </Style>
+
+    <!--MessageStringFormat-->
+    <Style x:Key="MessageStringFormat"
+           TargetType="TextBlock">
+        <Setter Property="FontSize"
+                Value="10.6" />
+        <Setter Property="Margin"
+                Value="8" />
+        <Setter Property="MaxWidth"
+                Value="128" />
+        <Setter Property="TextAlignment"
+                Value="Left" />
+        <Setter Property="TextWrapping"
+                Value="Wrap" />
+        <Setter Property="FontWeight"
+                Value="Thin" />
+        <Setter Property="HorizontalAlignment"
+                Value="Left" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource ExtensionItem_Fg_N}" />
     </Style>
 
     <!--#endregion-->
@@ -481,6 +506,8 @@
                 Value="RightBottom" />
         <Setter Property="Placement"
                 Value="RelativePoint" />
+        <Setter Property="PlacementTarget"
+                Value="{x:Null}" />
         <Setter Property="AutoHide"
                 Value="True" />
         <Setter Property="AutoHideDelay"
@@ -488,16 +515,34 @@
         <Setter Property="RelativeRect"
                 Value="16,12" />
         <Setter Property="Message"
-                Value="True" />
+                Value="False" />
         <Setter Property="Width"
                 Value="{StaticResource WXnotifypopupwidth}" />
     </Style>
 
-    <Grid x:Key="TextKey"
-          Background="DarkBlue"
-          Height="64">
-
-    </Grid>
+    <!--MessageTextPopup-->
+    <Style x:Key="MessageTextPopup"
+           TargetType="yt_flow:YT_PopupBase">
+        <Setter Property="AllowsTransparency"
+                Value="True" />
+        <Setter Property="RelativeMode"
+                Value="RightBottom" />
+        <Setter Property="Placement"
+                Value="RelativePoint" />
+        <Setter Property="AutoHide"
+                Value="True" />
+        <Setter Property="AutoHideDelay"
+                Value="4000" />
+        <Setter Property="RelativeRect"
+                Value="18,14" />
+        <Setter Property="RelativeRectToTarget"
+                Value="4,4" />
+        <Setter Property="Message"
+                Value="True" />
+        <Setter Property="EnableBlur"
+                Value="True" />
+    </Style>
+        
     <!--#endregion-->
 
     <!--#region                                                         ContextMenu-->

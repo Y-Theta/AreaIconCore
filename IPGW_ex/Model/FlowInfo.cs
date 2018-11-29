@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using YFrameworkBase.DataAccessor;
@@ -10,16 +11,19 @@ namespace IPGW_ex.Model {
     /// 流量类
     /// </summary>
     [XmlOperate(
-        @"extensions\IPGW_ex\fluxdata.xml",
+        @"extensions\IPGW_ex\log_ipgwflow.xml",
         nameof(Time),
-        "Ipgw-fluxinfo",
+        "Log",
         "item",
-        "prop")]
-    internal class FluxInfo {
+        "prop",
+        nameof(DataTime_Equal))]
+    [DataContract]
+    public class FlowInfo {
         #region Properties
         /// <summary>
-        /// 时间戳
+        /// 时间戳 精确到分钟
         /// </summary>
+        [DataMember]
         [XmlMember(typeof(DateTime), nameof(Time), XmlMemberType.UserElement,
             nameof(DataTime_Set), nameof(DataTime_Get))]
         public DateTime Time { get; set; }
@@ -27,30 +31,44 @@ namespace IPGW_ex.Model {
         /// <summary>
         /// 当前流量值
         /// </summary>
+        [DataMember]
         [XmlMember(typeof(double), nameof(Data), XmlMemberType.RootElement)]
         public double Data { get; set; }
 
         /// <summary>
         /// 账户余额
         /// </summary>
+        [DataMember]
         [XmlMember(typeof(double), nameof(Balance), XmlMemberType.RootElement)]
         public double Balance { get; set; }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// 主键比较精确到天
+        /// </summary>
+        private bool DataTime_Equal(DateTime value, string test) {
+            string day = Time.ToShortDateString();
+            string[] testday = test.Split('/');
+            return day.Equals(testday[0] + "/" + testday[1] + "/" + testday[2]);
+        }
+
         private void DataTime_Set(string key) {
-            Time = DateTime.FromFileTime(long.Parse(key));
+            string[] args = key.Split('/');
+            Time = new DateTime(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), int.Parse(args[3]), int.Parse(args[4]), 0);
         }
 
         private string DataTime_Get() {
-            return Time.ToFileTime().ToString();
+            string day = Time.ToShortDateString();
+            string[] time = Time.ToShortTimeString().Split(':');
+            return day + "/" + time[0] + "/" + time[1];
         }
         #endregion
 
         #region
         public override string ToString() {
             return string.Format($"< " +
-                $"TIME:{Time.ToFileTime().ToString().PadRight(20)}  " +
+                $"TIME:{DataTime_Get().PadRight(20)}  " +
                 $"data:{Data.ToString().PadRight(20)} " +
                 $"balance:{Balance.ToString().PadRight(20)} >");
         }

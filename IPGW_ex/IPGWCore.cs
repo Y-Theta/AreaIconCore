@@ -3,6 +3,7 @@ using IPGW_ex.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using ColorD = System.Drawing.Color;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +17,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YControls.FlowControls;
+using AreaIconCore.Services;
+using IPGW_ex.Controls;
 
 namespace IPGW_ex {
     [Export(typeof(IInnerDomainExtensionContract))]
-    public class IPGW_ex_Main : InnerDomainExtenesion<IPGW_ex_Main> {
+    public class IPGWCore : InnerDomainExtenesion<IPGWCore> {
 
         public bool MainWindowBlur {
             get {
@@ -30,18 +33,18 @@ namespace IPGW_ex {
         public override object Run(ApplicationScenario c, object arg = null) {
             switch (c) {
                 case ApplicationScenario.AreaIcon:
-                    return null;
+                    return AreaIconDraw.Instance.StringIcon("10", ColorD.AliceBlue, 6);
                 case ApplicationScenario.MainPage:
                     return new MainPage();
                 case ApplicationScenario.AreaPopup:
-                    return null;
+                    return new FlowPanel() { FLOW = new Model.FlowInfo() { Balance = 20, Data = 20 } ,Height = 36};
                 default:
                     return null;
             }
         }
 
 
-        public IPGW_ex_Main() {
+        public IPGWCore() {
             Name = "IPGW控件";
             Author = "Y_Theta";
             Edition = "1";

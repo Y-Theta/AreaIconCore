@@ -33,14 +33,14 @@ namespace ToastHelper {
 
             _aumid = aumid;
 
-            String exePath = Process.GetCurrentProcess().MainModule.FileName;
-            // 不需要从通知打开程序则不需要这项操作
-            // RegisterComServer<T>(exePath);
+            string exePath = Process.GetCurrentProcess().MainModule.FileName;
+            string shortpath = "\\Microsoft\\Windows\\Start Menu\\AreaIcon Core";
             var shortcut = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-                + $"\\Microsoft\\Windows\\Start Menu\\AreaIcon Core\\{_aumid}.lnk";
+                + shortpath + $"\\{_aumid}.lnk";
             if (!File.Exists(shortcut)) {
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                    $"\\Microsoft\\Windows\\Start Menu\\AreaIcon Core");
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + shortpath);
+                // 不需要从通知打开程序则不需要这项操作
+                // RegisterComServer<T>(exePath);
                 CreatShortcut<T>(shortcut);
             }
 
@@ -62,7 +62,7 @@ namespace ToastHelper {
 
             var key = localKey.CreateSubKey(regString);
 
-            key.SetValue(null, '"' + exePath + '"' + " " + TOAST_ACTIVATED_LAUNCH_ARG);
+            key.SetValue(null, '"' + exePath + '"');
         }
 
         /// <summary>
@@ -99,8 +99,7 @@ namespace ToastHelper {
             }
 
             var toastclass = typeof(T).GUID.ToString();
-            using (PropVariant toastid = new PropVariant(toastclass)) {
-                toastid.SetEnum(VarEnum.VT_CLSID);
+            using (PropVariant toastid = new PropVariant(toastclass, VarEnum.VT_CLSID))  {
                 ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 26), toastid));
             }
             ErrorHelper.VerifySucceeded(newShortcutProperties.Commit());

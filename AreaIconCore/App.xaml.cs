@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ToastHelper;
 using YControls.FlowControls;
+using YFrameworkBase;
+using YFrameworkBase.RegOperator;
 using Icon = System.Drawing.Icon;
 
 namespace AreaIconCore {
@@ -76,7 +78,6 @@ namespace AreaIconCore {
             YT_PopupBase popup = new YT_PopupBase();
             popup.Child = content;
             popup.Style = Current.FindResource("AreaPopup") as Style;
-            popup.PlacementTarget = Current.MainWindow;
             return popup;
         }
 
@@ -96,7 +97,61 @@ namespace AreaIconCore {
             return menu;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private bool Singleton_LanguageChanged(object op, object np) {
+            return true;
+        }
+
+        /// <summary>
+        /// 初始化窗体操作
+        /// </summary>
+        protected void InitWindow(params string[] args) {
+            MainWindow window = new MainWindow();
+            window.Show();
+            if (args.Length > 0)
+                window.Hide();
+            window.IsVisibleChanged += Window_IsVisibleChanged;
+        }
+
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e) {
+            //在窗体不可见时将内存释放一些
+            if (!(bool)e.NewValue) {
+                WinAPI.SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle.ToInt32(), -1, -1);
+            }
+        }
+
+        /// <summary>
+        /// 主窗口初始化前操作
+        /// </summary>
+        protected void BeforeWindowInit() {
+            //启用Win10消息通知
+            ToastHelper = new NotificationService();
+            ToastHelper.Init(APP_ID);
+            //加载插件
+            HostAdapter.Instance.PluginsPath = App.GetDirectory(DirectoryKind.Extension);
+        }
+
+        /// <summary>
+        /// 主窗口初始化后操作
+        /// </summary>
+        protected void AfterWindowInit() {
+            CoreSettings.Instance.SettingChanged += Instance_SettingChanged;
+            //初始化样式资源
+            AppearanceManager.Singleton.Init();
+            //监听语言设置变更
+            AppearanceManager.Singleton.LanguageChanged += Singleton_LanguageChanged;
+        }
+
+        private bool Instance_SettingChanged(object sender, SettingChangeArgs e) {
+            if (e.Name == "AutoRun") {
+                RegAccessor.SetAutorun(nameof(AreaIconCore), $"\"{Process.GetCurrentProcess().MainModule.FileName}\"" + "-silent", (bool)e.NewValue);
+                if ((bool)e.NewValue)
+                    PopupMessageManager.Instance.Message("已设置为开机自动启动");
+                else
+                    PopupMessageManager.Instance.Message("已关闭开机自动启动");
+            }
             return true;
         }
 
@@ -104,18 +159,10 @@ namespace AreaIconCore {
         /// 主程序启动操作
         /// </summary>
         private void App_Startup(object sender, StartupEventArgs e) {
-            //启用Win10消息通知
-            ToastHelper = new NotificationService();
-            ToastHelper.Init(APP_ID);
-            //加载插件
-            HostAdapter.Instance.PluginsPath = App.GetDirectory(DirectoryKind.Extension);
+            BeforeWindowInit();
             //初始化主窗口
-            InitWindow();
-            //初始化样式资源
-            AppearanceManager.Singleton.Init();
-            //监听语言设置变更
-            AppearanceManager.Singleton.LanguageChanged += Singleton_LanguageChanged;
-
+            InitWindow(e.Args);
+            AfterWindowInit();
         }
 
         /// <summary>
@@ -126,13 +173,16 @@ namespace AreaIconCore {
         }
 
         /// <summary>
-        /// 初始化窗体操作
+        /// 在查找资源出错时通过UI反馈
         /// </summary>
-        protected void InitWindow() {
-            MainWindow window = new MainWindow();
-            window.Show();
+        public static T FindRes<T>(string reskey) {
+            try {
+                return (T)App.Current.FindResource(reskey);
+            }
+            catch {
+                return default(T);
+            }
         }
-
 
         public App() {
             CompleteDirectory();

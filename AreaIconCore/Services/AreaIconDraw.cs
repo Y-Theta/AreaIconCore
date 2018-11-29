@@ -1,11 +1,15 @@
-﻿using System;
+﻿using AreaIconCore.Models;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -20,7 +24,7 @@ namespace AreaIconCore.Services {
     /// <summary>
     /// 托盘图标绘制函数
     /// </summary>
-    internal class AreaIconDraw : SingletonBase<AreaIconDraw> {
+    public class AreaIconDraw : SingletonBase<AreaIconDraw> {
         #region Properties
         private const string _numfontfamily = "FontLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
 
@@ -65,23 +69,34 @@ namespace AreaIconCore.Services {
 
                 //从相关程序集中加载字体
                 if (!string.IsNullOrEmpty(assemblyname)) {
+                    var asb = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => {
+                        return a.GetName().Name.Equals(assemblyname);
+                    });
                     try {
-                        var asb = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => {
-                            return a.GetName().Name.Equals(assemblyname);
-                        });
                         if (asb is null)
                             asb = AppDomain.CurrentDomain.Load(_numfontfamily);
+                        //从嵌入的资源中查找
                         using (var strs = asb.GetManifestResourceStream(string.Format(@"{0}.{1}.ttf", assemblyname, familyname))) {
                             myText = new byte[strs.Length];
                             strs.Read(myText, 0, myText.Length);
                         }
                     }
                     catch {
-                        //TODO:字体不存在
+                        try {
+                            //从resx文件中查找
+                            using (var font = GetResourceNames(asb, $"{familyname.ToLower()}.ttf")) {
+                                myText = new byte[font.Length];
+                                font.Read(myText, 0, myText.Length);
+                            }
+                        }
+                        catch {
+                            //TODO:字体不存在
+                            PopupMessageManager.Instance.Message("Font Not Found!");
+                        }
                     }
                 }
                 else {
-                    //在资源文件中搜索
+                    //在当前程序集资源文件中搜索
                     var asb = Assembly.GetExecutingAssembly();
                     try {
                         using (var strs = asb.GetManifestResourceStream(string.Format(@"{0}.{1}.ttf", asb.GetName().Name, familyname))) {
@@ -91,7 +106,7 @@ namespace AreaIconCore.Services {
                     }
                     catch {
                         //TODO:字体不存在
-
+                        PopupMessageManager.Instance.Message("Font Not Found!");
                     }
                 }
                 _pfc = new PrivateFontCollection();
@@ -102,6 +117,17 @@ namespace AreaIconCore.Services {
                 _lastfont = new Font(_pfc.Families[0], size);
 
                 return _lastfont;
+            }
+        }
+
+        /// <summary>
+        /// 从程序集Resource中获取资源
+        /// </summary>
+        public static UnmanagedMemoryStream GetResourceNames(Assembly asm, string name) {
+            string resName = asm.GetName().Name + ".g.resources";
+            using (var stream = asm.GetManifestResourceStream(resName))
+            using (var reader = new ResourceReader(stream)) {
+                return (UnmanagedMemoryStream)reader.Cast<DictionaryEntry>().FirstOrDefault(entry => { return (string)entry.Key == (name); }).Value;
             }
         }
 
@@ -174,6 +200,7 @@ namespace AreaIconCore.Services {
         public AreaIconDraw() {
             App.Current.SessionEnding += Current_SessionEnding;
             _privateFontDictionary = new Dictionary<string, PrivateFontCollection>();
+            LoadFont(ConstTable.RectNum, 6, ConstTable.MyFont);
         }
         #endregion
     }

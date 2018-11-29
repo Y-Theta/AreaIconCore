@@ -124,6 +124,7 @@
     <Compile Include="Services\CoreSettings.cs" />
     <Compile Include="Services\HostAdapter.cs" />
     <Compile Include="Services\AppearanceManager.cs" />
+    <Compile Include="Services\PopupMessageManager.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingPageViewModel.cs" />
     <Compile Include="Views\Pages\AboutPage.xaml.cs">

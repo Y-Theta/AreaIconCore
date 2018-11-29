@@ -22,14 +22,16 @@
     <Color x:Key="C_MainTheme_Fg_D2">#808080</Color>
 
     <SolidColorBrush x:Key="MainTheme_Bg_Aero"
-                     Opacity="0.1"
-                     Color="{StaticResource C_MainTheme_Bg}" />
+                     Opacity="0.125"
+                     Color="{StaticResource C_MainTheme_Bg_D1}" />
     <SolidColorBrush x:Key="MainTheme_Bc_Aero"
                      Opacity="0.3"
                      Color="{StaticResource C_MainTheme_Bc}" />
 
     <SolidColorBrush x:Key="MainTheme_Bg"
                      Color="{StaticResource C_MainTheme_Bg}" />
+    <SolidColorBrush x:Key="MainTheme_Bg_D1"
+                     Color="{StaticResource C_MainTheme_Bg_D1}" />
     <SolidColorBrush x:Key="MainTheme_Bc"
                      Color="{StaticResource C_MainTheme_Bc}" />
     <SolidColorBrush x:Key="MainTheme_Fg"
@@ -230,4 +232,11 @@
 
     <!--#endregion-->
 
+    <!--Popup-->
+    <!--#region-->
+    <SolidColorBrush x:Key="DefaultMessagePopup_Bg"
+                     Opacity="0.8"
+                     Color="{StaticResource C_MainTheme_Bg_D1}" />
+    <!--#endregion-->
+    
 </ResourceDictionary>

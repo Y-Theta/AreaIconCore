@@ -60,6 +60,7 @@ namespace AreaIconCore.Services {
                 if(CoreSettings.Instance.Extensions.ContainsKey(key)) {
                     CoreSettings.Instance.Extensions[key].Name = extension.Name;
                     CoreSettings.Instance.Extensions[key].Description = extension.Description;
+                    CoreSettings.Instance.Extensions[key].Edition = extension.Edition;
                     CoreSettings.Instance.Extensions[key].Enabled = true;
                 }
                 PropertyChanged?.Invoke(CoreSettings.Instance, new PropertyChangedEventArgs("Extensions"));

@@ -1,4 +1,5 @@
-﻿using IPGW_ex.Model;
+﻿using HttpServices;
+using IPGW_ex.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,20 +20,17 @@ namespace IPGW_ex.View {
     /// MainPage.xaml 的交互逻辑
     /// </summary>
     public partial class MainPage : Page {
-        XmlDataProvider provider = new XmlDataProvider();
 
         public MainPage() {
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            provider.AddNode(new FluxInfo { Time = DateTime.Today, Data = 20, Balance = 20 });
+            XmlDataProvider.Instance.AddNode(new FlowInfo { Data = 20, Balance = 20, Time = DateTime.Now });
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e) {
-            Console.WriteLine(
-            provider.GetNode<FluxInfo>(DateTime.Today.ToFileTime().ToString()).ToString());
-
+            Console.WriteLine(XmlDataProvider.Instance.GetNode<WebInfoContainer>(0).ToString());
         }
     }
 }

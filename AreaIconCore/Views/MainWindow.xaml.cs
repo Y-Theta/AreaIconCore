@@ -17,6 +17,7 @@ using ToastHelper;
 using AreaIconCore.Views.Pages;
 using YControls.Dialogs;
 using System.Windows.Controls;
+using ExtensionContract;
 
 namespace AreaIconCore.Views {
     /// <summary>
@@ -56,34 +57,38 @@ namespace AreaIconCore.Views {
         #endregion
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e) {
+            //允许托盘图标
             if (!AllowAreaIcon)
                 AllowAreaIcon = true;
-            AreaIconDraw.Instance.LoadFont(ConstTable.RectNum, 6, ConstTable.MyFont);
 
             foreach (var ext in HostAdapter.Instance.ExtensionDirectory.Values) {
-                if (ext.Application.ContainsKey(ExtensionContract.ApplicationScenario.AreaIcon)) {
+                if (ext.Application.ContainsKey(ApplicationScenario.AreaIcon)) {
                     RegisterAreaIcon(ext.Name);
                     AreaIcons[ext.Name].IconMouseDoubleClick += MainWindow_IconMouseDoubleClick;
-                    AreaIcons[ext.Name].Areaicon = AreaIconDraw.Instance.StringIcon("33", ColorD.White);
+                    AreaIcons[ext.Name].Areaicon = (Icon)ext.Run(ApplicationScenario.AreaIcon);
+                    AreaIcons[ext.Name].AreaText = ext.Name;
                     AreaIcons[ext.Name].DContextmenu = App.CreateAreaIconMenu();
-                    AreaIcons[ext.Name].CheckPop = App.CreatAreaPopup(App.Current.Resources["TextKey"] as Grid);
+                    AreaIcons[ext.Name].CheckPop = App.CreatAreaPopup((UIElement)ext.Run(ApplicationScenario.AreaPopup));
                 }
-                if (ext.Application.ContainsKey(ExtensionContract.ApplicationScenario.MainPage)) {
-
+                if (ext.Application.ContainsKey(ApplicationScenario.MainPage)) {
+                    MainFrame.Navigate(ext.Run(ApplicationScenario.MainPage));
                 }
             }
             if (AreaIcons.Count == 0) {
                 RegisterAreaIcon(nameof(AreaIconCore));
                 AreaIcons[nameof(AreaIconCore)].IconMouseDoubleClick += MainWindow_IconMouseDoubleClick;
                 AreaIcons[nameof(AreaIconCore)].Areaicon = new Icon(ConstTable.AppIcon);
-                AreaIcons[nameof(AreaIconCore)].AreaText = "AreaIconCore";
+                AreaIcons[nameof(AreaIconCore)].AreaText = nameof(AreaIconCore);
                 AreaIcons[nameof(AreaIconCore)].DContextmenu = App.CreateAreaIconMenu();
             }
-            (DataContext as MainWindowViewModel).NavigateToLocal(new MainPage());
+
         }
 
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {
-            App.ToastHelper.Notify(ConstTable.AppIcon, nameof(AreaIconCore), "sss");
+            App.ToastHelper.Notify(ConstTable.AppIcon, nameof(AreaIconCore), "HELLO", new ToastCommands[] {
+                 new ToastCommands("Invoke_YES","YES"),
+                 new ToastCommands("Invoke_NO","NO"),
+             });
         }
 
         public MainWindow() {

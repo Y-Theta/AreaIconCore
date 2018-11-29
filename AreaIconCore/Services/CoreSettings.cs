@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using YFrameworkBase.RegOperator;
 using YFrameworkBase.Setting;
 
 namespace AreaIconCore.Services {
@@ -63,12 +65,25 @@ namespace AreaIconCore.Services {
             get => _mainlang;
             set => SetValue(out _mainlang, value, MainLang);
         }
+
+        /// <summary>
+        /// 开机自启动
+        /// </summary>
+        [DataMember]
+        private bool _autorun;
+        public bool AutoRun {
+            get => _autorun;
+            set => SetValue(out _autorun, value, AutoRun);
+        }
         #endregion
 
         #region Methods
         public void Init() {
             Extensions = new Dictionary<String, ExtensionInfo>();
             MainOpacity = 1.0;
+            AutoRun = true;
+            MainTheme = AppearanceManager.__DefaultTheme;
+            MainLang = AppearanceManager.__DefaultLanguage;
         }
         #endregion
 

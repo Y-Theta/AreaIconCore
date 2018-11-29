@@ -28,10 +28,17 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <yt_button:FIconButton Style="{StaticResource SettingPageSaveButton}"
                                    CommandParameter="Save"
                                    Command="{Binding SettingPageCommands}"/>
+            <yt_button:FIconButton Style="{StaticResource SettingPageSaveButton}"
+                                   LabelFontFamily="{StaticResource Questrial}"
+                                   LabelString="ABCDE"
+                                   Grid.Column="2"
+                                   CommandParameter="Clear"
+                                   Command="{Binding SettingPageCommands}" />
         </Grid>
         <yt_slide:YT_ScrollViewer x:Name="SettingItem"
                                   Grid.Row="0"
@@ -43,6 +50,13 @@
                     <yt_wx:YT_WinXToggelSwitch OnString="{DynamicResource SettingPage_ToggelSwitchOn}"
                                                OffString="{DynamicResource SettingPage_ToggelSwitchOff}"
                                                IsChecked="{Binding EnableBlur, Source={x:Static ser:CoreSettings.Instance},Mode=TwoWay}"
+                                               Style="{StaticResource SettingItemToggelSwitch}" />
+                </control:SettingItem>
+                <control:SettingItem SettingKey="{DynamicResource SettingPage_AutoRun}"
+                                     Style="{StaticResource DefaultSettingItem}">
+                    <yt_wx:YT_WinXToggelSwitch OnString="{DynamicResource SettingPage_ToggelSwitchOn}"
+                                               OffString="{DynamicResource SettingPage_ToggelSwitchOff}"
+                                               IsChecked="{Binding AutoRun, Source={x:Static ser:CoreSettings.Instance},Mode=TwoWay}"
                                                Style="{StaticResource SettingItemToggelSwitch}" />
                 </control:SettingItem>
                 <control:SettingItem SettingKey="{DynamicResource SettingPage_MainOpacity}"

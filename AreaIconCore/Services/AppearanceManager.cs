@@ -17,11 +17,11 @@ namespace AreaIconCore.Services {
     /// </summary>
     public class AppearanceManager : ViewModelBase<AppearanceManager> {
         #region Properties
-        private const string __ThemeKey = "ThemeDic";
-        private const string __LangKey = "LangDic";
+        internal const string __ThemeKey = "ThemeDic";
+        internal const string __LangKey = "LangDic";
 
-        private const string __DefaultTheme = "VS_Blue";
-        private const string __DefaultLanguage = "简体中文";
+        internal const string __DefaultTheme = "VS_Blue";
+        internal const string __DefaultLanguage = "简体中文";
 
         private bool _inited { get; set; }
 
@@ -85,7 +85,7 @@ namespace AreaIconCore.Services {
         /// </summary>
         private Dictionary<string, string> DicMap { get; set; }
 
-        public event YPropertyChangedEventHandler LanguageChanged; 
+        public event YPropertyChangedEventHandler LanguageChanged;
 
         private string _temptheme;
 
@@ -166,15 +166,17 @@ namespace AreaIconCore.Services {
         /// </summary>
         private void MainWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e) {
             //后台时销毁单例
-            if (!(bool)e.NewValue)
+            if (!(bool)e.NewValue) {
                 Singleton = null;
+            }
         }
 
         /// <summary>
         /// 切换到上次的主题
         /// </summary>
         private void SwitchToLastSelected() {
-
+            SelectTheme = CoreSettings.Instance.MainTheme;
+            SelectLanguage = CoreSettings.Instance.MainLang;
         }
 
         /// <summary>
@@ -187,10 +189,10 @@ namespace AreaIconCore.Services {
             LanguageDics.Clear();
             DicMap.Clear();
             //设置主题资源
-            //加载默认主题
             _themedic = AppRes.FirstOrDefault(e => { return e.Contains(__ThemeKey); });
             _selectTheme = _themedic[__ThemeKey].ToString();
             _temptheme = _selectTheme;
+            //加载默认主题
             ThemeDics.Add(__DefaultTheme);
             DicMap.Add(__DefaultTheme, ConstTable.DefaultThemeUri);
             //加载其它主题
@@ -204,10 +206,10 @@ namespace AreaIconCore.Services {
                 dic = null;
             }
             //设置语言资源
-            //加载默认语言
             _langdic = AppRes.FirstOrDefault(e => { return e.Contains(__LangKey); });
             _selectLanguage = _langdic[__LangKey].ToString();
             _templang = _selectLanguage;
+            //加载默认语言
             LanguageDics.Add(__DefaultLanguage);
             DicMap.Add(__DefaultLanguage, ConstTable.DefaultLangUri);
             //加载其它文件
@@ -222,6 +224,7 @@ namespace AreaIconCore.Services {
             }
             //
             AddListener();
+            SwitchToLastSelected();
             _inited = true;
         }
         #endregion

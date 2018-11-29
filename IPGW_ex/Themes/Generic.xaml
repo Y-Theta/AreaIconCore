@@ -1,6 +1,39 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:contorl="clr-namespace:IPGW_ex.Controls"
+                    xmlns:vm="clr-namespace:IPGW_ex.ViewModels"
+                    xmlns:ser="clr-namespace:IPGW_ex.Services"
                     xmlns:local="clr-namespace:IPGW_ex">
 
+    <!--FlowPanel-->
+    <Style TargetType="contorl:FlowPanel">
+        <Setter Property="FLOW"
+                Value="{Binding LatestFlow, Source={x:Static ser:IpgwSetting.Instance}}" />
+        <Setter Property="Background"
+                Value="Black" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="contorl:FlowPanel">
+                    <Border x:Name="rborder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Margin="{TemplateBinding Margin}">
+                        <Grid x:Name="rgrid"
+                              Margin="{TemplateBinding Padding}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="percent_balance"
+                                       Foreground="White"
+                                       FontSize="24"
+                                       Text="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance}}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

@@ -13,13 +13,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Todo_Ex
-{
-    public class CustomControl1 : Control
-    {
-        static CustomControl1()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomControl1), new FrameworkPropertyMetadata(typeof(CustomControl1)));
+namespace IPGW_ex.View {
+    /// <summary>
+    /// SettingPage.xaml 的交互逻辑
+    /// </summary>
+    public partial class SettingPage : Page {
+        public SettingPage() {
+            InitializeComponent();
         }
     }
 }

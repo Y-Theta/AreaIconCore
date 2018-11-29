@@ -211,9 +211,16 @@ namespace ToastHelper {
             if (value == null) {
                 throw new ArgumentException();
             }
-
             _valueType = (ushort)VarEnum.VT_LPWSTR;
             _ptr = Marshal.StringToCoTaskMemUni(value);
+        }
+
+        public PropVariant(string value, VarEnum type) {
+            if (value == null) {
+                throw new ArgumentException();
+            }
+            _valueType = (ushort)type;
+            _ptr2 = Marshal.StringToCoTaskMemUni(value);
         }
 
         #endregion
