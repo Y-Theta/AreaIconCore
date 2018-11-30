@@ -33,11 +33,11 @@ namespace IPGW_ex {
         public override object Run(ApplicationScenario c, object arg = null) {
             switch (c) {
                 case ApplicationScenario.AreaIcon:
-                    return AreaIconDraw.Instance.StringIcon("10", ColorD.AliceBlue, 6);
+                    return AreaIconDraw.Instance.StringIcon("100", ColorD.AliceBlue, 4);
                 case ApplicationScenario.MainPage:
                     return new MainPage();
                 case ApplicationScenario.AreaPopup:
-                    return new FlowPanel() { FLOW = new Model.FlowInfo() { Balance = 20, Data = 20 } ,Height = 36};
+                    return new FlowPanel();
                 default:
                     return null;
             }

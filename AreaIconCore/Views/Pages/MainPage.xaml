@@ -6,5 +6,5 @@
       xmlns:local="clr-namespace:AreaIconCore.Views"
       Height="360"
       mc:Ignorable="d">
-    
+    <Frame x:Name="Main" />
 </Page>

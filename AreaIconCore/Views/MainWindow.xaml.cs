@@ -25,37 +25,6 @@ namespace AreaIconCore.Views {
     /// </summary>
     public partial class MainWindow : YT_Window {
 
-        #region Properties
-        /// <summary>
-        /// 失去焦点时边框
-        /// </summary>
-        public Brush FocusLostBrush {
-            get { return (Brush)GetValue(FocusLostBrushProperty); }
-            set { SetValue(FocusLostBrushProperty, value); }
-        }
-        public static readonly DependencyProperty FocusLostBrushProperty =
-            DependencyProperty.Register("FocusLostBrush", typeof(Brush),
-                typeof(MainWindow), new PropertyMetadata(null));
-
-        /// <summary>
-        /// 获得焦点时边框
-        /// </summary>
-        public Brush FocusGotColor {
-            get { return (Brush)GetValue(FocusGotColorProperty); }
-            set { SetValue(FocusGotColorProperty, value); }
-        }
-        public static readonly DependencyProperty FocusGotColorProperty =
-            DependencyProperty.Register("FocusGotColor", typeof(Brush),
-                typeof(MainWindow), new PropertyMetadata(null));
-        #endregion
-
-        #region Methods
-        public override void OnApplyTemplate() {
-            base.OnApplyTemplate();
-        }
-
-        #endregion
-
         private void MainWindow_Loaded(object sender, RoutedEventArgs e) {
             //允许托盘图标
             if (!AllowAreaIcon)
@@ -71,7 +40,6 @@ namespace AreaIconCore.Views {
                     AreaIcons[ext.Name].CheckPop = App.CreatAreaPopup((UIElement)ext.Run(ApplicationScenario.AreaPopup));
                 }
                 if (ext.Application.ContainsKey(ApplicationScenario.MainPage)) {
-                    MainFrame.Navigate(ext.Run(ApplicationScenario.MainPage));
                 }
             }
             if (AreaIcons.Count == 0) {
@@ -81,7 +49,8 @@ namespace AreaIconCore.Views {
                 AreaIcons[nameof(AreaIconCore)].AreaText = nameof(AreaIconCore);
                 AreaIcons[nameof(AreaIconCore)].DContextmenu = App.CreateAreaIconMenu();
             }
-
+            //导航到主页
+           ((MainWindowViewModel)DataContext).NavigateToLocal(new MainPage());
         }
 
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {

@@ -76,23 +76,17 @@ namespace AreaIconCore.Services {
                         if (asb is null)
                             asb = AppDomain.CurrentDomain.Load(_numfontfamily);
                         //从嵌入的资源中查找
-                        using (var strs = asb.GetManifestResourceStream(string.Format(@"{0}.{1}.ttf", assemblyname, familyname))) {
-                            myText = new byte[strs.Length];
-                            strs.Read(myText, 0, myText.Length);
-                        }
+                        var strs = asb.GetManifestResourceStream(string.Format(@"{0}.{1}.ttf", assemblyname, familyname));
+                        //从一般资源中查找
+                        if (strs is null)
+                            strs = GetResourceNames(asb, $"{familyname.ToLower()}.ttf");
+                        myText = new byte[strs.Length];
+                        strs.Read(myText, 0, myText.Length);
+                        strs.Dispose();
                     }
-                    catch {
-                        try {
-                            //从resx文件中查找
-                            using (var font = GetResourceNames(asb, $"{familyname.ToLower()}.ttf")) {
-                                myText = new byte[font.Length];
-                                font.Read(myText, 0, myText.Length);
-                            }
-                        }
-                        catch {
+                    catch (NullReferenceException) {
                             //TODO:字体不存在
                             PopupMessageManager.Instance.Message("Font Not Found!");
-                        }
                     }
                 }
                 else {

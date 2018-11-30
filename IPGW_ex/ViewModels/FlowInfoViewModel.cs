@@ -12,7 +12,7 @@ namespace IPGW_ex.ViewModels {
     /// <summary>
     /// 因为只实现单一功能，所以将功能富集到一个类上
     /// </summary>
-    public class FlowInfoViewModel : ViewModelBase<FlowInfoViewModel> {
+    internal class FlowInfoViewModel : ViewModelBase<FlowInfoViewModel> {
         #region Properties
 
         #endregion

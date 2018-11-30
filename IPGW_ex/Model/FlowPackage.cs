@@ -10,7 +10,7 @@ namespace IPGW_ex.Model {
     /// 流量包信息
     /// </summary>
     [DataContract]
-    public struct FlowPackage {
+    internal struct FlowPackage {
         #region Properties
         /// <summary>
         /// 价格

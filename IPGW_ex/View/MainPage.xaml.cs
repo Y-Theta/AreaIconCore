@@ -1,5 +1,6 @@
 ﻿using HttpServices;
 using IPGW_ex.Model;
+using IPGW_ex.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,11 @@ namespace IPGW_ex.View {
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            XmlDataProvider.Instance.AddNode(new FlowInfo { Data = 20, Balance = 20, Time = DateTime.Now });
+            IpgwSetting.Instance.LatestFlow = FormatService.Instance.GetIpgwDataInf(Flux.Text);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e) {
-            Console.WriteLine(XmlDataProvider.Instance.GetNode<WebInfoContainer>(0).ToString());
+
         }
     }
 }

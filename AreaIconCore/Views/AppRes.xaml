@@ -4,13 +4,19 @@
                     xmlns:conv="clr-namespace:AreaIconCore.Converter"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:service="clr-namespace:AreaIconCore.Services"
-                    xmlns:model="clr-namespace:AreaIconCore.Models">
+                    xmlns:app="clr-namespace:AreaIconCore"
+                    xmlns:model="clr-namespace:AreaIconCore.Models"
+                    xmlns:yt_conv="clr-namespace:YControls.Converters;assembly=YControls">
     <!--#region                                                         -->
     <!--#endregion-->
 
     <!--#region                                                                       Font-->
     <FontFamily x:Key="Questrial">
         pack://application:,,,/FontLibrary;component/Questrial.ttf#Questrial
+    </FontFamily>
+
+    <FontFamily x:Key="RectNum">
+        pack://application:,,,/FontLibrary;component/RectNum.ttf#RectNum
     </FontFamily>
     <!--#endregion-->
 
@@ -28,6 +34,40 @@
 
     <x:Static x:Key="CoreSetting"
               Member="service:CoreSettings.Instance" />
+    <!--#endregion-->
+
+    <!--#region                                                         Icons-->
+    <sys:String x:Key="Icon_MainPage">&#xE80F;</sys:String>
+    <sys:String x:Key="Icon_SettingPage">&#xE713;</sys:String>
+    <sys:String x:Key="Icon_ExtensionPage">&#xE74C;</sys:String>
+    <sys:String x:Key="Icon_AboutPage">&#xE8F2;</sys:String>
+
+    <!--#endregion-->
+
+    <!--#region                                                         SizeConfig-->
+    <sys:Double x:Key="WXnotifypopupwidth">364</sys:Double>
+    <sys:Double x:Key="MessagePopupWidth">288</sys:Double>
+    <sys:Double x:Key="DefaultSliderThumb_Size">8</sys:Double>
+    <sys:Double x:Key="TitleBarMinHeight">28</sys:Double>
+    <sys:Double x:Key="DefaultSlider_TrackThickness">2</sys:Double>
+    <Thickness x:Key="MainBorderThickness"
+               Left="1"
+               Right="1"
+               Top="1"
+               Bottom="1" />
+
+    <!--#endregion-->
+
+    <!--#region                                                         ConvertArgs-->
+
+    <yt_conv:StringConverterArgs x:Key="NavigaterToolTipText"
+                                 Format="Label_ToolTipStyle"
+                                 FindRes="True"
+                                 ResourceDic="{Binding Resources, Source={x:Static app:App.Current}}" />
+
+    <yt_conv:StringConverterArgs x:Key="MainOpacityToolTipText"
+                                 Format="{}{0:F0}%"
+                                 FindRes="False" />
     <!--#endregion-->
 
 </ResourceDictionary>

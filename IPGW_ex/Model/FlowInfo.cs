@@ -18,10 +18,10 @@ namespace IPGW_ex.Model {
         "prop",
         nameof(DataTime_Equal))]
     [DataContract]
-    public class FlowInfo {
+    internal class FlowInfo {
         #region Properties
         /// <summary>
-        /// 时间戳 精确到分钟
+        /// 时间戳     /Y/M/D/H/M
         /// </summary>
         [DataMember]
         [XmlMember(typeof(DateTime), nameof(Time), XmlMemberType.UserElement,
@@ -29,14 +29,14 @@ namespace IPGW_ex.Model {
         public DateTime Time { get; set; }
 
         /// <summary>
-        /// 当前流量值
+        /// 当前流量值 /MB
         /// </summary>
         [DataMember]
         [XmlMember(typeof(double), nameof(Data), XmlMemberType.RootElement)]
         public double Data { get; set; }
 
         /// <summary>
-        /// 账户余额
+        /// 账户余额  /元
         /// </summary>
         [DataMember]
         [XmlMember(typeof(double), nameof(Balance), XmlMemberType.RootElement)]

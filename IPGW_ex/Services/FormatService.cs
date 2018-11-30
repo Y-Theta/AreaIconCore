@@ -13,23 +13,31 @@ namespace IPGW_ex.Services {
     /// <summary>
     /// 有关流量信息的格式化方法
     /// </summary>
-    public class FormatService : SingletonBase<FormatService>, IValueConverter {
+    internal class FormatService : SingletonBase<FormatService>, IValueConverter {
+        /// <summary>
+        /// 流量进制
+        /// </summary>
+        private const double TICK = 1024.0;
 
         #region Methods
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if (value is null)
+                return null;
             switch (parameter) {
-                case "Percent":
-                    return value;
+                case "Percent_Use":
+                    return string.Format("{0}", CastToPercent((FlowInfo)value, IpgwSetting.Instance.Package, true));
+                case "Percent_Rem":
+                    return string.Format("{0}", CastToPercent((FlowInfo)value, IpgwSetting.Instance.Package, false));
                 case "Used":
-                    return value;
+                    return CastToFit(GetUsedFlow((FlowInfo)value));
                 case "Balance":
-                    return value;
+                    return CastToFit(GetBalanceFlow((FlowInfo)value, IpgwSetting.Instance.Package));
                 case "Cost":
-                    return value;
+                    return GetActualBalance((FlowInfo)value, IpgwSetting.Instance.Package);
                 case "SumCost":
-                    return value;
+                    return ((FlowInfo)value).Balance;
                 case "Span":
-                    return value;
+                    return GetSpan((FlowInfo)value);
                 default: return value;
             }
         }
@@ -39,19 +47,71 @@ namespace IPGW_ex.Services {
         }
 
         /// <summary>
+        /// 判断是否需要充值
+        /// </summary>
+        internal bool NeedRecharge() {
+            return GetActualBalance(IpgwSetting.Instance.LatestFlow, IpgwSetting.Instance.Package) >= IpgwSetting.Instance.Package.Price;
+        }
+
+        /// <summary>
+        /// 判断是否超过警戒值
+        /// </summary>
+        internal bool Warning() {
+            return CastToPercent(IpgwSetting.Instance.LatestFlow, IpgwSetting.Instance.Package, false) <= IpgwSetting.Instance.WarnningLevel;
+        }
+
+        /// <summary>
         /// 流量信息百分比格式化
         /// </summary>
-        public double CastToPercent(FlowInfo info, int package, bool used) {
+        /// <param name="info">流量信息</param>
+        /// <param name="package">流量包类型</param>
+        /// <param name="used">true 已使用/false 未使用</param>
+        private double CastToPercent(FlowInfo info, FlowPackage package, bool used) {
             double ret = 0;
+            double balance = GetBalanceFlow(info, package);
+            double use = GetUsedFlow(info);
+            if (used)
+                ret = use / (use + balance);
+            else
+                ret = balance / (use + balance);
+            return Math.Floor(ret * 100);
+        }
 
+        /// <summary>
+        /// 获取已使用流量 /MB
+        /// </summary>
+        /// <param name="info">流量信息</param>
+        private double GetUsedFlow(FlowInfo info) {
+            return info.Data;
+        }
 
-            return ret;
+        /// <summary>
+        /// 获取剩余流量 /MB
+        /// </summary>
+        /// <param name="info">流量信息</param>
+        private double GetBalanceFlow(FlowInfo info, FlowPackage package) {
+            double packageflow = package.Count * TICK;
+            double actbalance = info.Balance - package.Price;
+            if (info.Data <= packageflow)
+                return packageflow - info.Data + actbalance * TICK;
+            else
+                return actbalance * TICK;
+        }
+
+        /// <summary>
+        /// 将流量值转化到合适的单位
+        /// </summary>
+        private string CastToFit(double data) {
+            if (data < 1024)
+                return string.Format("{0:##.##} M", data);
+            else
+                return string.Format("{0:##.##} G", data / TICK);
         }
 
         /// <summary>
         /// 由IPGW返回的字符串格式化
         /// </summary>
-        private FlowInfo GetIpgwDataInf(string data) {
+        internal FlowInfo GetIpgwDataInf(string data) {
             FlowInfo info = new FlowInfo();
             try {
                 string[] t = data.Split(new char[] { ',' });
@@ -60,10 +120,7 @@ namespace IPGW_ex.Services {
                 info.Time = DateTime.Now;
                 //TODO::计算时间差
             }
-            catch (IndexOutOfRangeException) {
-                return null;
-            }
-            catch (NullReferenceException) {
+            catch {
                 return null;
             }
             //TODO::保存本地
@@ -71,14 +128,36 @@ namespace IPGW_ex.Services {
         }
 
         /// <summary>
-        /// 流量信息格式化 in(Byte)
+        /// 获取账户余额
         /// </summary>
-        /// <param name="flux"></param>
-        /// <returns></returns>
+        private double GetActualBalance(FlowInfo info, FlowPackage package) {
+            return info.Balance - package.Price;
+        }
+
+        /// <summary>
+        /// 获取距上次刷新时间
+        /// </summary>
+        private string GetSpan(FlowInfo info) {
+            TimeSpan span = DateTime.Now.Subtract(info.Time);
+            if (span.TotalSeconds > 60) {
+                if (span.TotalMinutes > 60) {
+                    return string.Format("{0:#} H", span.TotalHours);
+                }
+                else {
+                    return string.Format("{0:#}} M", span.TotalMinutes);
+                }
+            }
+            else
+                return string.Format("{0:#} S", span.TotalSeconds);
+        }
+
+        /// <summary>
+        /// 流量信息格式化 in(B) out(M)
+        /// </summary>
         private double FluxFormater(string flux) {
             try {
                 Int64 a = SysConvert.ToInt64(flux);
-                return a / 1000000.0;
+                return a / TICK / TICK;
             }
             catch (FormatException) {
                 return 0;
@@ -86,5 +165,4 @@ namespace IPGW_ex.Services {
         }
         #endregion
     }
-
 }
