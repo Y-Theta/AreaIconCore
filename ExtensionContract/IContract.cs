@@ -37,11 +37,6 @@ namespace ExtensionContract {
         Dictionary<ApplicationScenario, int> Application { get; set; }
 
         /// <summary>
-        /// 控件数据流通知
-        /// </summary>
-        event OnExtensionAction Notify;
-
-        /// <summary>
         /// 触发PostData,通知主程序接收数据
         /// </summary>
         object PostData(object sender, ApplicationScenario scenario, object para);

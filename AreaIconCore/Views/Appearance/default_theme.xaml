@@ -235,7 +235,7 @@
     <!--Popup-->
     <!--#region-->
     <SolidColorBrush x:Key="DefaultMessagePopup_Bg"
-                     Opacity="0.8"
+                     Opacity="0.6"
                      Color="{StaticResource C_MainTheme_Bg_D1}" />
     <!--#endregion-->
     

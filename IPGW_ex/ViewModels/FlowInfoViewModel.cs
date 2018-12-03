@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Threading;
 using YFrameworkBase;
 
 namespace IPGW_ex.ViewModels {
@@ -14,6 +15,15 @@ namespace IPGW_ex.ViewModels {
     /// </summary>
     internal class FlowInfoViewModel : ViewModelBase<FlowInfoViewModel> {
         #region Properties
+
+        /// <summary>
+        /// 当前网络连接状态
+        /// </summary>
+        private bool _connectstate;
+        public bool ConnectState {
+            get => _connectstate;
+            set => SetValue(out _connectstate, value, ConnectState);
+        }
 
         #endregion
 
@@ -25,7 +35,7 @@ namespace IPGW_ex.ViewModels {
 
         #region Constructors
         public FlowInfoViewModel() {
-
+                 
         }
 
         #endregion

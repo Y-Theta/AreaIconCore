@@ -26,35 +26,29 @@ namespace AreaIconCore.Services {
         /// <summary>
         /// 发出一条文本通知
         /// </summary>
-        [STAThread]
         public void Message(string content) {
-            App.Current.Dispatcher.Invoke(() => {
-                _popholder.Style = App.FindRes<Style>("MessageTextPopup");
-                Border grid = new Border {
-                    Height = 32,
-                    Width = 128,
-                    Background = App.FindRes<SolidColorBrush>("DefaultMessagePopup_Bg"),
-                };
-                TextBlock text = new TextBlock {
-                    Style = App.FindRes<Style>("MessageStringFormat"),
-                    Text = content
-                };
-                grid.Child = text;
-                _popholder.Child = grid;
-                _popholder.IsOpen = true;
-            }, System.Windows.Threading.DispatcherPriority.Normal);
+            _popholder.Style = App.FindRes<Style>("MessageTextPopup");
+            ContentControl contentc = new ContentControl {
+                Style = App.FindRes<Style>("MessagePopupContent"),
+                Width = 128,
+                Height = 32,
+            };
+            TextBlock text = new TextBlock {
+                Style = App.FindRes<Style>("MessageStringFormat"),
+                Text = content
+            };
+            contentc.Content = text;
+            _popholder.Child = contentc;
+            _popholder.IsOpen = true;
         }
 
         /// <summary>
         /// 发出一条带有内容的通知
         /// </summary>
-        [STAThread]
         public void Message(UIElement content) {
-            App.Current.Dispatcher.Invoke(() => {
-                _popholder.Style = App.FindRes<Style>("MessageTextPopup") as Style;
-                _popholder.Child = content;
-                _popholder.IsOpen = true;
-            }, System.Windows.Threading.DispatcherPriority.Normal);
+            _popholder.Style = App.FindRes<Style>("MessageTextPopup") as Style;
+            _popholder.Child = content;
+            _popholder.IsOpen = true;
         }
 
         protected void Init() {

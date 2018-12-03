@@ -1,4 +1,5 @@
 ﻿using AreaIconCore.Models;
+using AreaIconCore.Views;
 using ExtensionContract;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using YFrameworkBase;
@@ -13,14 +15,14 @@ using YFrameworkBase;
 namespace AreaIconCore.Services {
     public class HostAdapter : SingletonBase<HostAdapter> ,INotifyPropertyChanged {
         #region Properties
-        [ImportMany(typeof(IInnerDomainExtensionContract), AllowRecomposition = true)]
-        private ObservableCollection<IInnerDomainExtensionContract> _addInContracts;
-        public ObservableCollection<IInnerDomainExtensionContract> AddInContracts {
+        [ImportMany(typeof(InnerDomainExtenesion))]
+        private ObservableCollection<InnerDomainExtenesion> _addInContracts;
+        public ObservableCollection<InnerDomainExtenesion> AddInContracts {
             get => _addInContracts;
             set => _addInContracts = value;
         }
 
-        public Dictionary<string, IInnerDomainExtensionContract> ExtensionDirectory { get; set; }
+        public Dictionary<string, InnerDomainExtenesion> ExtensionDirectory { get; set; }
 
         private String _pluginsPath;
         public String PluginsPath {
@@ -55,7 +57,6 @@ namespace AreaIconCore.Services {
             _container = new CompositionContainer(_acceptcatalog);
             _container.ComposeParts(this);
             foreach (var extension in _addInContracts) {
-                extension.Notify += Extension_Notify;
                 string key = extension.GetType().Assembly.GetName().Name;
                 if(CoreSettings.Instance.Extensions.ContainsKey(key)) {
                     CoreSettings.Instance.Extensions[key].Name = extension.Name;
@@ -65,19 +66,23 @@ namespace AreaIconCore.Services {
                 }
                 PropertyChanged?.Invoke(CoreSettings.Instance, new PropertyChangedEventArgs("Extensions"));
                 ExtensionDirectory.Add(extension.Name, extension);
+                InnerDomainExtenesion.Notify += Extension_Notify;
             }
         }
 
         private object Extension_Notify(object sender, ApplicationScenario scenario, object obj) {
+            IInnerDomainExtensionContract invoker = sender as IInnerDomainExtensionContract;
+            MainWindow wind = App.Current.MainWindow as MainWindow;
             switch (scenario) {
                 case ApplicationScenario.AreaIcon:
+                    wind.AreaIcons[invoker.Name].Areaicon = (Icon)obj;
                     return null;
                 default: return null;
             }
         }
 
         private void Init() {
-            ExtensionDirectory = new Dictionary<string, IInnerDomainExtensionContract>();
+            ExtensionDirectory = new Dictionary<string, InnerDomainExtenesion>();
         }
         #endregion
 

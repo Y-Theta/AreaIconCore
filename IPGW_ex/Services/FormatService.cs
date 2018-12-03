@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using SysConvert = System.Convert;
 using YFrameworkBase;
+using System.Windows;
 
 namespace IPGW_ex.Services {
     /// <summary>
@@ -19,27 +20,41 @@ namespace IPGW_ex.Services {
         /// </summary>
         private const double TICK = 1024.0;
 
+        /// <summary>
+        /// 最新的剩余流量百分比
+        /// </summary>
+        internal string LatestPercent;
+
         #region Methods
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value is null)
                 return null;
-            switch (parameter) {
-                case "Percent_Use":
-                    return string.Format("{0}", CastToPercent((FlowInfo)value, IpgwSetting.Instance.Package, true));
-                case "Percent_Rem":
-                    return string.Format("{0}", CastToPercent((FlowInfo)value, IpgwSetting.Instance.Package, false));
-                case "Used":
-                    return CastToFit(GetUsedFlow((FlowInfo)value));
-                case "Balance":
-                    return CastToFit(GetBalanceFlow((FlowInfo)value, IpgwSetting.Instance.Package));
-                case "Cost":
-                    return GetActualBalance((FlowInfo)value, IpgwSetting.Instance.Package);
-                case "SumCost":
-                    return ((FlowInfo)value).Balance;
-                case "Span":
-                    return GetSpan((FlowInfo)value);
-                default: return value;
+            if (parameter is string) {
+                switch (parameter) {
+                    case "Percent_Use":
+                        return string.Format("{0}", CastToPercent((FlowInfo)value, IpgwSetting.Instance.Package, true));
+                    case "Percent_Rem":
+                        LatestPercent = string.Format("{0}", CastToPercent((FlowInfo)value, IpgwSetting.Instance.Package, false));
+                        return LatestPercent;
+                    case "Used":
+                        return CastToFit(GetUsedFlow((FlowInfo)value));
+                    case "Balance":
+                        return CastToFit(GetBalanceFlow((FlowInfo)value, IpgwSetting.Instance.Package));
+                    case "Cost":
+                        return GetActualBalance((FlowInfo)value, IpgwSetting.Instance.Package);
+                    case "SumCost":
+                        return ((FlowInfo)value).Balance;
+                    case "Span":
+                        return GetSpan((FlowInfo)value);
+                    case "State_Text":
+                        return (bool)value ? "已连接" : "未连接";
+                    case "State_Vis":
+                        return (bool)value ? Visibility.Visible : Visibility.Collapsed;
+                    default: return value;
+                }
             }
+            else
+                return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
@@ -66,7 +81,7 @@ namespace IPGW_ex.Services {
         /// <param name="info">流量信息</param>
         /// <param name="package">流量包类型</param>
         /// <param name="used">true 已使用/false 未使用</param>
-        private double CastToPercent(FlowInfo info, FlowPackage package, bool used) {
+        public double CastToPercent(FlowInfo info, FlowPackage package, bool used) {
             double ret = 0;
             double balance = GetBalanceFlow(info, package);
             double use = GetUsedFlow(info);

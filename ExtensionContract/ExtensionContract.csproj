@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationScenario.cs" />
+    <Compile Include="ContractAttribute.cs" />
     <Compile Include="IContract.cs" />
     <Compile Include="InnerDomainExtenesion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

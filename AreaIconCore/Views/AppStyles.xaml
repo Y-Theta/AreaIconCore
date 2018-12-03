@@ -470,6 +470,8 @@
            TargetType="yt_flow:YT_PopupBase">
         <Setter Property="AllowsTransparency"
                 Value="True" />
+        <Setter Property="PopupAnimation"
+                Value="Fade" />
         <Setter Property="RelativeMode"
                 Value="RightBottom" />
         <Setter Property="Placement"
@@ -493,24 +495,53 @@
            TargetType="yt_flow:YT_PopupBase">
         <Setter Property="AllowsTransparency"
                 Value="True" />
+        <Setter Property="PopupAnimation"
+                Value="Fade" />
         <Setter Property="RelativeMode"
-                Value="RightBottom" />
+                Value="RightTop" />
         <Setter Property="Placement"
                 Value="RelativePoint" />
         <Setter Property="AutoHide"
-                Value="True" />
+                Value="False" />
         <Setter Property="AutoHideDelay"
                 Value="4000" />
         <Setter Property="RelativeRect"
                 Value="18,14" />
         <Setter Property="RelativeRectToTarget"
-                Value="4,4" />
+                Value="4,34" />
         <Setter Property="Message"
                 Value="True" />
-        <Setter Property="EnableBlur"
-                Value="True" />
     </Style>
-        
+
+    <Style x:Key="MessagePopupContent"
+           TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border Background="{DynamicResource DefaultMessagePopup_Bg}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter Grid.Column="0"
+                                              Content="{TemplateBinding Content}" />
+                            <yt_button:FIconButton Grid.Column="1"
+                                                   Command="{Binding CloseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=yt_flow:YT_PopupBase}}"
+                                                   Style="{StaticResource CloseButton}"
+                                                   Margin="4"
+                                                   Content="&#xEA47;"
+                                                   IconMargin="2"
+                                                   FontSize="10" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--#endregion-->
 
     <!--#region                                                         ContextMenu-->

@@ -55,6 +55,7 @@
     <Compile Include="Controls\FlowPanel.cs" />
     <Compile Include="Model\FlowPackage.cs" />
     <Compile Include="Services\FormatService.cs" />
+    <Compile Include="Services\IpgwLoginService.cs" />
     <Compile Include="Services\IpgwSetting.cs" />
     <Compile Include="ViewModels\FlowInfoViewModel.cs" />
     <Compile Include="View\MainPage.xaml.cs">

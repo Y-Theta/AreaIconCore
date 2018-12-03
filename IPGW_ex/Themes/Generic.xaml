@@ -1,8 +1,9 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:contorl="clr-namespace:IPGW_ex.Controls"
                     xmlns:yt_button="clr-namespace:YControls.FontIconButtons;assembly=YControls"
                     xmlns:yt_flow="clr-namespace:YControls.FlowControls;assembly=YControls"
+                    xmlns:yt_conv="clr-namespace:YControls.Converters;assembly=YControls"
                     xmlns:vm="clr-namespace:IPGW_ex.ViewModels"
                     xmlns:ser="clr-namespace:IPGW_ex.Services"
                     xmlns:local="clr-namespace:IPGW_ex">
@@ -13,9 +14,13 @@
     <!--FlowPanel-->
     <Style TargetType="contorl:FlowPanel">
         <Setter Property="Background"
-                Value="#1E1E1E" />
+                Value="#1F1F1F" />
+        <Setter Property="ConnectState"
+                Value="{Binding ConnectState, Source={x:Static vm:FlowInfoViewModel.Singleton}}" />
         <Setter Property="Padding"
                 Value="2" />
+        <Setter Property="Height"
+                Value="108" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="contorl:FlowPanel">
@@ -32,6 +37,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid x:Name="infopanel"
                                   HorizontalAlignment="Left"
+                                  Margin="8,4"
                                   Grid.Column="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />
@@ -42,8 +48,32 @@
                                     <RowDefinition Height="auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0"
+                                           Width="64"
+                                           Height="64"
                                            Style="{StaticResource FlowPanelMainPercent}"
                                            Text="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Percent_Rem}" />
+                                <StackPanel Grid.Row="1"
+                                            Orientation="Horizontal">
+                                    <Grid>
+                                        <Ellipse x:Name="ID_Online" 
+                                                 Width="8"
+                                                 Height="8"
+                                                 StrokeThickness="2"
+                                                 Visibility="{Binding ConnectState, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=State_Vis}"
+                                                 Stroke="{StaticResource RefreshButton_Fg_N}"
+                                                 Fill="{StaticResource RefreshButton_Fg_O}"/>
+                                        <Ellipse x:Name="ID_Offline"
+                                                 Width="8"
+                                                 Height="8"
+                                                 StrokeThickness="2"
+                                                 Stroke="{StaticResource RefreshButton_Fg_N}"
+                                                 Fill="{x:Null}" />
+                                    </Grid>
+                                    <TextBlock x:Name="State_Text"
+                                               FontSize="12"
+                                               Foreground="{StaticResource RefreshButton_Fg_N}"
+                                               Text="{Binding ConnectState, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=State_Text }" />
+                                </StackPanel>
                                 <Grid x:Name="moreInfo"
                                       Grid.Column="1"
                                       Grid.RowSpan="2">
@@ -51,18 +81,39 @@
                                 </Grid>
                             </Grid>
                             <Grid x:Name="controlpanel"
+                                  Visibility="{Binding IsMouseOver,RelativeSource={RelativeSource Mode=TemplatedParent} ,Converter={x:Static yt_conv:VisibilityConverter.Singleton}}"
                                   Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Button Grid.Row="0"
-                                        Command="{Binding CloseCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type yt_flow:YT_PopupBase}}}">Close</Button>
-                                <Button Grid.Row="1"
-                                        Command="{Binding CloseCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type yt_flow:YT_PopupBase}}}">Close</Button>
-                                <Button Grid.Row="2"
-                                        Command="{Binding CloseCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type yt_flow:YT_PopupBase}}}">Close</Button>
+                                <yt_button:FIconButton x:Name="BTN_Close"
+                                                       Grid.Row="0"
+                                                       Content="&#xEA47;"
+                                                       ToolTipString="关闭"
+                                                       Style="{StaticResource FlowPanelControlButon}"
+                                                       Command="{Binding CloseCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type yt_flow:YT_PopupBase}}}" />
+                                <Button x:Name="BTN_Update"
+                                        Grid.Row="1"
+                                        Style="{StaticResource RefreshButton}"
+                                        CommandParameter="Update"
+                                        Command="{Binding Action, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                    <Button.ToolTip>
+                                        <ToolTip Style="{StaticResource DefaultToolTipStyle}">
+                                            <TextBlock Style="{StaticResource  DefaultToolTipTextBlockStyle}"
+                                                       Text="连接/刷新" />
+                                        </ToolTip>
+                                    </Button.ToolTip>
+                                </Button>
+                                <yt_button:FIconButton x:Name="BTN_DisConnect"
+                                                       Grid.Row="2"
+                                                       FontSize="14"
+                                                       Content="&#xE7E8;"
+                                                       ToolTipString="断开网络连接"
+                                                       Style="{StaticResource FlowPanelControlButon}"
+                                                       CommandParameter="DisConnect"
+                                                       Command="{Binding Action,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             </Grid>
                         </Grid>
                     </Border>

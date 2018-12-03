@@ -19,21 +19,28 @@ using System.Windows.Shapes;
 using YControls.FlowControls;
 using AreaIconCore.Services;
 using IPGW_ex.Controls;
+using System.Drawing;
+using IPGW_ex.Services;
 
 namespace IPGW_ex {
-    [Export(typeof(IInnerDomainExtensionContract))]
-    public class IPGWCore : InnerDomainExtenesion<IPGWCore> {
+    /// <summary>
+    /// 
+    /// </summary>
+    [Export(typeof(InnerDomainExtenesion))]
+    public class IPGWCore : InnerDomainExtenesion {
 
-        public bool MainWindowBlur {
-            get {
-                return (bool)PostData(this, ApplicationScenario.BlurState);
-            }
+        private static Lazy<IPGWCore> _instence = new Lazy<IPGWCore>();
+        public static IPGWCore Instence {
+            get => _instence.Value;
         }
 
+        /// <summary>
+        /// 主程序控制控件方法
+        /// </summary>
         public override object Run(ApplicationScenario c, object arg = null) {
             switch (c) {
                 case ApplicationScenario.AreaIcon:
-                    return AreaIconDraw.Instance.StringIcon("100", ColorD.AliceBlue, 4);
+                    return GetAreaIcon(FormatService.Instance.LatestPercent);
                 case ApplicationScenario.MainPage:
                     return new MainPage();
                 case ApplicationScenario.AreaPopup:
@@ -43,6 +50,26 @@ namespace IPGW_ex {
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public Icon GetAreaIcon(string ico) {
+            return AreaIconDraw.Instance.StringIcon(ico, IpgwSetting.Instance.IconFontColor, (float)IpgwSetting.Instance.IconFontSize);
+        }
+
+        /// <summary>
+        /// 更新托盘图标
+        /// </summary>
+        public void UpdateAreaIcon(string ico) {
+            base.PostData(this, ApplicationScenario.AreaIcon, GetAreaIcon(ico));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public object PostData(ApplicationScenario appc, object data = null) {
+            return base.PostData(this, appc, data);
+        }
 
         public IPGWCore() {
             Name = "IPGW控件";

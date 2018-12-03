@@ -19,8 +19,8 @@ using System.Windows.Shapes;
 using YFrameworkBase;
 
 namespace D6_ex {
-    [Export(typeof(IInnerDomainExtensionContract))]
-    public class D6Core : InnerDomainExtenesion<D6Core> {
+    [Export(typeof(InnerDomainExtenesion))]
+    public class D6Core : InnerDomainExtenesion {
 
         public override object Run(ApplicationScenario c, object obj) {
             switch (c) {

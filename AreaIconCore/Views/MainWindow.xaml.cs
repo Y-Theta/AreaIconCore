@@ -18,6 +18,10 @@ using AreaIconCore.Views.Pages;
 using YControls.Dialogs;
 using System.Windows.Controls;
 using ExtensionContract;
+using YFrameworkBase.DataAccessor;
+using HttpServices;
+using HttpServices.DataProviders;
+using System.Collections.Generic;
 
 namespace AreaIconCore.Views {
     /// <summary>
@@ -51,6 +55,11 @@ namespace AreaIconCore.Views {
             }
             //导航到主页
            ((MainWindowViewModel)DataContext).NavigateToLocal(new MainPage());
+
+            //XmlDataProvider.Instance.AddNode<WebInfoContainer>(new WebInfoContainer {
+            //    Name = "NEU_Ipgw"
+
+            //});
         }
 
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {

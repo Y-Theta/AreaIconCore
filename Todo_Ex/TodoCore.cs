@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Todo_ex {
-    [Export(typeof(IInnerDomainExtensionContract))]
-    public class TodoCore : InnerDomainExtenesion<TodoCore> {
+    [Export(typeof(InnerDomainExtenesion))]
+    public class TodoCore : InnerDomainExtenesion {
         #region Properties
         #endregion
 

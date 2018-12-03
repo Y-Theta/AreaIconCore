@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 using YFrameworkBase;
 
 namespace ExtensionContract {
-    public abstract class InnerDomainExtenesion<T> : IInnerDomainExtensionContract where T : class, new() {
+    public abstract class InnerDomainExtenesion : IInnerDomainExtensionContract {
         #region Properties
-
-        private static Lazy<T> _instence = new Lazy<T>(() => { return new T(); });
-        public static T Instence {
-            get => _instence.Value;
-        }
 
         public string Name { get; set; }
 
@@ -24,7 +19,10 @@ namespace ExtensionContract {
 
         public Dictionary<ApplicationScenario, int> Application { get; set; }
 
-        public event OnExtensionAction Notify;
+        /// <summary>
+        /// 由于在域内,采用统一的事件来进行信息交换
+        /// </summary>
+        public static event OnExtensionAction Notify;
         #endregion
 
         #region Methods
@@ -36,14 +34,11 @@ namespace ExtensionContract {
         }
 
         public object PostData(object sender, ApplicationScenario scenario, object para = null) {
-           return Notify?.Invoke(sender, scenario, para);
+            var result = Notify?.Invoke(sender, scenario, para);
+            return result;
         }
 
         public abstract object Run(ApplicationScenario c, object arg = null);
         #endregion
-
-        #region Constructors
-        #endregion
-
     }
 }

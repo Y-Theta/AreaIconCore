@@ -9,18 +9,31 @@
         <ResourceDictionary Source="pack://application:,,,/YControls;component/Themes/Styles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <SolidColorBrush x:Key="RefreshButton_Fg_N"
+                     Color="#909090" />
+    <SolidColorBrush x:Key="RefreshButton_Fg_O"
+                     Color="#FFFFFF" />
+    <SolidColorBrush x:Key="RefreshButton_Fg_P"
+                     Color="#C0C0C0" />
+
     <Style x:Key="FlowPanelMainPercent"
            TargetType="TextBlock">
         <Setter Property="FontFamily"
-                Value="{DynamicResource RectNum}" />
+                Value="{DynamicResource Questrial}" />
         <Setter Property="FontSize"
-                Value="24" />
+                Value="40" />
+        <Setter Property="TextAlignment"
+                Value="Center" />
         <Setter Property="Foreground"
-                Value="#E0E0E0" />
+                Value="{StaticResource RefreshButton_Fg_N}" />
     </Style>
 
     <Style x:Key="RefreshButton"
            TargetType="Button">
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="Foreground"
+                Value="{StaticResource RefreshButton_Fg_N}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -39,9 +52,69 @@
                             </TextBlock.RenderTransform>
                         </TextBlock>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="IconHolder"
+                                    Property="Foreground"
+                                    Value="{StaticResource RefreshButton_Fg_O}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="IconHolder"
+                                    Property="Foreground"
+                                    Value="{StaticResource RefreshButton_Fg_P}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="BeginAnimate">
+                                    <Storyboard FillBehavior="HoldEnd"
+                                                RepeatBehavior="Forever">
+                                        <DoubleAnimation Storyboard.TargetName="IconRotateTransform"
+                                                         Storyboard.TargetProperty="Angle"
+                                                         Duration="0:0:0.8"
+                                                         To="360" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="BeginAnimate" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+
+    <Style x:Key="FlowPanelControlButon"
+           TargetType="yt_button:FIconButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="LabelVisibility"
+                Value="Collapsed" />
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="IconMargin"
+                Value="8,2" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+
+        <Setter Property="IconFgNormal"
+                Value="#C0C0C0" />
+        <Setter Property="IconFgOver"
+                Value="#E0E0E0" />
+        <Setter Property="IconFgPressed"
+                Value="#A0A0A0" />
+
+        <Setter Property="IconBgNormal"
+                Value="Transparent" />
+        <Setter Property="IconBgOver"
+                Value="Transparent" />
+        <Setter Property="IconBgPressed"
+                Value="Transparent" />
     </Style>
 
 </ResourceDictionary>
