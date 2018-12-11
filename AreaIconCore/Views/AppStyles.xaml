@@ -498,17 +498,19 @@
         <Setter Property="PopupAnimation"
                 Value="Fade" />
         <Setter Property="RelativeMode"
-                Value="RightTop" />
+                Value="BottomTarget" />
         <Setter Property="Placement"
                 Value="RelativePoint" />
         <Setter Property="AutoHide"
-                Value="False" />
+                Value="True" />
         <Setter Property="AutoHideDelay"
                 Value="4000" />
         <Setter Property="RelativeRect"
                 Value="18,14" />
+        <Setter Property="EnableBlur"
+                Value="True" />
         <Setter Property="RelativeRectToTarget"
-                Value="4,34" />
+                Value="0,-24" />
         <Setter Property="Message"
                 Value="True" />
     </Style>
@@ -532,6 +534,8 @@
                                                    Command="{Binding CloseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=yt_flow:YT_PopupBase}}"
                                                    Style="{StaticResource CloseButton}"
                                                    Margin="4"
+                                                   Width="24"
+                                                   Height="24"
                                                    Content="&#xEA47;"
                                                    IconMargin="2"
                                                    FontSize="10" />

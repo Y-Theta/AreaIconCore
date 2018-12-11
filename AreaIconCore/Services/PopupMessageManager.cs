@@ -30,12 +30,12 @@ namespace AreaIconCore.Services {
             _popholder.Style = App.FindRes<Style>("MessageTextPopup");
             ContentControl contentc = new ContentControl {
                 Style = App.FindRes<Style>("MessagePopupContent"),
-                Width = 128,
-                Height = 32,
+                MaxWidth = 256,
             };
             TextBlock text = new TextBlock {
                 Style = App.FindRes<Style>("MessageStringFormat"),
-                Text = content
+                Text = content,
+                TextWrapping = TextWrapping.Wrap,
             };
             contentc.Content = text;
             _popholder.Child = contentc;

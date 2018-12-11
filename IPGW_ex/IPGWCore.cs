@@ -51,7 +51,7 @@ namespace IPGW_ex {
         }
 
         /// <summary>
-        /// 
+        /// 获取图标化字符
         /// </summary>
         public Icon GetAreaIcon(string ico) {
             return AreaIconDraw.Instance.StringIcon(ico, IpgwSetting.Instance.IconFontColor, (float)IpgwSetting.Instance.IconFontSize);

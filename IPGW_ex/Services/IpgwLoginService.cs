@@ -23,7 +23,6 @@ namespace IPGW_ex.Services {
         private const string _webname = "NEU_Ipgw";
         private const string _loginuri = "login";
         private const string _datauri = "fluxdata";
-        private static bool _testlock;
 
         public LoginServices ServiceHolder { get; set; }
 

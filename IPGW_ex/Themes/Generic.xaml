@@ -14,7 +14,7 @@
     <!--FlowPanel-->
     <Style TargetType="contorl:FlowPanel">
         <Setter Property="Background"
-                Value="#1F1F1F" />
+                Value="{StaticResource RefreshButton_Bg}" />
         <Setter Property="ConnectState"
                 Value="{Binding ConnectState, Source={x:Static vm:FlowInfoViewModel.Singleton}}" />
         <Setter Property="Padding"
@@ -37,48 +37,67 @@
                             </Grid.ColumnDefinitions>
                             <Grid x:Name="infopanel"
                                   HorizontalAlignment="Left"
-                                  Margin="8,4"
                                   Grid.Column="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0"
-                                           Width="64"
-                                           Height="64"
-                                           Style="{StaticResource FlowPanelMainPercent}"
-                                           Text="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Percent_Rem}" />
-                                <StackPanel Grid.Row="1"
-                                            Orientation="Horizontal">
-                                    <Grid>
-                                        <Ellipse x:Name="ID_Online" 
-                                                 Width="8"
-                                                 Height="8"
-                                                 StrokeThickness="2"
-                                                 Visibility="{Binding ConnectState, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=State_Vis}"
-                                                 Stroke="{StaticResource RefreshButton_Fg_N}"
-                                                 Fill="{StaticResource RefreshButton_Fg_O}"/>
-                                        <Ellipse x:Name="ID_Offline"
-                                                 Width="8"
-                                                 Height="8"
-                                                 StrokeThickness="2"
-                                                 Stroke="{StaticResource RefreshButton_Fg_N}"
-                                                 Fill="{x:Null}" />
-                                    </Grid>
-                                    <TextBlock x:Name="State_Text"
-                                               FontSize="12"
-                                               Foreground="{StaticResource RefreshButton_Fg_N}"
-                                               Text="{Binding ConnectState, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=State_Text }" />
-                                </StackPanel>
-                                <Grid x:Name="moreInfo"
-                                      Grid.Column="1"
-                                      Grid.RowSpan="2">
-
+                                <Grid x:Name="statepanel"
+                                      Margin="8,0,0,0"
+                                      Width="108"
+                                      Grid.Column="0">
+                                    <Ellipse HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Fill="{StaticResource RefreshButton_Fg_P}"
+                                             Width="72"
+                                             Height="72" />
+                                    <Ellipse HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             StrokeThickness="2"
+                                             Fill="{x:Null}"
+                                             Stroke="{StaticResource RefreshButton_Fg_O}"
+                                             Visibility="{Binding ConnectState, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=State_Vis}"
+                                             Width="84"
+                                             Height="84">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#FFFFFF"
+                                                              BlurRadius="15"
+                                                              ShadowDepth="0" />
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+                                    <TextBlock Grid.Row="0"
+                                               Style="{StaticResource FlowPanelMainPercent}"
+                                               Text="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Percent_Rem}" />
                                 </Grid>
+                                <StackPanel x:Name="moreInfo"
+                                            Grid.Column="1">
+                                    <Canvas x:Name="ID_Panel"
+                                            Width="120" 
+                                            Height="32"
+                                            Background="White">
+                                        
+                                    </Canvas>
+                                    <StackPanel Margin="8,0,0,0"
+                                                Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource FlowPanelLabel}"
+                                                   Text="已使用:" />
+                                        <TextBlock Margin="8,0,0,0"
+                                                   FontSize="10"
+                                                   FontFamily="{StaticResource RectNum}"
+                                                   Style="{StaticResource FlowPanelLabel}"
+                                                   Text="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Used}" />
+                                    </StackPanel>
+                                    <StackPanel Margin="8,0,0,0"
+                                                Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource FlowPanelLabel}"
+                                                   Text="剩余:" />
+                                        <TextBlock Margin="8,0,0,0"
+                                                   FontSize="10"
+                                                   FontFamily="{StaticResource RectNum}"
+                                                   Style="{StaticResource FlowPanelLabel}"
+                                                   Text="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Used}" />
+                                    </StackPanel>
+                                </StackPanel>
                             </Grid>
                             <Grid x:Name="controlpanel"
                                   Visibility="{Binding IsMouseOver,RelativeSource={RelativeSource Mode=TemplatedParent} ,Converter={x:Static yt_conv:VisibilityConverter.Singleton}}"
@@ -96,13 +115,16 @@
                                                        Command="{Binding CloseCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type yt_flow:YT_PopupBase}}}" />
                                 <Button x:Name="BTN_Update"
                                         Grid.Row="1"
+                                        FontWeight="Black"
                                         Style="{StaticResource RefreshButton}"
                                         CommandParameter="Update"
                                         Command="{Binding Action, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                     <Button.ToolTip>
                                         <ToolTip Style="{StaticResource DefaultToolTipStyle}">
-                                            <TextBlock Style="{StaticResource  DefaultToolTipTextBlockStyle}"
-                                                       Text="连接/刷新" />
+                                            <Border Margin="8,4">
+                                                <TextBlock Style="{StaticResource  DefaultToolTipTextBlockStyle}"
+                                                           Text="连接/刷新" />
+                                            </Border>
                                         </ToolTip>
                                     </Button.ToolTip>
                                 </Button>

@@ -12,7 +12,7 @@ using YFrameworkBase.Setting;
 namespace IPGW_ex.Services {
     [SettingFile("settings", "ipgw_set.xml")]
     [DataContract]
-    internal class IpgwSetting :ILocalSetting<IpgwSetting> {
+    internal class IpgwSetting : ILocalSetting<IpgwSetting> {
         #region Properties
         /// <summary>
         /// 当前流量信息
@@ -51,7 +51,7 @@ namespace IPGW_ex.Services {
         private double _iconfontsize;
         public double IconFontSize {
             get => _iconfontsize;
-            set => SetValue(out _iconfontsize, value, IconFontSize);
+            set => SetValue(out _iconfontsize, value, IconFontSize, ReDrawIcon);
         }
 
         /// <summary>
@@ -61,11 +61,16 @@ namespace IPGW_ex.Services {
         private ColorD _iconfontcolor;
         public ColorD IconFontColor {
             get => _iconfontcolor;
-            set => SetValue(out _iconfontcolor, value, IconFontColor);
+            set => SetValue(out _iconfontcolor, value, IconFontColor, ReDrawIcon);
         }
         #endregion
 
         #region Methods
+        private void ReDrawIcon(string settingname, object newValue, object oldValue) {
+            //字体颜色或大小变化时重新绘制
+            IPGWCore.Instence.UpdateAreaIcon(FormatService.Instance.LatestPercent);
+        }
+
         protected void Init() {
             LatestFlow = new FlowInfo { Time = DateTime.Now, Data = 0, Balance = 0 };
             Package = new FlowPackage { Price = 20, Count = 60 };

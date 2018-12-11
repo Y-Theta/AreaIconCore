@@ -1,7 +1,9 @@
-﻿using IPGW_ex.Model;
+﻿using AreaIconCore;
+using IPGW_ex.Model;
 using IPGW_ex.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YControls.Command;
+using YFrameworkBase;
 
 namespace IPGW_ex.Controls {
     /// <summary>
@@ -70,7 +73,7 @@ namespace IPGW_ex.Controls {
 
             base.OnApplyTemplate();
         }
-    
+
         protected override void OnInitialized(EventArgs e) {
             base.OnInitialized(e);
             _flowBinding = new Binding {
@@ -112,6 +115,10 @@ namespace IPGW_ex.Controls {
                 FLOW = null;
                 SetBinding(FLOWProperty, _flowBinding);
                 await IpgwLoginService.Instance.TestOnly();
+            }
+            else {
+                if(!App.Current.MainWindow.IsVisible)
+                    WinAPI.SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle.ToInt32(), -1, -1);
             }
         }
 
