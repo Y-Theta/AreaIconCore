@@ -117,7 +117,7 @@ namespace IPGW_ex.Controls {
                 await IpgwLoginService.Instance.TestOnly();
             }
             else {
-                if(!App.Current.MainWindow.IsVisible)
+                if(App.Current != null && !App.Current.MainWindow.IsVisible)
                     WinAPI.SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle.ToInt32(), -1, -1);
             }
         }

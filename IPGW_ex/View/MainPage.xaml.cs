@@ -26,12 +26,5 @@ namespace IPGW_ex.View {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            IpgwSetting.Instance.LatestFlow = FormatService.Instance.GetIpgwDataInf(Flux.Text);
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e) {
-           
-        }
     }
 }

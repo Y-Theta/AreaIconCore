@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\FlowPanel.cs" />
+    <Compile Include="Controls\IconLabelItem.cs" />
     <Compile Include="Model\FlowPackage.cs" />
     <Compile Include="Services\FormatService.cs" />
     <Compile Include="Services\IpgwLoginService.cs" />

@@ -3,20 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:IPGW_ex.View"
-      Height="360">
-    <Grid Margin="0,30,0,0">
-        <StackPanel>
-            <TextBox x:Name="Flux"
-                     Height="48" />
-            <StackPanel Orientation="Horizontal">
-                <Button Width="120"
-                        Height="24"
-                        Click="Button_Click">Save</Button>
-                <Button Width="120"
-                        Height="24"
-                        Click="Button_Click_1">Read</Button>
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+      xmlns:local="clr-namespace:IPGW_ex.View">
+  
 </Page>

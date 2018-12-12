@@ -41,15 +41,19 @@ namespace IPGW_ex.Services {
                     case "Balance":
                         return CastToFit(GetBalanceFlow((FlowInfo)value, IpgwSetting.Instance.Package));
                     case "Cost":
-                        return GetActualBalance((FlowInfo)value, IpgwSetting.Instance.Package);
+                        return string.Format("{0} 元", GetActualBalance((FlowInfo)value, IpgwSetting.Instance.Package));
                     case "SumCost":
                         return ((FlowInfo)value).Balance;
                     case "Span":
                         return GetSpan((FlowInfo)value);
+                    case "Recharge":
+                        return NeedRecharge((FlowInfo)value) ? Visibility.Visible : Visibility.Collapsed;
                     case "State_Text":
                         return (bool)value ? "已连接" : "未连接";
                     case "State_Vis":
                         return (bool)value ? Visibility.Visible : Visibility.Collapsed;
+                    case "User":
+                        return IpgwLoginService.Instance.UserID;
                     default: return value;
                 }
             }
@@ -64,8 +68,10 @@ namespace IPGW_ex.Services {
         /// <summary>
         /// 判断是否需要充值
         /// </summary>
-        internal bool NeedRecharge() {
-            return GetActualBalance(IpgwSetting.Instance.LatestFlow, IpgwSetting.Instance.Package) >= IpgwSetting.Instance.Package.Price;
+        internal bool NeedRecharge(FlowInfo value) {
+            if (value is null)
+                return false;
+            return GetActualBalance(value, IpgwSetting.Instance.Package) <= IpgwSetting.Instance.Package.Price;
         }
 
         /// <summary>

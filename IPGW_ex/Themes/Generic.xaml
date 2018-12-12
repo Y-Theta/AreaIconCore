@@ -11,7 +11,105 @@
         <ResourceDictionary Source="pack://application:,,,/IPGW_ex;component/Themes/Styles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!--IconLabelItem-->
+    <Style TargetType="contorl:IconLabelItem">
+        <Setter Property="IconFamily"
+                Value="{StaticResource Segoe}" />
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Style="{StaticResource DefaultToolTipStyle}"
+                         Visibility="{Binding ToolTipString,Converter={x:Static yt_conv:VisibilityConverter.Singleton}}"
+                         DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Mode=Self}}">
+                    <Border Margin="8,4">
+                        <TextBlock Style="{StaticResource DefaultToolTipTextBlockStyle}"
+                                   Text="{Binding ToolTipString}" />
+                    </Border>
+                </ToolTip>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="contorl:IconLabelItem">
+                    <Grid x:Name="rgrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="p_icon"
+                                   Grid.Column="0"
+                                   Text="{TemplateBinding Icon}"
+                                   FontFamily="{TemplateBinding IconFamily}"
+                                   FontWeight="{TemplateBinding IconWeight}"
+                                   FontSize="{TemplateBinding IconSize}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   MinWidth="{TemplateBinding IconWidth}"
+                                   Visibility="{TemplateBinding IconVisibility}"
+                                   TextAlignment="{TemplateBinding IconAlignment}"
+                                   RenderTransformOrigin=".5 .5">
+                            <TextBlock.RenderTransform>
+                                <ScaleTransform x:Name="p_icon_scale" />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                        <TextBlock x:Name="p_item"
+                                   Grid.Column="1"
+                                   Text="{TemplateBinding ItemName}"
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   MinWidth="{TemplateBinding ItemNameWidth}"
+                                   Visibility="{TemplateBinding ItemNameVisibility}"
+                                   TextAlignment="{TemplateBinding ItemNameTextAlignment}" />
+                        <TextBlock x:Name="p_value"
+                                   Grid.Column="2"
+                                   Text="{TemplateBinding ItemValue}"
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   Visibility="{TemplateBinding ItemValueVisibility}"
+                                   TextAlignment="{TemplateBinding ItemValueTextAlignment}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ToggelMode"
+                                 Value="True">
+                            <Setter TargetName="p_icon"
+                                    Property="Text"
+                                    Value="{Binding ToggelIcon, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard  x:Name="Icon_scale">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="p_icon_scale"
+                                                                       Storyboard.TargetProperty="ScaleX">
+                                            <SplineDoubleKeyFrame KeyTime="0:0:0.24"
+                                                                  KeySpline="0,0.4 0.6,1"
+                                                                  Value="1.2" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="p_icon_scale"
+                                                                       Storyboard.TargetProperty="ScaleY">
+                                            <SplineDoubleKeyFrame KeyTime="0:0:0.24"
+                                                                  KeySpline="0,0.4 0.6,1"
+                                                                  Value="1.2" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="Icon_scale" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--FlowPanel-->
+    <Visibility x:Key="vis_coll">Collapsed</Visibility>
     <Style TargetType="contorl:FlowPanel">
         <Setter Property="Background"
                 Value="{StaticResource RefreshButton_Bg}" />
@@ -36,7 +134,6 @@
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <Grid x:Name="infopanel"
-                                  HorizontalAlignment="Left"
                                   Grid.Column="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />
@@ -66,41 +163,82 @@
                                         </Ellipse.Effect>
                                     </Ellipse>
                                     <TextBlock Grid.Row="0"
+                                               Margin="0,2,0,0"
                                                Style="{StaticResource FlowPanelMainPercent}"
                                                Text="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Percent_Rem}" />
                                 </Grid>
-                                <StackPanel x:Name="moreInfo"
-                                            Grid.Column="1">
-                                    <Canvas x:Name="ID_Panel"
-                                            Width="120" 
-                                            Height="32"
-                                            Background="White">
-                                        
-                                    </Canvas>
-                                    <StackPanel Margin="8,0,0,0"
-                                                Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource FlowPanelLabel}"
-                                                   Text="已使用:" />
-                                        <TextBlock Margin="8,0,0,0"
-                                                   FontSize="10"
-                                                   FontFamily="{StaticResource RectNum}"
-                                                   Style="{StaticResource FlowPanelLabel}"
-                                                   Text="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Used}" />
-                                    </StackPanel>
-                                    <StackPanel Margin="8,0,0,0"
-                                                Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource FlowPanelLabel}"
-                                                   Text="剩余:" />
-                                        <TextBlock Margin="8,0,0,0"
-                                                   FontSize="10"
-                                                   FontFamily="{StaticResource RectNum}"
-                                                   Style="{StaticResource FlowPanelLabel}"
-                                                   Text="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Used}" />
-                                    </StackPanel>
-                                </StackPanel>
+                                <Grid x:Name="moreInfo"
+                                      Margin="0,12,12,0"
+                                      Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Margin="8,0,0,16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <contorl:IconLabelItem Grid.Column="1"
+                                                               Style="{StaticResource FlowPanelLabel}"
+                                                               ItemNameWidth="32"
+                                                               Icon="&#xE13D;"
+                                                               ToolTipString="当前账户"
+                                                               IconSize="16"
+                                                               FontSize="16"
+                                                               Margin="0"
+                                                               ItemValue="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=User}" />
+                                        <contorl:IconLabelItem Grid.Column="0"
+                                                               Visibility="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Recharge,TargetNullValue={StaticResource vis_coll}}"
+                                                               Style="{StaticResource FlowPanelLabel}"
+                                                               ItemNameVisibility="Collapsed"
+                                                               ItemValueVisibility="Collapsed"
+                                                               Margin="0"
+                                                               IconSize="16"
+                                                               IconWidth="36"
+                                                               IconAlignment="Left"
+                                                               Icon="&#xF167;"
+                                                               ToolTipString="当前账户余额不足下一个月的月租，请及时充值" />
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <contorl:IconLabelItem Grid.Column="0"
+                                                               Grid.Row="0"
+                                                               Style="{StaticResource FlowPanelLabel}"
+                                                               Icon="&#xEB05;"
+                                                               ToolTipString="已使用流量"
+                                                               ItemValue="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Used}" />
+                                        <contorl:IconLabelItem Grid.Column="2"
+                                                               Grid.Row="0"
+                                                               Style="{StaticResource FlowPanelLabel}"
+                                                               Icon="&#xE9D9;"
+                                                               ToolTipString="剩余流量"
+                                                               ItemValue="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Balance}" />
+                                        <contorl:IconLabelItem Grid.Column="0"
+                                                               Grid.Row="1"
+                                                               Style="{StaticResource FlowPanelLabel}"
+                                                               Icon="&#xE7B3;"
+                                                               ToolTipString="账户余额（除去月租后）"
+                                                               ItemValue="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Cost}" />
+                                        <contorl:IconLabelItem Grid.Column="2"
+                                                               Grid.Row="1"
+                                                               Style="{StaticResource FlowPanelLabel}"
+                                                               Icon="&#xE81B;"
+                                                               ToolTipString="距上次更新时间"
+                                                               ItemValue="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Span}" />
+                                    </Grid>
+                                </Grid>
                             </Grid>
                             <Grid x:Name="controlpanel"
-                                  Visibility="{Binding IsMouseOver,RelativeSource={RelativeSource Mode=TemplatedParent} ,Converter={x:Static yt_conv:VisibilityConverter.Singleton}}"
+                                  Visibility="{Binding IsMouseOver,RelativeSource={RelativeSource Mode=TemplatedParent} ,Converter={x:Static yt_conv:VisibilityConverter.Singleton},ConverterParameter=YH}"
                                   Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />

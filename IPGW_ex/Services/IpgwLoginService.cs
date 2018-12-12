@@ -26,10 +26,23 @@ namespace IPGW_ex.Services {
 
         public LoginServices ServiceHolder { get; set; }
 
+        /// <summary>
+        /// 用于网络连接的类
+        /// </summary>
         protected WebInfoContainer InfoContainer {
             get => ServiceHolder.Container;
         }
 
+        /// <summary>
+        /// 当前账户
+        /// </summary>
+        internal string UserID {
+            get => ServiceHolder.Container.KeyValuePairs.FirstOrDefault(f => {return f.Key.Equals("username"); } ).Value;
+        }
+
+        /// <summary>
+        /// 当前连接状态
+        /// </summary>
         public bool ConnectState {
             get => FlowInfoViewModel.Singleton.ConnectState;
             set {
