@@ -42,6 +42,15 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
+                <yt_button:FIconButton x:Name="Back"
+                                       FontSize="14"
+                                       Command="{Binding MainPageCommands}"
+                                       CommandParameter="Back"
+                                       Content="&#xE112;"
+                                       ToolTipString="返回"
+                                       Visibility="{Binding ExtensionPage,Converter={StaticResource VisibilityConverter}}"
+                                       Style="{StaticResource CloseButton}"
+                                       Grid.Column="0" />
                 <yt_flow:YT_InlineMenuPanel AnimationMode="Right_Slide"
                                             Grid.Column="2"
                                             IsOpen="{Binding IsChecked, ElementName=Navigater,Mode=TwoWay}"

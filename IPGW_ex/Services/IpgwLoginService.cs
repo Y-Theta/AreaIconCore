@@ -14,8 +14,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using YFrameworkBase.Setting;
+using XmlDataProvider = YFrameworkBase.DataAccessor.XmlDataProvider;
 using YFrameworkBase;
-using YFrameworkBase.DataAccessor;
 
 namespace IPGW_ex.Services {
     internal class IpgwLoginService : SingletonBase<IpgwLoginService> {
@@ -64,6 +65,7 @@ namespace IPGW_ex.Services {
                 App.Current.Dispatcher.Invoke(() => {
                     IpgwSetting.Instance.LatestFlow = info;
                 }, DispatcherPriority.Normal);
+                SettingManager.Instance.SaveSetting<IpgwSetting>();
             });
             tsk.Start();
             await tsk;

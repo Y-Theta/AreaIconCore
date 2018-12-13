@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorD = System.Drawing.Color;
 using YFrameworkBase.Setting;
+using ExtensionContract;
+using AreaIconCore.Services;
 
 namespace IPGW_ex.Services {
     [SettingFile("settings", "ipgw_set.xml")]
@@ -68,11 +70,16 @@ namespace IPGW_ex.Services {
         #region Methods
         private void ReDrawIcon(string settingname, object newValue, object oldValue) {
             //字体颜色或大小变化时重新绘制
-            IPGWCore.Instence.UpdateAreaIcon(FormatService.Instance.LatestPercent);
+            if (_iconfontsize > 0) {
+                if (String.IsNullOrEmpty(FormatService.Instance.LatestPercent))
+                    FormatService.Instance.LatestPercent = string.Format("{0}", FormatService.Instance.CastToPercent(_latestflow, _package, false));
+                IPGWCore.Instence.PostData(IPGWCore.Instence, ApplicationScenario.AreaIcon,
+                        AreaIconDraw.Instance.StringIcon(FormatService.Instance.LatestPercent, _iconfontcolor, (float)_iconfontsize));
+            }
         }
 
         protected void Init() {
-            LatestFlow = new FlowInfo { Time = DateTime.Now, Data = 0, Balance = 0 };
+            LatestFlow = null;
             Package = new FlowPackage { Price = 20, Count = 60 };
             IconFontColor = ColorD.FromArgb(255, 255, 255, 255);
             IconFontSize = 6;

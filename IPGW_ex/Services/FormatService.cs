@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using SysConvert = System.Convert;
 using YFrameworkBase;
+using XmlDataProvider = YFrameworkBase.DataAccessor.XmlDataProvider;
 using System.Windows;
 
 namespace IPGW_ex.Services {
@@ -45,9 +46,9 @@ namespace IPGW_ex.Services {
                     case "SumCost":
                         return ((FlowInfo)value).Balance;
                     case "Span":
-                        return GetSpan((FlowInfo)value);
+                        return GetSpan(IpgwSetting.Instance.LatestFlow);
                     case "Recharge":
-                        return NeedRecharge((FlowInfo)value) ? Visibility.Visible : Visibility.Collapsed;
+                        return NeedRecharge() ? Visibility.Visible : Visibility.Collapsed;
                     case "State_Text":
                         return (bool)value ? "已连接" : "未连接";
                     case "State_Vis":
@@ -68,10 +69,8 @@ namespace IPGW_ex.Services {
         /// <summary>
         /// 判断是否需要充值
         /// </summary>
-        internal bool NeedRecharge(FlowInfo value) {
-            if (value is null)
-                return false;
-            return GetActualBalance(value, IpgwSetting.Instance.Package) <= IpgwSetting.Instance.Package.Price;
+        internal bool NeedRecharge() {
+            return GetActualBalance(IpgwSetting.Instance.LatestFlow, IpgwSetting.Instance.Package) <= IpgwSetting.Instance.Package.Price;
         }
 
         /// <summary>
@@ -145,6 +144,7 @@ namespace IPGW_ex.Services {
                 return null;
             }
             //TODO::保存本地
+            XmlDataProvider.Instance.AddNode(info);
             return info;
         }
 
@@ -165,7 +165,7 @@ namespace IPGW_ex.Services {
                     return string.Format("{0:#} H", span.TotalHours);
                 }
                 else {
-                    return string.Format("{0:#}} M", span.TotalMinutes);
+                    return string.Format("{0:#} M", span.TotalMinutes);
                 }
             }
             else

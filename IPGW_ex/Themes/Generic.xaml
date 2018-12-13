@@ -207,7 +207,7 @@
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition Width="16" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <contorl:IconLabelItem Grid.Column="0"
@@ -233,7 +233,7 @@
                                                                Style="{StaticResource FlowPanelLabel}"
                                                                Icon="&#xE81B;"
                                                                ToolTipString="距上次更新时间"
-                                                               ItemValue="{Binding FLOW, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Span}" />
+                                                               ItemValue="{Binding InfoUpdate, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Span,TargetNullValue=0}" />
                                     </Grid>
                                 </Grid>
                             </Grid>

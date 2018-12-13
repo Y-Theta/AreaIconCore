@@ -40,7 +40,7 @@ namespace IPGW_ex {
         public override object Run(ApplicationScenario c, object arg = null) {
             switch (c) {
                 case ApplicationScenario.AreaIcon:
-                    return GetAreaIcon(FormatService.Instance.LatestPercent);
+                    return GetAreaIcon();
                 case ApplicationScenario.MainPage:
                     return new MainPage();
                 case ApplicationScenario.AreaPopup:
@@ -53,15 +53,17 @@ namespace IPGW_ex {
         /// <summary>
         /// 获取图标化字符
         /// </summary>
-        public Icon GetAreaIcon(string ico) {
-            return AreaIconDraw.Instance.StringIcon(ico, IpgwSetting.Instance.IconFontColor, (float)IpgwSetting.Instance.IconFontSize);
+        public Icon GetAreaIcon() {
+            if(string.IsNullOrEmpty(FormatService.Instance.LatestPercent))
+                FormatService.Instance.LatestPercent = string.Format("{0}", FormatService.Instance.CastToPercent(IpgwSetting.Instance.LatestFlow, IpgwSetting.Instance.Package, false));
+            return AreaIconDraw.Instance.StringIcon(FormatService.Instance.LatestPercent, IpgwSetting.Instance.IconFontColor, (float)IpgwSetting.Instance.IconFontSize);
         }
 
         /// <summary>
         /// 更新托盘图标
         /// </summary>
-        public void UpdateAreaIcon(string ico) {
-            base.PostData(this, ApplicationScenario.AreaIcon, GetAreaIcon(ico));
+        public void UpdateAreaIcon() {
+            base.PostData(this, ApplicationScenario.AreaIcon, GetAreaIcon());
         }
 
         /// <summary>

@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YControls.Command;
 using YFrameworkBase;
+using XmlDataProvider = YFrameworkBase.DataAccessor.XmlDataProvider;
 
 namespace IPGW_ex.Controls {
     /// <summary>
@@ -48,7 +49,10 @@ namespace IPGW_ex.Controls {
         }
         public static readonly DependencyProperty FLOWProperty =
             DependencyProperty.Register("FLOW", typeof(FlowInfo),
-                typeof(FlowPanel), new PropertyMetadata(null));
+                typeof(FlowPanel), new PropertyMetadata(null, OnFlowChanged));
+        private static void OnFlowChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            ((FlowPanel)d).ForceTimeUpdate();
+        }
 
         /// <summary>
         /// 网络连接状态
@@ -62,26 +66,49 @@ namespace IPGW_ex.Controls {
                 typeof(FlowPanel), new PropertyMetadata(false));
 
         /// <summary>
+        /// 用于刷新一些时间戳相关的数值
+        /// </summary>
+        public bool InfoUpdate {
+            get { return (bool)GetValue(InfoUpdateProperty); }
+            set { SetValue(InfoUpdateProperty, value); }
+        }
+        public static readonly DependencyProperty InfoUpdateProperty =
+            DependencyProperty.Register("InfoUpdate", typeof(bool),
+                typeof(FlowPanel), new PropertyMetadata(false));
+
+        /// <summary>
         /// 按钮命令
         /// </summary>
         public CommandBase Action { get; set; }
         #endregion
 
         #region Methods
+        private void ForceTimeUpdate() {
+            InfoUpdate = false;
+            InfoUpdate = true;
+        }
+
         public override void OnApplyTemplate() {
             _updatebutton = GetTemplateChild("BTN_Update") as Button;
 
             base.OnApplyTemplate();
-        }
-
-        protected override void OnInitialized(EventArgs e) {
-            base.OnInitialized(e);
             _flowBinding = new Binding {
                 Source = IpgwSetting.Instance,
                 Path = new PropertyPath("LatestFlow"),
                 Mode = BindingMode.OneWay,
             };
-            SetBinding(FLOWProperty, _flowBinding);
+            SetBinding(FLOWProperty,_flowBinding);
+        }
+
+        protected override void OnInitialized(EventArgs e) {
+            base.OnInitialized(e);
+            if (IpgwSetting.Instance.LatestFlow is null) {
+                FlowInfo info = XmlDataProvider.Instance.GetNode<FlowInfo>(-1);
+                if (info is null) {
+                    info = IpgwLoginService.Instance.GetLatestFlow();
+                }
+                IpgwSetting.Instance.LatestFlow = info;
+            }
             IsVisibleChanged += FlowPanel_IsVisibleChanged;
             Action = new CommandBase();
             Action.Execution += Action_Execution;
@@ -100,7 +127,7 @@ namespace IPGW_ex.Controls {
                     _updatebutton.IsEnabled = false;
                     await IpgwLoginService.Instance.Update(() => {
                         _updatebutton.IsEnabled = true;
-                        IPGWCore.Instence.UpdateAreaIcon(FormatService.Instance.LatestPercent);
+                        IPGWCore.Instence.UpdateAreaIcon();
                     });
                     break;
                 case "DisConnect":
@@ -112,12 +139,11 @@ namespace IPGW_ex.Controls {
 
         private async void FlowPanel_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e) {
             if ((bool)e.NewValue) {
-                FLOW = null;
-                SetBinding(FLOWProperty, _flowBinding);
+                ForceTimeUpdate();
                 await IpgwLoginService.Instance.TestOnly();
             }
             else {
-                if(App.Current != null && !App.Current.MainWindow.IsVisible)
+                if (App.Current != null && !App.Current.MainWindow.IsVisible)
                     WinAPI.SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle.ToInt32(), -1, -1);
             }
         }

@@ -38,6 +38,15 @@ namespace AreaIconCore.ViewModels {
             get => _contentPageNow;
             set => SetValue(out _contentPageNow, value, ContentPageNow);
         }
+
+        /// <summary>
+        /// 是否为插件中的页面
+        /// </summary>
+        private bool _extensionpage;
+        public bool ExtensionPage {
+            get => _extensionpage;
+            set => SetValue(out _extensionpage, value, ExtensionPage);
+        }
         #endregion
 
         public CommandBase MainPageCommands { get; set; }
@@ -78,19 +87,15 @@ namespace AreaIconCore.ViewModels {
             switch (para.ToString()) {
                 case "Page_Main":
                     NavigateToLocal(new MainPage());
-
                     break;
                 case "Page_Setting":
                     NavigateToLocal(new SettingPage());
-
                     break;
                 case "Page_Extension":
                     NavigateToLocal(new ExtensionPage());
-
                     break;
                 case "Page_About":
                     NavigateToLocal(new AboutPage());
-
                     break;
                 default: break;
             }
@@ -101,6 +106,9 @@ namespace AreaIconCore.ViewModels {
         /// </summary>
         private void MainPageCommands_Execution(object para = null) {
             switch (para) {
+                case "Back":
+                    NavigateToLocal(new ExtensionPage());
+                    break;
                 case "Close":
                     App.Current.MainWindow.Hide();
                     break;
@@ -108,7 +116,11 @@ namespace AreaIconCore.ViewModels {
             }
         }
 
+        /// <summary>
+        /// 导航到本地页面
+        /// </summary>
         public void NavigateToLocal(Page page) {
+            ExtensionPage = false;
             if (page.GetType() == typeof(MainPage))
                 UpdateContentInfo(App.Current.Resources["Icon_MainPage"] as String, App.Current.Resources["Label_MainPage"] as String);
             else if (page.GetType() == typeof(SettingPage))
@@ -121,10 +133,12 @@ namespace AreaIconCore.ViewModels {
         }
 
         public void NavigateTo(Uri page) {
+            ExtensionPage = true;
             FrameCommand.Execute(new NavigateArgs(page, null));
         }
 
         public void NavigateTo(object content) {
+            ExtensionPage = true;
             FrameCommand.Execute(new NavigateArgs(content, null));
         }
 
