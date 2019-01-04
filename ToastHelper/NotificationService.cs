@@ -14,12 +14,17 @@ namespace ToastHelper {
     /// Win10通知
     /// Toast通知回调
     /// </summary>
-    /// <param name="arg">写在ToastCommands中的Argument</param>
-    public delegate void ToastAction(string arg);
+    /// <param name="app">app的id</param>
+    /// <param name="arg">按钮的参数</param>
+    /// <param name="kvs">用户输入</param>
+    public delegate void ToastAction(string app, string arg, List<KeyValuePair<string, string>> kvs);
 
     /// <summary>
     /// 继承自NotificationActivator 本来是为了使用OnActivated回调
     /// 结果没有用,只能在每个Toast创建时创建回调
+    /// 
+    /// 
+    /// 最好用其他类继承本类，并将下面的特性拷贝到新类上，换上自己的GUID，这是为了测试方便
     /// </summary>
     [ClassInterface(ClassInterfaceType.None)]
     [ComSourceInterfaces(typeof(INotificationActivationCallback))]
@@ -32,14 +37,26 @@ namespace ToastHelper {
         }
 
         /// <summary>
-        /// 通知响应事件
+        /// 通知响应事件,在使用时接收
         /// </summary>
         public event ToastAction ToastCallback;
 
         /// <summary>
         /// 微软提供的回调,但是目前没有响应
         /// </summary>
-        public override void OnActivated(string arguments, NotificationUserInput userInput, string appUserModelId) { }
+        public override void OnActivated(string arguments, NotificationUserInput userInput, string appUserModelId) {
+            //foreach (var key in userInput.Keys) {
+            //    Console.WriteLine(key);
+            //    Console.WriteLine(userInput[key]);
+            //}
+            //Console.WriteLine(appUserModelId);
+            List<KeyValuePair<string, string>> kvs = new List<KeyValuePair<string, string>>();
+            if (userInput != null && userInput.Count > 0)
+                foreach (var key in userInput.Keys) {
+                    kvs.Add(new KeyValuePair<string, string>(key, userInput[key]));
+                }
+            ToastCallback?.Invoke(appUserModelId, arguments, kvs);
+        }
 
         /// <summary>
         /// 发送一条通知 （标题/文本）
@@ -110,12 +127,37 @@ namespace ToastHelper {
         }
 
         /// <summary>
+        /// ————————————————————————————————————————————————————————
+        /// 测试Input类型使用
+        /// </summary>
+        public void Notify(string title, string content, bool flag) {
+            XmlDocument xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+            //获得binding组
+            XmlElement binding = (XmlElement)xml.GetElementsByTagName("binding")[0];
+            binding.SetAttribute("template", "ToastGeneric");
+
+            XmlNodeList lines = xml.GetElementsByTagName("text");
+            lines[0].AppendChild(xml.CreateTextNode(title));
+            lines[1].AppendChild(xml.CreateTextNode(content));
+
+            XmlElement root = (XmlElement)xml.GetElementsByTagName("toast")[0];
+            XmlElement actions = xml.CreateElement("actions");
+
+            XmlElement input = xml.CreateElement("input");
+            input.SetAttribute("type", "text");
+            input.SetAttribute("id", "textBox");
+            input.SetAttribute("placeHolderContent", "reply");
+            actions.AppendChild(input);
+            root.AppendChild(actions);
+
+            ShowToast(xml);
+        }
+
+        /// <summary>
         /// 发送通知
         /// </summary>
         private void ShowToast(XmlDocument xml) {
             ToastNotification toast = new ToastNotification(xml);
-            toast.Activated += Toast_Activated;
-            toast.Dismissed += Toast_Dismissed;
             DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
         }
 
@@ -137,6 +179,19 @@ namespace ToastHelper {
         }
 
         /// <summary>
+        /// 添加输入框
+        /// </summary>
+        private void AddInput(XmlDocument xml) {
+            XmlElement actions = (XmlElement)xml.GetElementsByTagName("actions")[0];
+
+            XmlElement input = xml.CreateElement("input");
+            input.SetAttribute("type", "text");
+            input.SetAttribute("id", "textBox");
+            input.SetAttribute("placeHolderContent", "test");
+            actions.AppendChild(input);
+        }
+
+        /// <summary>
         /// 为通知添加大标签
         /// </summary>
         private void AddBigLogo(XmlDocument xml, string logopath) {
@@ -148,22 +203,6 @@ namespace ToastHelper {
             image.SetAttribute("placement", "appLogoOverride");
             image.SetAttribute("src", logopath);
             binding.AppendChild(image);
-        }
-
-        /// <summary>
-        /// 交互响应
-        /// </summary>
-        private void Toast_Activated(ToastNotification sender, object args) {
-            var arg = ((ToastActivatedEventArgs)args);
-            ToastCallback?.Invoke(arg.Arguments);
-        }
-
-        /// <summary>
-        /// 消失原因
-        /// </summary>
-        private void Toast_Dismissed(ToastNotification sender, ToastDismissedEventArgs args) {
-            //区别通知类型
-            ToastCallback?.Invoke("Dismissed:" + args.Reason.ToString());
         }
 
         /// <summary>

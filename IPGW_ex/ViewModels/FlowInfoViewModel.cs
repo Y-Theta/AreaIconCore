@@ -25,6 +25,24 @@ namespace IPGW_ex.ViewModels {
             set => SetValue(out _connectstate, value, ConnectState);
         }
 
+        /// <summary>
+        /// 当前登录的用户
+        /// </summary>
+        private string _presentAccount;
+        public string PresentAccount {
+            get => _presentAccount;
+            set => SetValue(out _presentAccount, value, PresentAccount);
+        }
+
+        /// <summary>
+        /// 当前用户的密码
+        /// </summary>
+        private string _presentPassword;
+        public string PresentPassword {
+            get => _presentPassword;
+            set => SetValue(out _presentPassword, value, PresentPassword);
+        }
+
         #endregion
 
         #region Methods

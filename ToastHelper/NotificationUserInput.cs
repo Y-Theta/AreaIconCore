@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace ToastHelper {
    public class NotificationUserInput : IReadOnlyDictionary<string, string> {
         #region Properties
-        private NotificationActivator.NOTIFICATION_USER_INPUT_DATA[] _data;
+        private NOTIFICATION_USER_INPUT_DATA[] _data;
 
-        internal NotificationUserInput(NotificationActivator.NOTIFICATION_USER_INPUT_DATA[] data) {
+        internal NotificationUserInput(NOTIFICATION_USER_INPUT_DATA[] data) {
             _data = data;
         }
 

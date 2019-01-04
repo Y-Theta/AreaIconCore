@@ -10,8 +10,7 @@
       xmlns:ser="clr-namespace:AreaIconCore.Services"
       xmlns:control="clr-namespace:AreaIconCore.Controls"
       xmlns:conv="clr-namespace:AreaIconCore.Converter"
-      DataContext="{Binding Source={StaticResource SettingPageViewModel}}"
-      mc:Ignorable="d">
+      DataContext="{Binding Source={StaticResource SettingPageViewModel}}">
     <Page.Resources>
         <conv:DCArgs x:Key="OpacitySliderConvPara"
                      Num="100"
@@ -35,7 +34,7 @@
                                    Command="{Binding SettingPageCommands}"/>
             <yt_button:FIconButton Style="{StaticResource SettingPageSaveButton}"
                                    LabelFontFamily="{StaticResource Questrial}"
-                                   LabelString="ABCDE"
+                                   LabelString="{DynamicResource SettingPage_Reset}"
                                    Grid.Column="2"
                                    CommandParameter="Clear"
                                    Command="{Binding SettingPageCommands}" />

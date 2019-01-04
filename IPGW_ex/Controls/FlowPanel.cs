@@ -102,13 +102,7 @@ namespace IPGW_ex.Controls {
 
         protected override void OnInitialized(EventArgs e) {
             base.OnInitialized(e);
-            if (IpgwSetting.Instance.LatestFlow is null) {
-                FlowInfo info = XmlDataProvider.Instance.GetNode<FlowInfo>(-1);
-                if (info is null) {
-                    info = IpgwLoginService.Instance.GetLatestFlow();
-                }
-                IpgwSetting.Instance.LatestFlow = info;
-            }
+           
             IsVisibleChanged += FlowPanel_IsVisibleChanged;
             Action = new CommandBase();
             Action.Execution += Action_Execution;
@@ -124,6 +118,13 @@ namespace IPGW_ex.Controls {
         private async void Action_Execution(object para = null) {
             switch (para) {
                 case "Update":
+                    if (IpgwSetting.Instance.LatestFlow is null) {
+                        FlowInfo info = XmlDataProvider.Instance.GetNode<FlowInfo>(-1);
+                        if (info is null) {
+                            info = IpgwLoginService.Instance.GetLatestFlow();
+                        }
+                        IpgwSetting.Instance.LatestFlow = info;
+                    }
                     _updatebutton.IsEnabled = false;
                     await IpgwLoginService.Instance.Update(() => {
                         _updatebutton.IsEnabled = true;

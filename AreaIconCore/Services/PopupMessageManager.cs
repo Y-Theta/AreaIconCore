@@ -19,7 +19,7 @@ namespace AreaIconCore.Services {
         /// 消息Popup控件
         /// 采用即时消息
         /// </summary>
-        private YT_PopupBase _popholder { get; set; }
+        private YT_PopupBase _popholder;
         #endregion
 
         #region Methods
@@ -27,6 +27,8 @@ namespace AreaIconCore.Services {
         /// 发出一条文本通知
         /// </summary>
         public void Message(string content) {
+            if (_popholder.IsOpen)
+                _popholder.IsOpen = false;
             _popholder.Style = App.FindRes<Style>("MessageTextPopup");
             ContentControl contentc = new ContentControl {
                 Style = App.FindRes<Style>("MessagePopupContent"),
@@ -46,6 +48,8 @@ namespace AreaIconCore.Services {
         /// 发出一条带有内容的通知
         /// </summary>
         public void Message(UIElement content) {
+            if (_popholder.IsOpen)
+                _popholder.IsOpen = false;
             _popholder.Style = App.FindRes<Style>("MessageTextPopup") as Style;
             _popholder.Child = content;
             _popholder.IsOpen = true;
@@ -53,7 +57,8 @@ namespace AreaIconCore.Services {
 
         protected void Init() {
             _popholder = new YT_PopupBase {
-                PlacementTarget = App.Current.MainWindow
+                PlacementTarget = App.Current.MainWindow,
+                Placement = System.Windows.Controls.Primitives.PlacementMode.RelativePoint
             };
         }
         #endregion

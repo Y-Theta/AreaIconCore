@@ -111,6 +111,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\SelfLibraries\YControlExtension\YControlExtension\YControlExtension\YControlExtension.csproj">
+      <Project>{b7bdd716-441e-4411-90a9-6a5099eff6bc}</Project>
+      <Name>YControlExtension</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\SelfLibraries\YControls1.0\YControls1.0\YControls1.0\YControls.csproj">
       <Project>{11c8d3a8-f83f-4112-95c5-b61684af36a7}</Project>
       <Name>YControls</Name>

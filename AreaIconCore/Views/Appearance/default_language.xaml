@@ -41,6 +41,7 @@
     <sys:String x:Key="SettingPage_Lang">当前语言</sys:String>
 
     <sys:String x:Key="SettingPage_Save">保存当前设置</sys:String>
+    <sys:String x:Key="SettingPage_Reset">还原默认设置</sys:String>
     <sys:String x:Key="SettingPage_Save_OKMessage">设置已保存.</sys:String>
     <sys:String x:Key="SettingPage_Save_FailedMessage">设置保存失败!</sys:String>
     

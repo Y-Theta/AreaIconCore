@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HttpServices;
 using System.Windows.Data;
 using SysConvert = System.Convert;
 using YFrameworkBase;
@@ -55,6 +56,10 @@ namespace IPGW_ex.Services {
                         return (bool)value ? Visibility.Visible : Visibility.Collapsed;
                     case "User":
                         return IpgwLoginService.Instance.UserID;
+                    case "Package_P":
+                        return ((FlowPackage)value).Price;
+                    case "Package_C":
+                        return ((FlowPackage)value).Count;
                     default: return value;
                 }
             }
@@ -63,7 +68,24 @@ namespace IPGW_ex.Services {
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-            throw new NotImplementedException();
+            FlowPackage newpack;
+            if (parameter is string) {
+                switch (parameter) {
+                    case "Package_P":
+                        newpack = new FlowPackage();
+                        try { newpack.Price = int.Parse(value.ToString()); newpack.Count = IpgwSetting.Instance.Package.Count; }
+                        catch { newpack = IpgwSetting.Instance.Package; }
+                        return newpack;
+                    case "Package_C":
+                        newpack = new FlowPackage();
+                        try { newpack.Count = int.Parse(value.ToString()); newpack.Price = IpgwSetting.Instance.Package.Price; }
+                        catch { newpack = IpgwSetting.Instance.Package; }
+                        return newpack;
+                    default: return value;
+                }
+            }
+            else
+                return null;
         }
 
         /// <summary>
@@ -102,6 +124,8 @@ namespace IPGW_ex.Services {
         /// </summary>
         /// <param name="info">流量信息</param>
         private double GetUsedFlow(FlowInfo info) {
+            if (info is null)
+                return 0;
             return info.Data;
         }
 
@@ -110,6 +134,8 @@ namespace IPGW_ex.Services {
         /// </summary>
         /// <param name="info">流量信息</param>
         private double GetBalanceFlow(FlowInfo info, FlowPackage package) {
+            if (info is null)
+                return 0;
             double packageflow = package.Count * TICK;
             double actbalance = info.Balance - package.Price;
             if (info.Data <= packageflow)
@@ -132,6 +158,8 @@ namespace IPGW_ex.Services {
         /// 由IPGW返回的字符串格式化
         /// </summary>
         internal FlowInfo GetIpgwDataInf(string data) {
+            if (string.IsNullOrEmpty(data))
+                return null;
             FlowInfo info = new FlowInfo();
             try {
                 string[] t = data.Split(new char[] { ',' });
@@ -143,7 +171,6 @@ namespace IPGW_ex.Services {
             catch {
                 return null;
             }
-            //TODO::保存本地
             XmlDataProvider.Instance.AddNode(info);
             return info;
         }
@@ -159,6 +186,8 @@ namespace IPGW_ex.Services {
         /// 获取距上次刷新时间
         /// </summary>
         private string GetSpan(FlowInfo info) {
+            if (info is null)
+                return "0 S";
             TimeSpan span = DateTime.Now.Subtract(info.Time);
             if (span.TotalSeconds > 60) {
                 if (span.TotalMinutes > 60) {

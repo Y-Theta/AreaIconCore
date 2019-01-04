@@ -1,5 +1,6 @@
 ﻿using AreaIconCore.Models;
 using AreaIconCore.Services;
+using AreaIconCore.ViewModels;
 using ExtensionContract;
 using System;
 using System.Collections.Generic;
@@ -74,22 +75,22 @@ namespace AreaIconCore.Controls {
             Operation.Execution += Operation_Execution;
         }
 
+        protected override void OnInitialized(EventArgs e) {
+            InitCommands();
+            base.OnInitialized(e);
+        }
+
         /// <summary>
         /// 对相关插件的操作
         /// </summary>
         private void Operation_Execution(object para = null) {
             switch (para) {
-                case "ENABLE":
-                    break;
                 case "SETTING":
+                    if (HostAdapter.Instance.ExtensionDirectory.ContainsKey(ExtensionKey.Name))
+                        MainWindowViewModel.Singleton.NavigateTo(HostAdapter.Instance.ExtensionDirectory[ExtensionKey.Name].Run(ApplicationScenario.SettingPage));
                     break;
                 default:break;
             }
-        }
-
-        public override void OnApplyTemplate() {
-            InitCommands();
-            base.OnApplyTemplate();
         }
         #endregion
 

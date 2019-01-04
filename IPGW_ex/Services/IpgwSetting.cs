@@ -1,11 +1,6 @@
 ﻿using IPGW_ex.Model;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using ColorD = System.Drawing.Color;
 using YFrameworkBase.Setting;
 using ExtensionContract;
@@ -34,6 +29,26 @@ namespace IPGW_ex.Services {
         public FlowPackage Package {
             get => _package;
             set => SetValue(out _package, value, Package);
+        }
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        [DataMember]
+        private string _account;
+        public string Account {
+            get => _account;
+            set => SetValue(out _account, value, Account);
+        }
+
+        /// <summary>
+        /// 密码
+        /// </summary>
+        [DataMember]
+        private string _password;
+        public string Password {
+            get => _password;
+            set => SetValue(out _password, value, Password);
         }
 
         /// <summary>

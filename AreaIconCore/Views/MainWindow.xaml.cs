@@ -63,10 +63,7 @@ namespace AreaIconCore.Views {
         }
 
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {
-            App.ToastHelper.Notify(ConstTable.AppIcon, nameof(AreaIconCore), "HELLO", new ToastCommands[] {
-                 new ToastCommands("Invoke_YES","YES"),
-                 new ToastCommands("Invoke_NO","NO"),
-             });
+            App.ToastHelper.Notify(nameof(AreaIconCore), "HELLO", true);
         }
 
         public MainWindow() {

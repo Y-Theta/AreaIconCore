@@ -43,6 +43,8 @@ namespace IPGW_ex {
                     return GetAreaIcon();
                 case ApplicationScenario.MainPage:
                     return new MainPage();
+                case ApplicationScenario.SettingPage:
+                    return new SettingPage();
                 case ApplicationScenario.AreaPopup:
                     return new FlowPanel();
                 default:

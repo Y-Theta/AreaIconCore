@@ -2,8 +2,83 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:ic_control="clr-namespace:AreaIconCore.Controls;assembly=AreaIconCore"
-      xmlns:local="clr-namespace:IPGW_ex.View">
-    <Grid>
-        
+      xmlns:yt_slide="clr-namespace:YControls.SlideControls;assembly=YControls"
+      xmlns:yt_text="clr-namespace:YControls.TextControls;assembly=YControls"
+      xmlns:yte_text="clr-namespace:YControlExtension.TextView;assembly=YControlExtension"
+      xmlns:ser="clr-namespace:IPGW_ex.Services"
+      xmlns:local="clr-namespace:IPGW_ex.View"
+      xmlns:yt_button="clr-namespace:YControls.FontIconButtons;assembly=YControls">
+    <Grid Margin="0,30,0,0">
+        <yt_slide:YT_ScrollViewer x:Name="SettingItem"
+                                  Style="{StaticResource DefaultScrollViewer}"
+                                  HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Width="320">
+                <ic_control:SettingItem SettingKey="校园网账户"
+                                        Style="{StaticResource DefaultSettingItem}">
+                    <yt_text:YT_TextBox Style="{StaticResource DefaultSettingInput}"
+                                        Text="{Binding Account, Source={x:Static ser:IpgwSetting.Instance},Mode=TwoWay}"
+                                        PlaceHolderText="请输入校园网账户" />
+                </ic_control:SettingItem>
+                <ic_control:SettingItem SettingKey="校园网密码"
+                                        Style="{StaticResource DefaultSettingItem}">
+                    <yte_text:YT_PasswordBox Style="{StaticResource DefaultSettingInput}"
+                                             Text="{Binding Password, Source={x:Static ser:IpgwSetting.Instance},Mode=TwoWay}"
+                                             PlaceHolderText="请输入校园网密码" />
+                </ic_control:SettingItem>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <yt_button:FIconButton Style="{StaticResource SettingPageSaveButton}"
+                                           LabelString="保存校园网信息"
+                                           HorizontalAlignment="Left"
+                                           LabelMargin="8,0"
+                                           CommandParameter="Save"
+                                           Command="{Binding SettingPageCommands}" />
+                </Grid>
+                <ic_control:SettingItem SettingKey="套餐费用"
+                                        Style="{StaticResource DefaultSettingItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <yt_text:YT_TextBox Style="{StaticResource DefaultSettingInput}"
+                                            PlaceHolderText="请输入当前流量套餐的月租"
+                                            Text="{Binding Package,Source={x:Static ser:IpgwSetting.Instance},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Package_P,Mode=TwoWay}" />
+                        <TextBlock Style="{StaticResource SettingItemKeyString}"
+                                   Grid.Column="1"
+                                   Width="16"
+                                   Text="元" />
+                    </Grid>
+                </ic_control:SettingItem>
+                <ic_control:SettingItem SettingKey="套餐流量"
+                                        Style="{StaticResource DefaultSettingItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <yt_text:YT_TextBox Style="{StaticResource DefaultSettingInput}"
+                                            PlaceHolderText="请输入当前流量套餐的额度"
+                                            Text="{Binding Package,Source={x:Static ser:IpgwSetting.Instance},Converter={x:Static ser:FormatService.Instance},ConverterParameter=Package_C,Mode=TwoWay}" />
+                        <TextBlock Style="{StaticResource SettingItemKeyString}"
+                                   Grid.Column="1"
+                                   Margin="4,2,0,0"
+                                   Width="16"
+                                   Text="G" />
+                    </Grid>
+                </ic_control:SettingItem>
+                <ic_control:SettingItem SettingKey="托盘字体大小"
+                                        Style="{StaticResource DefaultSettingItem}">
+
+                </ic_control:SettingItem>
+                <ic_control:SettingItem SettingKey="托盘字体颜色"
+                                        Style="{StaticResource DefaultSettingItem}">
+
+                </ic_control:SettingItem>
+            </StackPanel>
+        </yt_slide:YT_ScrollViewer>
     </Grid>
 </Page>

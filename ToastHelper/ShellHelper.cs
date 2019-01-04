@@ -33,7 +33,7 @@ namespace ToastHelper {
         #region equality and hashing
 
         public override int GetHashCode() {
-            return formatId.GetHashCode() ^ propertyId;
+            return formatId.GetHashCode() ^ (int)propertyId;
         }
 
         public override bool Equals(object obj) {
@@ -97,8 +97,7 @@ namespace ToastHelper {
         UInt32 GetArguments(
             [Out(), MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszArgs,
             int cchMaxPath);
-        UInt32 SetArguments(
-            [MarshalAs(UnmanagedType.LPWStr)] string pszArgs);
+        UInt32 SetArguments([MarshalAs(UnmanagedType.LPWStr)] string pszArgs);
         UInt32 GetHotKey(out short wHotKey);
         UInt32 SetHotKey(short wHotKey);
         UInt32 GetShowCmd(out uint iShowCmd);
@@ -118,9 +117,9 @@ namespace ToastHelper {
             [MarshalAs(UnmanagedType.LPWStr)] string pszFile);
     }
 
-    [ComImport,
-    Guid("0000010b-0000-0000-C000-000000000046"),
-    InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [ComImport]
+    [Guid("0000010b-0000-0000-C000-000000000046")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IPersistFile {
         UInt32 GetCurFile(
             [Out(), MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile
@@ -135,6 +134,7 @@ namespace ToastHelper {
         UInt32 SaveCompleted(
             [MarshalAs(UnmanagedType.LPWStr)] string pszFileName);
     }
+
     [ComImport]
     [Guid("886D8EEB-8CF2-4446-8D02-CDBA1DBDCF99")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -173,40 +173,14 @@ namespace ToastHelper {
         decimal _decimal;
         [FieldOffset(0)]
         ushort _valueType;
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
-        [FieldOffset(12)]
+        [FieldOffset(8)]
         IntPtr _ptr2;
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         [FieldOffset(8)]
         IntPtr _ptr;
-        [FieldOffset(8)]
-        Int32 _int32;
-        [FieldOffset(8)]
-        UInt32 _uint32;
-        [FieldOffset(8)]
-        byte _byte;
-        [FieldOffset(8)]
-        sbyte _sbyte;
-        [FieldOffset(8)]
-        short _short;
-        [FieldOffset(8)]
-        ushort _ushort;
-        [FieldOffset(8)]
-        long _long;
-        [FieldOffset(8)]
-        ulong _ulong;
-        [FieldOffset(8)]
-        double _double;
-        [FieldOffset(8)]
-        float _float;
 
         #endregion 
 
         #region Constructors
-        public void SetEnum(VarEnum enumtype) {
-            _valueType = (ushort)enumtype;
-        }
-
         public PropVariant(string value) {
             if (value == null) {
                 throw new ArgumentException();
@@ -215,12 +189,14 @@ namespace ToastHelper {
             _ptr = Marshal.StringToCoTaskMemUni(value);
         }
 
-        public PropVariant(string value, VarEnum type) {
-            if (value == null) {
+        public PropVariant(Guid guid) {
+            if (guid == null) {
                 throw new ArgumentException();
             }
-            _valueType = (ushort)type;
-            _ptr2 = Marshal.StringToCoTaskMemUni(value);
+            byte[] bytes = guid.ToByteArray();
+            _valueType = (ushort)VarEnum.VT_CLSID;
+            _ptr2 = Marshal.AllocCoTaskMem(bytes.Length);
+            Marshal.Copy(bytes, 0, _ptr2, bytes.Length);
         }
 
         #endregion

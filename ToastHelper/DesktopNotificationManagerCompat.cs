@@ -90,7 +90,6 @@ namespace ToastHelper {
             IShellLinkW newShortcut = (IShellLinkW)new CShellLink();
 
             ErrorHelper.VerifySucceeded(newShortcut.SetPath(exePath));
-            ErrorHelper.VerifySucceeded(newShortcut.SetArguments(""));
 
             IPropertyStore newShortcutProperties = (IPropertyStore)newShortcut;
 
@@ -98,8 +97,7 @@ namespace ToastHelper {
                 ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 5), appId));
             }
 
-            var toastclass = typeof(T).GUID.ToString();
-            using (PropVariant toastid = new PropVariant(toastclass, VarEnum.VT_CLSID))  {
+            using (PropVariant toastid = new PropVariant(typeof(T).GUID))  {
                 ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 26), toastid));
             }
             ErrorHelper.VerifySucceeded(newShortcutProperties.Commit());

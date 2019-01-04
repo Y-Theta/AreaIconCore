@@ -4,6 +4,7 @@
                     xmlns:yt_flow="clr-namespace:YControls.FlowControls;assembly=YControls"
                     xmlns:yt_slide="clr-namespace:YControls.SlideControls;assembly=YControls"
                     xmlns:yt_wx="clr-namespace:YControls.WinXStyleControls;assembly=YControls"
+                    xmlns:yt_text="clr-namespace:YControls.TextControls;assembly=YControls"
                     xmlns:yt_conv="clr-namespace:YControls.Converters;assembly=YControls"
                     xmlns:yt_dialog="clr-namespace:YControls.Dialogs;assembly=YControls"
                     xmlns:ct="clr-namespace:ExtensionContract;assembly=ExtensionContract"
@@ -121,6 +122,36 @@
 
     <!--#endregion-->
 
+    <!--#region                                                         TextBoxes-->
+    <Style x:Key="DefaultSettingInput"
+           TargetType="yt_text:YT_TextBox">
+        <Setter Property="Foreground"
+                Value="{DynamicResource MainTheme_Fg}" />
+        <Setter Property="PlaceHolderTextForeground"
+                Value="{DynamicResource MainTheme_Fg_D1}" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="CaretBrush"
+                Value="{DynamicResource MainTheme_Fg_B1}" />
+        <Setter Property="Width"
+                Value="48" />
+        <Setter Property="MaxWidth"
+                Value="128" />
+        <Setter Property="HorizontalAlignment"
+                Value="Right" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="TextAlignment"
+                Value="Left" />
+        <Setter Property="PlaceHolderMargin"
+                Value="0,3,0,0" />
+        <Setter Property="TextMargin"
+                Value="0,3,0,0" />
+        <Setter Property="FontSize"
+                Value="12" />
+    </Style>
+    <!--#endregion-->
+
     <!--#region                                                         ButtonStyles-->
 
     <!--CloseButton-->
@@ -169,8 +200,6 @@
                 Value="10.6" />
         <Setter Property="Margin"
                 Value="4,4" />
-        <Setter Property="LabelHorizontalAlignment"
-                Value="Center" />
         <Setter Property="Width"
                 Value="108" />
         <Setter Property="Height"

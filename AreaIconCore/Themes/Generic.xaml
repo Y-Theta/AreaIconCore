@@ -243,9 +243,7 @@
                                     </yt_button:FIconButton>
                                     <yt_button:FIconToggleButton Grid.Column="1"
                                                                  Style="{StaticResource ExtensionItem_EnableButton}"
-                                                                 IsChecked="{Binding ExtensionEnable,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}"
-                                                                 CommandParameter="ENABLE"
-                                                                 Command="{Binding Operation, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                                 IsChecked="{Binding ExtensionEnable,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}">
                                         <yt_button:FIconToggleButton.Clip>
                                             <EllipseGeometry RadiusX="15"
                                                              RadiusY="15"
