@@ -45,11 +45,6 @@ namespace ToastHelper {
         /// 微软提供的回调,但是目前没有响应
         /// </summary>
         public override void OnActivated(string arguments, NotificationUserInput userInput, string appUserModelId) {
-            //foreach (var key in userInput.Keys) {
-            //    Console.WriteLine(key);
-            //    Console.WriteLine(userInput[key]);
-            //}
-            //Console.WriteLine(appUserModelId);
             List<KeyValuePair<string, string>> kvs = new List<KeyValuePair<string, string>>();
             if (userInput != null && userInput.Count > 0)
                 foreach (var key in userInput.Keys) {
@@ -65,11 +60,7 @@ namespace ToastHelper {
         /// <param name="content">文本</param>
         public void Notify(string title, string content) {
             XmlDocument xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
-
-            XmlNodeList lines = xml.GetElementsByTagName("text");
-            lines[0].AppendChild(xml.CreateTextNode(title));
-            lines[1].AppendChild(xml.CreateTextNode(content));
-
+            AddTitle(xml, title, content);
             ShowToast(xml);
         }
 
@@ -81,11 +72,7 @@ namespace ToastHelper {
         /// <param name="commands">自定义命令组</param>
         public void Notify(string title, string content, params ToastCommands[] commands) {
             XmlDocument xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
-
-            XmlNodeList lines = xml.GetElementsByTagName("text");
-            lines[0].AppendChild(xml.CreateTextNode(title));
-            lines[1].AppendChild(xml.CreateTextNode(content));
-
+            AddTitle(xml, title, content);
             AddCommands(xml, commands);
             ShowToast(xml);
         }
@@ -98,11 +85,7 @@ namespace ToastHelper {
         /// <param name="content">文本</param>
         public void Notify(string picuri, string title, string content) {
             XmlDocument xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
-
-            XmlNodeList lines = xml.GetElementsByTagName("text");
-            lines[0].AppendChild(xml.CreateTextNode(title));
-            lines[1].AppendChild(xml.CreateTextNode(content));
-
+            AddTitle(xml, title, content);
             AddBigLogo(xml, picuri);
             ShowToast(xml);
         }
@@ -116,11 +99,7 @@ namespace ToastHelper {
         /// <param name="commands">自定义命令组</param>
         public void Notify(string picuri, string title, string content, params ToastCommands[] commands) {
             XmlDocument xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
-
-            XmlNodeList lines = xml.GetElementsByTagName("text");
-            lines[0].AppendChild(xml.CreateTextNode(title));
-            lines[1].AppendChild(xml.CreateTextNode(content));
-
+            AddTitle(xml, title, content);
             AddBigLogo(xml, picuri);
             AddCommands(xml, commands);
             ShowToast(xml);
@@ -159,6 +138,15 @@ namespace ToastHelper {
         private void ShowToast(XmlDocument xml) {
             ToastNotification toast = new ToastNotification(xml);
             DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
+        }
+
+        /// <summary>
+        /// 添加标题和内容描述
+        /// </summary>
+        private void AddTitle(XmlDocument xml, string title, string content) {
+            XmlNodeList lines = xml.GetElementsByTagName("text");
+            lines[0].AppendChild(xml.CreateTextNode(title));
+            lines[1].AppendChild(xml.CreateTextNode(content));
         }
 
         /// <summary>
@@ -214,5 +202,4 @@ namespace ToastHelper {
         }
         #endregion
     }
-
 }

@@ -1,27 +1,12 @@
-﻿using ColorD = System.Drawing.Color;
-using Icon = System.Drawing.Icon;
+﻿using Icon = System.Drawing.Icon;
 using System.Windows;
 using AreaIconCore.Services;
 using YControls.AreaIconWindow;
-using YControls.FlowControls;
-using YFrameworkBase.Setting;
 using AreaIconCore.ViewModels;
-using YControls.Command;
-using System;
-using static YControls.WinAPI.DllImportMethods;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
 using AreaIconCore.Models;
-using YControls.InterAction;
-using ToastHelper;
 using AreaIconCore.Views.Pages;
-using YControls.Dialogs;
-using System.Windows.Controls;
 using ExtensionContract;
-using YFrameworkBase.DataAccessor;
-using HttpServices;
-using HttpServices.DataProviders;
-using System.Collections.Generic;
+using ToastHelper;
 
 namespace AreaIconCore.Views {
     /// <summary>
@@ -48,7 +33,6 @@ namespace AreaIconCore.Views {
             }
             if (AreaIcons.Count == 0) {
                 RegisterAreaIcon(nameof(AreaIconCore));
-                AreaIcons[nameof(AreaIconCore)].IconMouseDoubleClick += MainWindow_IconMouseDoubleClick;
                 AreaIcons[nameof(AreaIconCore)].Areaicon = new Icon(ConstTable.AppIcon);
                 AreaIcons[nameof(AreaIconCore)].AreaText = nameof(AreaIconCore);
                 AreaIcons[nameof(AreaIconCore)].DContextmenu = App.CreateAreaIconMenu();
@@ -63,18 +47,13 @@ namespace AreaIconCore.Views {
         }
 
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {
-            App.ToastHelper.Notify(nameof(AreaIconCore), "HELLO", true);
+            NotificationService ser = new NotificationService();
+            ser.Notify("2323", "2323", true);
         }
 
         public MainWindow() {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            var dialog = new YT_DialogBase();
-            dialog.Style = App.Current.Resources["EnsureDialog"] as Style;
-            dialog.ShowDialog(App.Current.MainWindow);
         }
     }
 }

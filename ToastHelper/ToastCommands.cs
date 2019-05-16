@@ -10,7 +10,6 @@ namespace ToastHelper {
     /// <summary>
     /// Toast通知的按钮命令
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
     public struct ToastCommands {
         #region Properties
         public string Argument;

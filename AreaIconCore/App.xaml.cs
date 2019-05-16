@@ -94,6 +94,7 @@ namespace AreaIconCore {
             menu.Items.Add(sep1);
             var item3 = new YT_MenuItem { Style = Current.Resources["AreaContextMenu_Exit"] as Style };
             menu.Items.Add(item3);
+            menu.Placement = System.Windows.Controls.Primitives.PlacementMode.Top;
             return menu;
         }
 
