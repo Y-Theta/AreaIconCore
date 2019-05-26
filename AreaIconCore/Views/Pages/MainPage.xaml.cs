@@ -3,6 +3,9 @@ using HttpServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,11 +29,12 @@ namespace AreaIconCore.Views.Pages {
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e) {
-            Main.Navigate(HostAdapter.Instance.ExtensionDirectory["IPGW控件"].Run(ExtensionContract.ApplicationScenario.MainPage));
+            // Main.Navigate(HostAdapter.Instance.ExtensionDirectory["IPGW控件"].Run(ExtensionContract.ApplicationScenario.MainPage));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            
+            //Console.WriteLine(LoginServices.Instance.PostAsync(@"http://39.106.123.5:8888/system?action=GetSystemTotal", GetPostParameter()));
         }
+
     }
 }

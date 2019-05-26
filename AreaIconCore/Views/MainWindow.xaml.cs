@@ -1,27 +1,12 @@
-﻿using ColorD = System.Drawing.Color;
-using Icon = System.Drawing.Icon;
+﻿using Icon = System.Drawing.Icon;
 using System.Windows;
 using AreaIconCore.Services;
 using YControls.AreaIconWindow;
-using YControls.FlowControls;
-using YFrameworkBase.Setting;
 using AreaIconCore.ViewModels;
-using YControls.Command;
-using System;
-using static YControls.WinAPI.DllImportMethods;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
 using AreaIconCore.Models;
-using YControls.InterAction;
-using ToastHelper;
 using AreaIconCore.Views.Pages;
 using YControls.Dialogs;
-using System.Windows.Controls;
 using ExtensionContract;
-using YFrameworkBase.DataAccessor;
-using HttpServices;
-using HttpServices.DataProviders;
-using System.Collections.Generic;
 
 namespace AreaIconCore.Views {
     /// <summary>

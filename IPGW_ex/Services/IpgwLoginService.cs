@@ -60,15 +60,13 @@ namespace IPGW_ex.Services {
         /// 异步刷新数据
         /// </summary>
         public async Task Update(Action finishaction = null) {
-            Task tsk = new Task(() => {
+            await Task.Run(() => {
                 FlowInfo info = GetLatestFlow();
                 App.Current.Dispatcher.Invoke(() => {
                     IpgwSetting.Instance.LatestFlow = info;
                 }, DispatcherPriority.Normal);
                 SettingManager.Instance.SaveSetting<IpgwSetting>();
             });
-            tsk.Start();
-            await tsk;
             App.Current.Dispatcher.Invoke(() => {
                 finishaction?.Invoke();
             }, DispatcherPriority.Normal);
@@ -122,7 +120,7 @@ namespace IPGW_ex.Services {
             ConnectState = false;
             if (ServiceHolder.RefrashinfSet(_webname)) {
                 try {
-                    ServiceHolder.Post(InfoContainer.BaseUri + InfoContainer.Uris[_loginuri], InfoContainer.KeyValuePairs);
+                    ServiceHolder.PostAsync(InfoContainer.BaseUri + InfoContainer.Uris[_loginuri], InfoContainer.KeyValuePairs);
                     String rest = ServiceHolder.GetString(InfoContainer.BaseUri + InfoContainer.Uris[_datauri], InfoContainer.Compressed);
                     if (rest is null) {
                         return "请确保物理网络已连接!";
@@ -155,7 +153,7 @@ namespace IPGW_ex.Services {
         /// </summary>
         public void Logout() {
             if (ServiceHolder.RefrashinfSet(_webname)) {
-                ServiceHolder.Post(InfoContainer.BaseUri + InfoContainer.Uris[_loginuri], InfoContainer.KeyValuePairs, new Dictionary<string, string>{
+                ServiceHolder.PostAsync(InfoContainer.BaseUri + InfoContainer.Uris[_loginuri], InfoContainer.KeyValuePairs, new Dictionary<string, string>{
                 { "action","logout" }, });
                 ConnectState = false;
                 PopupMessageManager.Instance.Message("网络已断开.");
