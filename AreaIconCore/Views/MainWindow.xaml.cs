@@ -5,8 +5,8 @@ using YControls.AreaIconWindow;
 using AreaIconCore.ViewModels;
 using AreaIconCore.Models;
 using AreaIconCore.Views.Pages;
-using YControls.Dialogs;
 using ExtensionContract;
+using ToastHelper;
 
 namespace AreaIconCore.Views {
     /// <summary>
@@ -33,7 +33,6 @@ namespace AreaIconCore.Views {
             }
             if (AreaIcons.Count == 0) {
                 RegisterAreaIcon(nameof(AreaIconCore));
-                AreaIcons[nameof(AreaIconCore)].IconMouseDoubleClick += MainWindow_IconMouseDoubleClick;
                 AreaIcons[nameof(AreaIconCore)].Areaicon = new Icon(ConstTable.AppIcon);
                 AreaIcons[nameof(AreaIconCore)].AreaText = nameof(AreaIconCore);
                 AreaIcons[nameof(AreaIconCore)].DContextmenu = App.CreateAreaIconMenu();
@@ -48,18 +47,13 @@ namespace AreaIconCore.Views {
         }
 
         private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {
-            App.ToastHelper.Notify(nameof(AreaIconCore), "HELLO", true);
+            NotificationService ser = new NotificationService();
+            ser.Notify("2323", "2323", true);
         }
 
         public MainWindow() {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            var dialog = new YT_DialogBase();
-            dialog.Style = App.Current.Resources["EnsureDialog"] as Style;
-            dialog.ShowDialog(App.Current.MainWindow);
         }
     }
 }
