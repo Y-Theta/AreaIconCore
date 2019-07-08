@@ -1,12 +1,5 @@
-﻿using AreaIconCore.Models;
-using AreaIconCore.Services;
-using AreaIconCore.Views.Pages;
+﻿using AreaIconCore.Views.Pages;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using YControls.CollectionControls;
 using YControls.Command;

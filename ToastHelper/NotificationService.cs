@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
-using static ToastHelper.NotificationActivator;
 
 namespace ToastHelper {
 
@@ -21,8 +23,6 @@ namespace ToastHelper {
 
     /// <summary>
     /// 继承自NotificationActivator 本来是为了使用OnActivated回调
-    /// 结果没有用,只能在每个Toast创建时创建回调
-    /// 
     /// 
     /// 最好用其他类继承本类，并将下面的特性拷贝到新类上，换上自己的GUID，这是为了测试方便
     /// </summary>
@@ -32,6 +32,7 @@ namespace ToastHelper {
     public class NotificationService : NotificationActivator {
         #region Methods
         public void Init(string appid) {
+            // Console.WriteLine("Init" + Thread.CurrentThread.ManagedThreadId);
             DesktopNotificationManagerCompat.RegisterAumidAndComServer<NotificationService>(appid);
             DesktopNotificationManagerCompat.RegisterActivator<NotificationService>();
         }
@@ -45,6 +46,8 @@ namespace ToastHelper {
         /// 微软提供的回调,但是目前没有响应
         /// </summary>
         public override void OnActivated(string arguments, NotificationUserInput userInput, string appUserModelId) {
+            Console.WriteLine(this.GetHashCode());
+
             List<KeyValuePair<string, string>> kvs = new List<KeyValuePair<string, string>>();
             if (userInput != null && userInput.Count > 0)
                 foreach (var key in userInput.Keys) {

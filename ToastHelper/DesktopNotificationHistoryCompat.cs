@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Notifications;
+using Windows.UI.Notifications;  
 
 namespace ToastHelper {
     internal class DesktopNotificationHistoryCompat {

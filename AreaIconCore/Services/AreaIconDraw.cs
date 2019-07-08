@@ -26,7 +26,7 @@ namespace AreaIconCore.Services {
     /// </summary>
     public class AreaIconDraw : SingletonBase<AreaIconDraw> {
         #region Properties
-        private const string _numfontfamily = "FontLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+        private const string _numfontfamily = "FontRes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
 
         private IntPtr _ico = IntPtr.Zero;
 
@@ -152,7 +152,7 @@ namespace AreaIconCore.Services {
             g.Clear(Color.FromArgb(0, 255, 255, 255));
             g.SmoothingMode = SmoothingMode.HighSpeed;
             g.CompositingQuality = CompositingQuality.HighSpeed;
-            g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+            g.TextRenderingHint = TextRenderingHint.SingleBitPerPixel;
             Pen pen = new Pen(color, 1f);
             SizeF infsize = g.MeasureString(str, strfont);
             g.DrawString(str, strfont, pen.Brush,

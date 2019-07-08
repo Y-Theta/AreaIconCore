@@ -5,6 +5,7 @@
                      xmlns:yt_button="clr-namespace:YControls.FontIconButtons;assembly=YControls"
                      xmlns:yt_flow="clr-namespace:YControls.FlowControls;assembly=YControls"
                      xmlns:yt_coll="clr-namespace:YControls.CollectionControls;assembly=YControls"
+                     xmlns:yt_conv="clr-namespace:YControls.Converters;assembly=YControls"
                      DataContext="{StaticResource MainWindowViewModel}"
                      ExtendToTitleBar="True"
                      TitleBarMode="AutoHide"
@@ -43,7 +44,7 @@
                                        CommandParameter="Back"
                                        Content="&#xE112;"
                                        ToolTipString="返回"
-                                       Visibility="{Binding ExtensionPage,Converter={StaticResource VisibilityConverter}}"
+                                       Visibility ="{Binding ExtensionPage,Converter={x:Static yt_conv:VisibilityConverter.Singleton}}"
                                        Style="{StaticResource CloseButton}"
                                        Grid.Column="0" />
                 <yt_flow:YT_InlineMenuPanel AnimationMode="Right_Slide"
@@ -94,7 +95,7 @@
                                              CommandParameter="Navigate"
                                              Content="{Binding ContentIconNow}"
                                              IconSelect="{Binding ContentIconNow}"
-                                             ToolTipString="{Binding ContentPageNow,Converter={StaticResource StringConverter},ConverterParameter={StaticResource NavigaterToolTipText}}"
+                                             ToolTipString="{Binding ContentPageNow,Converter={x:Static yt_conv:VisibilityConverter.Singleton},ConverterParameter={StaticResource NavigaterToolTipText}}"
                                              Grid.Column="3" />
                 <yt_button:FIconButton x:Name="Close"
                                        FontSize="14"

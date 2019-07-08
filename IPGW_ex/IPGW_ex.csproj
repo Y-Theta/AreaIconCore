@@ -104,7 +104,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -143,11 +142,6 @@
     <ProjectReference Include="..\ExtensionContract\ExtensionContract.csproj">
       <Project>{ceb7b8b5-afe5-42c8-9e7f-9ffe428768e0}</Project>
       <Name>ExtensionContract</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\ToastHelper\ToastHelper.csproj">
-      <Project>{2ef101fa-3b8b-4e65-b42e-1a8db34aecd8}</Project>
-      <Name>ToastHelper</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

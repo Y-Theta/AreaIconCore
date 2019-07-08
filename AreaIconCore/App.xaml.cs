@@ -8,12 +8,12 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ToastHelper;
 using YControls.FlowControls;
 using YFrameworkBase;
 using YFrameworkBase.RegOperator;
@@ -27,7 +27,6 @@ namespace AreaIconCore {
         private InnerProcessAssemblyManager _manger;
         private static readonly string APP_ID = "Areaicon Core";
         private static readonly string _basedir = Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf('\\') + 1);
-        public static NotificationService ToastHelper;
 
         /// <summary>
         /// 获得应用下的相对路径
@@ -128,10 +127,14 @@ namespace AreaIconCore {
         /// </summary>
         protected void BeforeWindowInit() {
             //启用Win10消息通知
-            ToastHelper = new NotificationService();
-            ToastHelper.Init(APP_ID);
+
             //加载插件
             HostAdapter.Instance.PluginsPath = App.GetDirectory(DirectoryKind.Extension);
+        }
+
+        private void ToastHelper_ToastCallback(string app, string arg, System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string, string>> kvs) {
+            Console.WriteLine(app + "   " + arg);
+            kvs.ForEach(kv => Console.WriteLine(kv.Key + "   " + kv.Value));
         }
 
         /// <summary>

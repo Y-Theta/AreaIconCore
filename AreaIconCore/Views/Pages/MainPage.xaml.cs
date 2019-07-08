@@ -25,16 +25,7 @@ namespace AreaIconCore.Views.Pages {
     public partial class MainPage : Page {
         public MainPage() {
             InitializeComponent();
-            Loaded += MainPage_Loaded;
+            
         }
-
-        private void MainPage_Loaded(object sender, RoutedEventArgs e) {
-            // Main.Navigate(HostAdapter.Instance.ExtensionDirectory["IPGW控件"].Run(ExtensionContract.ApplicationScenario.MainPage));
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            //Console.WriteLine(LoginServices.Instance.PostAsync(@"http://39.106.123.5:8888/system?action=GetSystemTotal", GetPostParameter()));
-        }
-
     }
 }

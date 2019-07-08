@@ -6,7 +6,10 @@ using AreaIconCore.ViewModels;
 using AreaIconCore.Models;
 using AreaIconCore.Views.Pages;
 using ExtensionContract;
-using ToastHelper;
+using System;
+using System.Threading;
+using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace AreaIconCore.Views {
     /// <summary>
@@ -33,22 +36,28 @@ namespace AreaIconCore.Views {
             }
             if (AreaIcons.Count == 0) {
                 RegisterAreaIcon(nameof(AreaIconCore));
+                AreaIcons[nameof(AreaIconCore)].IconMouseDoubleClick += MainWindow_IconMouseDoubleClick;
                 AreaIcons[nameof(AreaIconCore)].Areaicon = new Icon(ConstTable.AppIcon);
                 AreaIcons[nameof(AreaIconCore)].AreaText = nameof(AreaIconCore);
                 AreaIcons[nameof(AreaIconCore)].DContextmenu = App.CreateAreaIconMenu();
             }
             //导航到主页
            ((MainWindowViewModel)DataContext).NavigateToLocal(new MainPage());
-
+            //ToastHelper.NotificationService.ToastCallback += ToastHelper_ToastCallback;
+            //Console.WriteLine("Init" + Process.GetCurrentProcess().Id);
             //XmlDataProvider.Instance.AddNode<WebInfoContainer>(new WebInfoContainer {
-            //    Name = "NEU_Ipgw"
+            //Name = "NEU_Ipgw"
 
             //});
         }
 
-        private void MainWindow_IconMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e) {
-            NotificationService ser = new NotificationService();
-            ser.Notify("2323", "2323", true);
+        private void MainWindow_IconMouseDoubleClick(object sender, MouseEventArgs e) {
+            
+        }
+
+        private void ToastHelper_ToastCallback(string app, string arg, System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string, string>> kvs) {
+            Console.WriteLine(app + "   " + arg);
+            kvs.ForEach(kv => Console.WriteLine(kv.Key + "   " + kv.Value));
         }
 
         public MainWindow() {

@@ -17,12 +17,14 @@ using System.Windows.Threading;
 using YFrameworkBase.Setting;
 using XmlDataProvider = YFrameworkBase.DataAccessor.XmlDataProvider;
 using YFrameworkBase;
+using System.Text.RegularExpressions;
 
 namespace IPGW_ex.Services {
     internal class IpgwLoginService : SingletonBase<IpgwLoginService> {
         #region Properties
         private const string _webname = "NEU_Ipgw";
         private const string _loginuri = "login";
+        private const string _logouturi = "logout";
         private const string _datauri = "fluxdata";
 
         public LoginServices ServiceHolder { get; set; }
@@ -38,7 +40,7 @@ namespace IPGW_ex.Services {
         /// 当前账户
         /// </summary>
         internal string UserID {
-            get => ServiceHolder.Container.KeyValuePairs.FirstOrDefault(f => {return f.Key.Equals("username"); } ).Value;
+            get => ServiceHolder.Container.KeyValuePairs.FirstOrDefault(f => { return f.Key.Equals("username"); }).Value;
         }
 
         /// <summary>
@@ -120,28 +122,42 @@ namespace IPGW_ex.Services {
             ConnectState = false;
             if (ServiceHolder.RefrashinfSet(_webname)) {
                 try {
-                    ServiceHolder.PostAsync(InfoContainer.BaseUri + InfoContainer.Uris[_loginuri], InfoContainer.KeyValuePairs);
-                    String rest = ServiceHolder.GetString(InfoContainer.BaseUri + InfoContainer.Uris[_datauri], InfoContainer.Compressed);
-                    if (rest is null) {
-                        return "请确保物理网络已连接!";
+                    string result = ServiceHolder.GetString(InfoContainer.Uris[_loginuri], InfoContainer.Compressed);
+
+                    var regexs = Regex.Matches(result, "<input type=\"hidden\".*name=\".*\" value=\"(.*)\" />");
+                    string lt = Regex.Match(regexs[0].Value, "value=\"(.+)\"").Groups[1].Value;
+                    string execution = Regex.Match(regexs[1].Value, "value=\"(.+)\"").Groups[1].Value;
+                    string password = "", username = "";
+                    foreach (var kv in ServiceHolder.Container.KeyValuePairs) {
+                        if (kv.Key.Equals("password")) password = kv.Value;
+                        else if (kv.Key.Equals("username")) username = kv.Value;
                     }
-                    else if (rest.Equals("not_online")) {
-                        String ori = ServiceHolder.GetResponse();
-                        if (ori.Contains("用户不存在"))
-                            return "请输入正确的用户名!";
-                        else if (ori.Contains("密码错误"))
-                            return "密码错误!";
-                        else
-                            return "网关被占用,请先断开连接并重新登录!";
+
+                    string posted = ServiceHolder.PostAsync(InfoContainer.Uris[_loginuri], new List<KeyValuePair<string, string>> {
+                            new KeyValuePair<string, string>("ul",$"{username.Length}"),
+                            new KeyValuePair<string, string>("pl",$"{password.Length}"),
+                            new KeyValuePair<string, string>("lt",lt),
+                            new KeyValuePair<string, string>("execution",execution),
+                            new KeyValuePair<string, string>("_eventId","submit"),
+                            new KeyValuePair<string, string>("rsa",username+password+lt),
+                        }).Result;
+
+                    string error = Regex.Match(posted, "id=\"errormsg\".*>(.*)<").Groups[1].Value;
+                    string flux = ServiceHolder.GetString(InfoContainer.Uris[_datauri], InfoContainer.Compressed);
+                    if (error.Equals("账号不存在！")) {
+                        return "请输入正确的用户名!";
                     }
                     else {
                         ConnectState = true;
-                        data = rest;
+                        data = flux;
                         return "网络已连接.";
                     }
                 }
                 catch (AggregateException) {
                     return "连接超时!";
+                }
+                catch (Exception) {
+                    return "未知错误";
                 }
             }
             else
@@ -153,8 +169,7 @@ namespace IPGW_ex.Services {
         /// </summary>
         public void Logout() {
             if (ServiceHolder.RefrashinfSet(_webname)) {
-                ServiceHolder.PostAsync(InfoContainer.BaseUri + InfoContainer.Uris[_loginuri], InfoContainer.KeyValuePairs, new Dictionary<string, string>{
-                { "action","logout" }, });
+                ServiceHolder.GetString(InfoContainer.Uris[_logouturi], InfoContainer.Compressed);
                 ConnectState = false;
                 PopupMessageManager.Instance.Message("网络已断开.");
             }

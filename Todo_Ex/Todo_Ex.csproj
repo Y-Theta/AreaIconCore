@@ -101,11 +101,6 @@
       <Name>ExtensionContract</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\ToastHelper\ToastHelper.csproj">
-      <Project>{2ef101fa-3b8b-4e65-b42e-1a8db34aecd8}</Project>
-      <Name>ToastHelper</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />

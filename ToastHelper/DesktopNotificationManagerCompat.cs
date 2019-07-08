@@ -37,7 +37,8 @@ namespace ToastHelper {
             string shortpath = "\\Microsoft\\Windows\\Start Menu\\AreaIcon Core";
             var shortcut = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
                 + shortpath + $"\\{_aumid}.lnk";
-            if (!File.Exists(shortcut)) {
+            if (!File.Exists(shortcut))
+            {
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + shortpath);
                 // 不需要从通知打开程序则不需要这项操作
                 // RegisterComServer<T>(exePath);
