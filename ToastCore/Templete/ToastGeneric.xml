@@ -1,0 +1,7 @@
+﻿<toast>
+  <visual>
+    <binding template="ToastGeneric">
+
+    </binding>
+  </visual>
+</toast>

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Runtime;
+﻿///------------------------------------------------------------------------------
+/// @ Y_Theta
+///------------------------------------------------------------------------------
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Notifications;  
+using Windows.UI.Notifications;
 
-namespace ToastHelper {
+namespace ToastCore.Notification {
     internal class DesktopNotificationHistoryCompat {
         #region Properties
         private string _aumid;

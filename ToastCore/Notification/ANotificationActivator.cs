@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿///------------------------------------------------------------------------------
+/// @ Y_Theta
+///------------------------------------------------------------------------------
+using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ToastHelper {
+namespace ToastCore.Notification {
     public abstract class NotificationActivator : INotificationActivationCallback {
 
         #region Methods

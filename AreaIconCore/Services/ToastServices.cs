@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using ToastCore.Notification;
 
 namespace AreaIconCore.Services {
@@ -18,8 +19,7 @@ namespace AreaIconCore.Services {
         #endregion
 
         #region Methods
-        protected override void OnSetNotifyXML(string xml) {
-            Console.WriteLine(xml);
+        protected override void OnSetNotifyXML(XmlDocument xml) {
             base.OnSetNotifyXML(xml);
         }
         #endregion

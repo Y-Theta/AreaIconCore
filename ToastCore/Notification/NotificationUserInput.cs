@@ -1,12 +1,12 @@
-﻿using System;
+﻿///------------------------------------------------------------------------------
+/// @ Y_Theta
+///------------------------------------------------------------------------------
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ToastHelper {
-   public class NotificationUserInput : IReadOnlyDictionary<string, string> {
+namespace ToastCore.Notification {
+    public class NotificationUserInput : IReadOnlyDictionary<string, string> {
         #region Properties
         private NOTIFICATION_USER_INPUT_DATA[] _data;
 
@@ -20,7 +20,7 @@ namespace ToastHelper {
 
         public IEnumerable<string> Values => _data.Select(i => i.Value);
 
-        public int Count => _data.Length;
+        public int Count => _data is null ? 0 : _data.Length;
         #endregion
 
         #region Methods

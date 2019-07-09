@@ -1,16 +1,18 @@
-﻿using System;
+﻿///------------------------------------------------------------------------------
+/// @ Y_Theta
+///------------------------------------------------------------------------------
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ToastHelper {
+namespace ToastCore.Util {
 
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public struct PropertyKey : IEquatable<PropertyKey> {
+    public struct PropertyKey {
         #region Private Fields
 
         private Guid formatId;
         private Int32 propertyId;
-
         #endregion
 
         #region Public Construction
@@ -19,34 +21,6 @@ namespace ToastHelper {
             this.formatId = formatId;
             this.propertyId = propertyId;
         }
-
-        #endregion
-
-        #region IEquatable<PropertyKey> Members
-
-        public bool Equals(PropertyKey other) {
-            return other.Equals((object)this);
-        }
-
-        #endregion
-
-        #region equality and hashing
-
-        public override int GetHashCode() {
-            return formatId.GetHashCode() ^ (int)propertyId;
-        }
-
-        public override bool Equals(object obj) {
-            if (obj == null)
-                return false;
-
-            if (!(obj is PropertyKey))
-                return false;
-
-            PropertyKey other = (PropertyKey)obj;
-            return other.formatId.Equals(formatId) && (other.propertyId == propertyId);
-        }
-
         #endregion
     }
 

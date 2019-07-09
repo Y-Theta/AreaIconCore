@@ -1,16 +1,14 @@
-﻿using System;
+﻿///------------------------------------------------------------------------------
+/// @ Y_Theta
+///------------------------------------------------------------------------------
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using XML = System.Xml;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
+using Windows.Storage;
+using System.IO;
 
-namespace ToastHelper {
+namespace ToastCore.Notification {
 
     /// <summary>
     /// Win10通知
@@ -23,31 +21,29 @@ namespace ToastHelper {
 
     /// <summary>
     /// 继承自NotificationActivator 本来是为了使用OnActivated回调
-    /// 
-    /// 最好用其他类继承本类，并将下面的特性拷贝到新类上，换上自己的GUID，这是为了测试方便
+    /// 在继承类上添加
+    /// [ClassInterface(ClassInterfaceType.None)]
+    /// [ComSourceInterfaces(typeof(INotificationActivationCallback))]
+    /// [Guid("7ddba60f-e2f0-4373-8098-0eafb79ba54a"), ComVisible(true)]
+    /// 换上自己的GUID
     /// </summary>
-    [ClassInterface(ClassInterfaceType.None)]
-    [ComSourceInterfaces(typeof(INotificationActivationCallback))]
-    [Guid("7ddba60f-e2f0-4373-8098-0eafb79ba54a"), ComVisible(true)]
     public class NotificationService : NotificationActivator {
         #region Methods
-        public void Init(string appid) {
+        public void Init<T>(string appid) where T : NotificationActivator {
             // Console.WriteLine("Init" + Thread.CurrentThread.ManagedThreadId);
-            DesktopNotificationManagerCompat.RegisterAumidAndComServer<NotificationService>(appid);
-            DesktopNotificationManagerCompat.RegisterActivator<NotificationService>();
+            DesktopNotificationManagerCompat.RegisterAumidAndComServer<T>(appid);
+            DesktopNotificationManagerCompat.RegisterActivator<T>();
         }
 
         /// <summary>
         /// 通知响应事件,在使用时接收
         /// </summary>
-        public event ToastAction ToastCallback;
+        public static event ToastAction ToastCallback;
 
         /// <summary>
-        /// 微软提供的回调,但是目前没有响应
+        /// 微软提供的回调,调用者不在当前上下文线程中
         /// </summary>
         public override void OnActivated(string arguments, NotificationUserInput userInput, string appUserModelId) {
-            Console.WriteLine(this.GetHashCode());
-
             List<KeyValuePair<string, string>> kvs = new List<KeyValuePair<string, string>>();
             if (userInput != null && userInput.Count > 0)
                 foreach (var key in userInput.Keys) {
@@ -57,12 +53,31 @@ namespace ToastHelper {
         }
 
         /// <summary>
+        /// 发送一条自定义格式通知
+        /// 将
+        /// </summary>
+        public void Notify() {
+            XmlDocument xml = GetTemplete();
+            XML.XmlDocument xxml = new XML.XmlDocument();
+            xxml.LoadXml(xml.GetXml());
+            OnSetNotifyXML(xxml);
+            xml.LoadXml(xxml.InnerXml);
+            ShowToast(xml);
+        }
+
+        /// <summary>
+        /// 重写此方法以自定义通知xml内容
+        /// </summary>
+        /// <param name="xml"></param>
+        protected virtual void OnSetNotifyXML(XML.XmlDocument xml) { }
+
+        /// <summary>
         /// 发送一条通知 （标题/文本）
         /// </summary>
         /// <param name="title">标题</param>
         /// <param name="content">文本</param>
         public void Notify(string title, string content) {
-            XmlDocument xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+            XmlDocument xml = GetTemplete();
             AddTitle(xml, title, content);
             ShowToast(xml);
         }
@@ -74,7 +89,7 @@ namespace ToastHelper {
         /// <param name="content">文本</param>
         /// <param name="commands">自定义命令组</param>
         public void Notify(string title, string content, params ToastCommands[] commands) {
-            XmlDocument xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+            XmlDocument xml = GetTemplete();
             AddTitle(xml, title, content);
             AddCommands(xml, commands);
             ShowToast(xml);
@@ -87,7 +102,7 @@ namespace ToastHelper {
         /// <param name="title">标题</param>
         /// <param name="content">文本</param>
         public void Notify(string picuri, string title, string content) {
-            XmlDocument xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+            XmlDocument xml = GetTemplete();
             AddTitle(xml, title, content);
             AddBigLogo(xml, picuri);
             ShowToast(xml);
@@ -101,44 +116,25 @@ namespace ToastHelper {
         /// <param name="content">文本</param>
         /// <param name="commands">自定义命令组</param>
         public void Notify(string picuri, string title, string content, params ToastCommands[] commands) {
-            XmlDocument xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+            XmlDocument xml = GetTemplete();
             AddTitle(xml, title, content);
             AddBigLogo(xml, picuri);
             AddCommands(xml, commands);
             ShowToast(xml);
         }
 
-        /// <summary>
-        /// ————————————————————————————————————————————————————————
-        /// 测试Input类型使用
-        /// </summary>
-        public void Notify(string title, string content, bool flag) {
-            XmlDocument xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
-            //获得binding组
-            XmlElement binding = (XmlElement)xml.GetElementsByTagName("binding")[0];
-            binding.SetAttribute("template", "ToastGeneric");
-
-            XmlNodeList lines = xml.GetElementsByTagName("text");
-            lines[0].AppendChild(xml.CreateTextNode(title));
-            lines[1].AppendChild(xml.CreateTextNode(content));
-
-            XmlElement root = (XmlElement)xml.GetElementsByTagName("toast")[0];
-            XmlElement actions = xml.CreateElement("actions");
-
-            XmlElement input = xml.CreateElement("input");
-            input.SetAttribute("type", "text");
-            input.SetAttribute("id", "textBox");
-            input.SetAttribute("placeHolderContent", "reply");
-            actions.AppendChild(input);
-            root.AppendChild(actions);
-
+        public void Notify(string title, string content, ToastCommands[] paras, ToastCommands[] commands) {
+            XmlDocument xml = GetTemplete();
+            AddTitle(xml, title, content);
+            AddInput(xml, paras);
+            AddCommands(xml, commands);
             ShowToast(xml);
         }
 
         /// <summary>
         /// 发送通知
         /// </summary>
-        private void ShowToast(XmlDocument xml) {
+        protected static void ShowToast(XmlDocument xml) {
             ToastNotification toast = new ToastNotification(xml);
             DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
         }
@@ -146,7 +142,7 @@ namespace ToastHelper {
         /// <summary>
         /// 添加标题和内容描述
         /// </summary>
-        private void AddTitle(XmlDocument xml, string title, string content) {
+        protected static void AddTitle(XmlDocument xml, string title, string content) {
             XmlNodeList lines = xml.GetElementsByTagName("text");
             lines[0].AppendChild(xml.CreateTextNode(title));
             lines[1].AppendChild(xml.CreateTextNode(content));
@@ -155,10 +151,8 @@ namespace ToastHelper {
         /// <summary>
         /// 为当前通知添加交互操作
         /// </summary>
-        private void AddCommands(XmlDocument xml, params ToastCommands[] commands) {
-            XmlElement root = (XmlElement)xml.GetElementsByTagName("toast")[0];
-            XmlElement actions = xml.CreateElement("actions");
-            root.AppendChild(actions);
+        protected static void AddCommands(XmlDocument xml, params ToastCommands[] commands) {
+            XmlElement actions = GetAction(xml);
 
             foreach (var command in commands) {
                 XmlElement action = xml.CreateElement("action");
@@ -172,20 +166,22 @@ namespace ToastHelper {
         /// <summary>
         /// 添加输入框
         /// </summary>
-        private void AddInput(XmlDocument xml) {
-            XmlElement actions = (XmlElement)xml.GetElementsByTagName("actions")[0];
+        protected static void AddInput(XmlDocument xml, params ToastCommands[] paras) {
+            XmlElement actions = GetAction(xml);
 
-            XmlElement input = xml.CreateElement("input");
-            input.SetAttribute("type", "text");
-            input.SetAttribute("id", "textBox");
-            input.SetAttribute("placeHolderContent", "test");
-            actions.AppendChild(input);
+            foreach (var para in paras) {
+                XmlElement input = xml.CreateElement("input");
+                input.SetAttribute("type", "text");
+                input.SetAttribute("id", para.Argument);
+                input.SetAttribute("placeHolderContent", para.Content);
+                actions?.AppendChild(input);
+            }
         }
 
         /// <summary>
         /// 为通知添加大标签
         /// </summary>
-        private void AddBigLogo(XmlDocument xml, string logopath) {
+        protected static void AddBigLogo(XmlDocument xml, string logopath) {
             //获得binding组
             XmlElement binding = (XmlElement)xml.GetElementsByTagName("binding")[0];
             binding.SetAttribute("template", "ToastGeneric");
@@ -194,6 +190,29 @@ namespace ToastHelper {
             image.SetAttribute("placement", "appLogoOverride");
             image.SetAttribute("src", logopath);
             binding.AppendChild(image);
+        }
+
+        /// <summary>
+        /// 获取action组
+        /// </summary>
+        protected static XmlElement GetAction(XmlDocument xml) {
+            XmlElement actions = null;
+            if (xml.GetElementsByTagName("actions").Count != 0)
+                actions = (XmlElement)xml.GetElementsByTagName("actions")[0];
+            else {
+                actions = xml.CreateElement("actions");
+                ((XmlElement)xml.GetElementsByTagName("toast")[0]).AppendChild(actions);
+            }
+            return actions;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected static XmlDocument GetTemplete() {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Properties.Resources.ToastGeneric);
+            return doc;
         }
 
         /// <summary>

@@ -23,8 +23,17 @@ namespace AreaIconCore.Views.Pages {
     /// MainPage.xaml 的交互逻辑
     /// </summary>
     public partial class MainPage : Page {
+
         public MainPage() {
             InitializeComponent();
+            ToastServices.ToastCallback += ToastServices_ToastCallback;
+        }
+
+        private void FIconButton_Click(object sender, RoutedEventArgs e) {
+            App.ToastNotifier.Notify();
+        }
+
+        private void ToastServices_ToastCallback(string app, string arg, List<KeyValuePair<string, string>> kvs) {
             
         }
     }

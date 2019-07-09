@@ -17,7 +17,6 @@ using System.Windows.Media.Imaging;
 using YControls.FlowControls;
 using YFrameworkBase;
 using YFrameworkBase.RegOperator;
-using Icon = System.Drawing.Icon;
 
 namespace AreaIconCore {
     /// <summary>
@@ -25,6 +24,7 @@ namespace AreaIconCore {
     /// </summary>
     public partial class App : Application {
         private InnerProcessAssemblyManager _manger;
+        public static ToastServices ToastNotifier;
         private static readonly string APP_ID = "Areaicon Core";
         private static readonly string _basedir = Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf('\\') + 1);
 
@@ -127,7 +127,8 @@ namespace AreaIconCore {
         /// </summary>
         protected void BeforeWindowInit() {
             //启用Win10消息通知
-
+            ToastNotifier = new ToastServices();
+            ToastNotifier.Init<ToastServices>(APP_ID);
             //加载插件
             HostAdapter.Instance.PluginsPath = App.GetDirectory(DirectoryKind.Extension);
         }

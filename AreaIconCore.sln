@@ -23,9 +23,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo_ex", "Todo_Ex\Todo_ex.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPGW_ex", "IPGW_ex\IPGW_ex.csproj", "{742B29C5-4278-4CEB-BEE7-9E3055945EAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToastCore", "..\..\C#_WIN_DeskTop\NotificationToast\ToastHelper\ToastCore\ToastCore.csproj", "{18F57AA0-E5ED-4569-A074-A0C622D3D52B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FontRes", "FontRes\FontRes.csproj", "{97A1CA96-3A5B-4BF3-89C7-1F492D58BCDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToastCore", "ToastCore\ToastCore.csproj", "{18F57AA0-E5ED-4569-A074-A0C622D3D52B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,18 +145,6 @@ Global
 		{742B29C5-4278-4CEB-BEE7-9E3055945EAD}.Release|x64.Build.0 = Release|Any CPU
 		{742B29C5-4278-4CEB-BEE7-9E3055945EAD}.Release|x86.ActiveCfg = Release|Any CPU
 		{742B29C5-4278-4CEB-BEE7-9E3055945EAD}.Release|x86.Build.0 = Release|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|x64.Build.0 = Debug|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|x86.Build.0 = Debug|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|x64.ActiveCfg = Release|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|x64.Build.0 = Release|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|x86.ActiveCfg = Release|Any CPU
-		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|x86.Build.0 = Release|Any CPU
 		{97A1CA96-3A5B-4BF3-89C7-1F492D58BCDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{97A1CA96-3A5B-4BF3-89C7-1F492D58BCDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97A1CA96-3A5B-4BF3-89C7-1F492D58BCDD}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -169,6 +157,18 @@ Global
 		{97A1CA96-3A5B-4BF3-89C7-1F492D58BCDD}.Release|x64.Build.0 = Release|Any CPU
 		{97A1CA96-3A5B-4BF3-89C7-1F492D58BCDD}.Release|x86.ActiveCfg = Release|Any CPU
 		{97A1CA96-3A5B-4BF3-89C7-1F492D58BCDD}.Release|x86.Build.0 = Release|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|x64.Build.0 = Debug|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Debug|x86.Build.0 = Debug|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|x64.ActiveCfg = Release|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|x64.Build.0 = Release|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|x86.ActiveCfg = Release|Any CPU
+		{18F57AA0-E5ED-4569-A074-A0C622D3D52B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,15 +1,21 @@
-﻿using Microsoft.Win32;
+﻿///------------------------------------------------------------------------------
+/// @ Y_Theta
+///------------------------------------------------------------------------------
+using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using ToastCore.Util;
 using Windows.UI.Notifications;
 
-namespace ToastHelper {
+namespace ToastCore.Notification {
     internal class DesktopNotificationManagerCompat {
         #region Properties
         public const string TOAST_ACTIVATED_LAUNCH_ARG = "-ToastActivated";
+        static readonly Guid TOAST_G = new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3");
 
         private static bool _registeredAumidAndComServer;
         private static string _aumid;
@@ -33,8 +39,8 @@ namespace ToastHelper {
 
             _aumid = aumid;
 
-            string exePath = Process.GetCurrentProcess().MainModule.FileName;
-            string shortpath = "\\Microsoft\\Windows\\Start Menu\\AreaIcon Core";
+            string exename = Assembly.GetExecutingAssembly().GetName().Name;
+            string shortpath = "\\Microsoft\\Windows\\Start Menu\\A" + exename;
             var shortcut = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
                 + shortpath + $"\\{_aumid}.lnk";
             if (!File.Exists(shortcut))
@@ -95,11 +101,11 @@ namespace ToastHelper {
             IPropertyStore newShortcutProperties = (IPropertyStore)newShortcut;
 
             using (PropVariant appId = new PropVariant(_aumid)) {
-                ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 5), appId));
+                ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(TOAST_G, 5), appId));
             }
 
             using (PropVariant toastid = new PropVariant(typeof(T).GUID))  {
-                ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 26), toastid));
+                ErrorHelper.VerifySucceeded(newShortcutProperties.SetValue(new PropertyKey(TOAST_G, 26), toastid));
             }
             ErrorHelper.VerifySucceeded(newShortcutProperties.Commit());
 
@@ -205,5 +211,4 @@ namespace ToastHelper {
         #endregion
 
     }
-
 }
