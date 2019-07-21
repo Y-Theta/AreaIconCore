@@ -67,7 +67,7 @@
     <Compile Include="Notification\ToastCommands.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Templete\ToastGeneric.xml" />
+    <None Include="Templete\ToastGeneric.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

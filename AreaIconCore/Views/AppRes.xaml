@@ -31,9 +31,6 @@
               Member="vm:MainWindowViewModel.Singleton" />
     <x:Static x:Key="SettingPageViewModel"
               Member="vm:SettingPageViewModel.Singleton" />
-
-    <x:Static x:Key="CoreSetting"
-              Member="service:CoreSettings.Instance" />
     <!--#endregion-->
 
     <!--#region                                                         Icons-->

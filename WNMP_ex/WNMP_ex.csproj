@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{742B29C5-4278-4CEB-BEE7-9E3055945EAD}</ProjectGuid>
+    <ProjectGuid>{BFD0254A-5A83-4512-B991-1B29BB375666}</ProjectGuid>
     <OutputType>library</OutputType>
-    <RootNamespace>IPGW_ex</RootNamespace>
-    <AssemblyName>IPGW_ex</AssemblyName>
+    <RootNamespace>WNMP_ex</RootNamespace>
+    <AssemblyName>WNMP_ex</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -18,11 +18,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\AreaIconCore\bin\Debug\extensions\IPGW_ex\</OutputPath>
+    <OutputPath>..\AreaIconCore\bin\Debug\extensions\WNMP_ex\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,12 +31,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -52,41 +53,40 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\FlowPanel.cs" />
-    <Compile Include="Controls\IconLabelItem.cs" />
-    <Compile Include="Model\FlowPackage.cs" />
-    <Compile Include="Services\FormatService.cs" />
-    <Compile Include="Services\IpgwLoginService.cs" />
-    <Compile Include="Services\IpgwSetting.cs" />
-    <Compile Include="ViewModels\FlowInfoViewModel.cs" />
-    <Compile Include="View\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SettingPage.xaml.cs">
-      <DependentUpon>SettingPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Services\AreaIconDrawer.cs" />
+    <Compile Include="WNMP_Setting.cs" />
+    <Page Include="Controls\ServerItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ServerPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="IPGWCore.cs">
+    <Compile Include="Controls\ServerItem.xaml.cs">
+      <DependentUpon>ServerItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ServerPanel.xaml.cs">
+      <DependentUpon>ServerPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ServerManager.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WNMPCore.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Themes\Styles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SettingPage.xaml">
+    <Page Include="Views\SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\FlowInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -110,9 +110,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\SelfLibraries\YControlExtension\YControlExtension\YControlExtension\YControlExtension.csproj">
       <Project>{b7bdd716-441e-4411-90a9-6a5099eff6bc}</Project>
       <Name>YControlExtension</Name>
@@ -128,21 +125,27 @@
       <Name>YFrameworkBase</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\SimpleHttpFrameWork\HttpServices\HttpServices.csproj">
-      <Project>{13b56f09-8884-48b7-abc6-b9840f819fd5}</Project>
-      <Name>HttpServices</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\AreaIconCore\AreaIconCore.csproj">
       <Project>{f17b54ef-29fa-47f3-81b8-b47e434fe968}</Project>
       <Name>AreaIconCore</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\ExtensionContract\ExtensionContract.csproj">
-      <Project>{ceb7b8b5-afe5-42c8-9e7f-9ffe428768e0}</Project>
+      <Project>{CEB7B8B5-AFE5-42C8-9E7F-9FFE428768E0}</Project>
       <Name>ExtensionContract</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\FontRes\FontRes.csproj">
+      <Project>{97a1ca96-3a5b-4bf3-89c7-1f492d58bcdd}</Project>
+      <Name>FontRes</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\ToastCore\ToastCore.csproj">
+      <Project>{18f57aa0-e5ed-4569-a074-a0c622d3d52b}</Project>
+      <Name>ToastCore</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

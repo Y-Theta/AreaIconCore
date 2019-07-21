@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="WNMP_ex.Controls.ServerItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:yt_wx="clr-namespace:YControls.WinXStyleControls;assembly=YControls"
+             xmlns:yt_btn="clr-namespace:YControls.FontIconButtons;assembly=YControls"
+             xmlns:local="clr-namespace:WNMP_ex.Controls"
+             DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+             Width="72"
+             Height="72"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Viewbox Stretch="Fill">
+            <Canvas x:Name="icon_host"
+                    Width="{Binding CanvasSize}"
+                    Height="{Binding CanvasSize}">
+                <Ellipse x:Name="icon_mask"
+                         Width="{Binding CanvasSize}"
+                         Height="{Binding CanvasSize}"
+                         Fill="#80000000" />
+                <Path x:Name="server_icon"
+                      IsHitTestVisible="False"
+                      Canvas.Left="{Binding PathOffset}"
+                      Canvas.Top="{Binding PathOffset}"
+                      Fill="{StaticResource ServerOff}"
+                      Data="{Binding ItemPath}" />
+                <Ellipse x:Name="icon_mask_f"
+                         Width="{Binding CanvasSize}"
+                         Height="{Binding CanvasSize}"
+                         Visibility="{Binding Visibility, ElementName=server_change}"
+                         Fill="#80000000" />
+            </Canvas>
+        </Viewbox>
+        <yt_btn:FIconToggleButton x:Name="server_ctl_btn"
+                                  Command="{Binding Command}"
+                                  CommandParameter="{Binding CommandParameter}"
+                                  Style="{StaticResource server_item_btn_toggle}"
+                                  Visibility="Collapsed"
+                                  IsChecked="{Binding IsServerRuning,Mode=TwoWay}"
+                                  Background="#80000000">
+            <yt_btn:FIconToggleButton.Clip>
+                <EllipseGeometry Center="32 32"
+                                 RadiusX="32"
+                                 RadiusY="32" />
+            </yt_btn:FIconToggleButton.Clip>
+        </yt_btn:FIconToggleButton>
+        <yt_wx:YT_WinXProgressBar x:Name="server_change"
+                                  DotSize="4"
+                                  ViewPortSize="32 32"
+                                  Foreground="{Binding EnableColor}"
+                                  IsIndeterminate="True"
+                                  Visibility="Hidden"
+                                  Style="{StaticResource YT_WinXProgressBar_Ring}" />
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="server_ctl_btn"
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                    Value="{StaticResource Visible}" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="server_ctl_btn"
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                    Value="{StaticResource Collapsed}" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+    </Grid>
+
+</UserControl>

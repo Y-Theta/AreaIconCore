@@ -1,6 +1,7 @@
 ﻿using AreaIconCore.Models;
 using AreaIconCore.Services;
 using AreaIconCore.Views;
+using ExtensionContract;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -174,7 +175,22 @@ namespace AreaIconCore {
         /// 主程序退出操作
         /// </summary>
         private void App_SessionEnding(object sender, SessionEndingCancelEventArgs e) {
+            CheckExtension();
+        }
 
+        /// <summary>
+        /// 主程序人工退出操作
+        /// </summary>
+        private void App_Exit(object sender, ExitEventArgs e) {
+            CheckExtension();
+        }
+
+        private void CheckExtension() {
+            foreach (var ext in HostAdapter.Instance.ExtensionDirectory.Values) {
+                if (ext.Application.ContainsKey(ApplicationScenario.SessionEnding)) {
+                    ext.Run(ApplicationScenario.SessionEnding);
+                }
+            }
         }
 
         /// <summary>
@@ -196,6 +212,8 @@ namespace AreaIconCore {
             _manger.HockResolve(AppDomain.CurrentDomain);
             Startup += App_Startup;
             SessionEnding += App_SessionEnding;
+            Exit += App_Exit;
         }
+
     }
 }

@@ -8,7 +8,7 @@
     <!--                                                                       MainWindow-->
     <!--#region-->
 
-    <Color x:Key="C_MainTheme_Bg">#1E1E1E</Color>
+    <Color x:Key="C_MainTheme_Bg">#161616</Color>
     <Color x:Key="C_MainTheme_Bg_D1">#000000</Color>
 
     <Color x:Key="C_MainTheme_Bc">#007ACC</Color>
@@ -189,17 +189,17 @@
     <!--ScrollViewer-->
     <!--#region-->
     <sys:Double x:Key="DefaultScrollViewerThumb_StrokeThickness">0</sys:Double>
-    <sys:Double x:Key="DefaultScrollViewer_ScrollbarThickness">12</sys:Double>
-    <sys:Double x:Key="DefaultScrollViewer_ScrollbarMiniThickness">4</sys:Double>
+    <sys:Double x:Key="DefaultScrollViewer_ScrollbarThickness">8</sys:Double>
+    <sys:Double x:Key="DefaultScrollViewer_ScrollbarMiniThickness">2</sys:Double>
 
     <SolidColorBrush x:Key="DefaultScrollViewerThumb_IconFg_N"
-                     Opacity="0.3"
+                     Opacity="0.8"
                      Color="{StaticResource C_MainTheme_Bc}" />
     <SolidColorBrush x:Key="DefaultScrollViewerThumb_IconFg_O"
                      Opacity="0.5"
                      Color="{StaticResource C_MainTheme_Bc}" />
     <SolidColorBrush x:Key="DefaultScrollViewerThumb_IconFg_P"
-                     Opacity="0.8"
+                     Opacity="0.4"
                      Color="{StaticResource C_MainTheme_Bc}" />
     <SolidColorBrush x:Key="DefaultScrollViewerThumb_IconBg_N"
                      Color="Transparent" />

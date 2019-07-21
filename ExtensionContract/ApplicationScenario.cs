@@ -74,6 +74,10 @@ namespace ExtensionContract {
 
         #endregion
 
+        /// <summary>
+        /// 在程序退出时执行
+        /// </summary>
+        SessionEnding,
         #endregion
     }
 }

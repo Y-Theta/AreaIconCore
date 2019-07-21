@@ -380,51 +380,25 @@
     <!--#endregion-->
 
     <!--#region                                                         ScrollViewer-->
-    <Style x:Key="DefaultScrollThumb"
-           TargetType="yt_slide:YT_Thumb">
-        <Setter Property="StrokeThickness"
-                Value="{DynamicResource DefaultScrollViewerThumb_StrokeThickness}" />
-        <Setter Property="IconFgNormal"
-                Value="{DynamicResource DefaultScrollViewerThumb_IconFg_N}" />
-        <Setter Property="IconFgOver"
-                Value="{DynamicResource DefaultScrollViewerThumb_IconFg_O}" />
-        <Setter Property="IconFgPressed"
-                Value="{DynamicResource DefaultScrollViewerThumb_IconFg_P}" />
-
-        <Setter Property="IconBgNormal"
-                Value="{DynamicResource DefaultScrollViewerThumb_IconBg_N}" />
-        <Setter Property="IconBgOver"
-                Value="{DynamicResource DefaultScrollViewerThumb_IconBg_O}" />
-        <Setter Property="IconBgPressed"
-                Value="{DynamicResource DefaultScrollViewerThumb_IconBg_P}" />
-    </Style>
 
     <Style x:Key="DefaultScrollViewer"
            TargetType="yt_slide:YT_ScrollViewer">
+        <Setter Property="ThumbFill"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconFg_N}" />
+        <Setter Property="ThumbStroke"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconBg_N}" />
+        <Setter Property="ThumbFill_O"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconFg_O}" />
+        <Setter Property="ThumbStroke_O"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconBg_O}" />
+        <Setter Property="ThumbFill_P"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconFg_P}" />
+        <Setter Property="ThumbStroke_P"
+                Value="{DynamicResource DefaultScrollViewerThumb_IconBg_P}" />
         <Setter Property="ScrollbarThickness"
                 Value="{DynamicResource DefaultScrollViewer_ScrollbarThickness}" />
         <Setter Property="ScrollbarMiniThickness"
                 Value="{DynamicResource DefaultScrollViewer_ScrollbarMiniThickness}" />
-        <Setter Property="HorizontalScrollBarStyle">
-            <Setter.Value>
-                <Style TargetType="yt_slide:YT_Scrollbar">
-                    <Setter Property="ThumbHorizontal"
-                            Value="{StaticResource DefaultScrollThumb}" />
-                    <Setter Property="ThumbVertival"
-                            Value="{StaticResource DefaultScrollThumb}" />
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="VerticalScrollBarStyle">
-            <Setter.Value>
-                <Style TargetType="yt_slide:YT_Scrollbar">
-                    <Setter Property="ThumbHorizontal"
-                            Value="{StaticResource DefaultScrollThumb}" />
-                    <Setter Property="ThumbVertival"
-                            Value="{StaticResource DefaultScrollThumb}" />
-                </Style>
-            </Setter.Value>
-        </Setter>
     </Style>
     <!--#endregion-->
 

@@ -71,7 +71,7 @@
                                 <Grid Width="108"
                                       Height="22">
                                     <yt_slide:YT_Slider x:Name="OpacitySlider"
-                                                        Value="{Binding MainOpacity, Source={StaticResource CoreSetting},Mode=TwoWay,Converter={StaticResource DoubleConverter},ConverterParameter={StaticResource OpacitySliderConvPara}}"
+                                                        Value="{Binding MainOpacity, Source={x:Static ser:CoreSettings.Instance},Mode=TwoWay,Converter={StaticResource DoubleConverter},ConverterParameter={StaticResource OpacitySliderConvPara}}"
                                                         Style="{StaticResource DefaultSettingPageSlider}"
                                                         Maximum="100"
                                                         Minimum="40"

@@ -41,7 +41,7 @@ namespace ToastCore.Notification {
         public static event ToastAction ToastCallback;
 
         /// <summary>
-        /// 微软提供的回调,调用者不在当前上下文线程中
+        /// 微软提供的回调,在异步线程中
         /// </summary>
         public override void OnActivated(string arguments, NotificationUserInput userInput, string appUserModelId) {
             List<KeyValuePair<string, string>> kvs = new List<KeyValuePair<string, string>>();
@@ -123,6 +123,13 @@ namespace ToastCore.Notification {
             ShowToast(xml);
         }
 
+        /// <summary>
+        /// 发送一条通知 （标题/文本/自定义输入/自定义命令）
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="content"></param>
+        /// <param name="paras"></param>
+        /// <param name="commands"></param>
         public void Notify(string title, string content, ToastCommands[] paras, ToastCommands[] commands) {
             XmlDocument xml = GetTemplete();
             AddTitle(xml, title, content);
@@ -144,8 +151,8 @@ namespace ToastCore.Notification {
         /// </summary>
         protected static void AddTitle(XmlDocument xml, string title, string content) {
             XmlNodeList lines = xml.GetElementsByTagName("text");
-            lines[0].AppendChild(xml.CreateTextNode(title));
-            lines[1].AppendChild(xml.CreateTextNode(content));
+            lines[0].InnerText = title; 
+            lines[1].InnerText = content;
         }
 
         /// <summary>

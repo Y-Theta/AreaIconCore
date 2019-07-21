@@ -14,7 +14,7 @@ using YFrameworkBase.Setting;
 namespace AreaIconCore.Services {
     [SettingFile("settings", "core_set.xml")]
     [DataContract]
-    public class CoreSettings : ILocalSetting<CoreSettings> {
+    public class CoreSettings : ALocalSetting<CoreSettings> {
         #region Properties
         /// <summary>
         /// 插件列表

@@ -1,0 +1,107 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:yt_btn="clr-namespace:YControls.FontIconButtons;assembly=YControls"
+                    xmlns:ser="clr-namespace:WNMP_ex.Services"
+                    xmlns:local="clr-namespace:WNMP_ex">
+    <SolidColorBrush x:Key="server_panel_fg_n"
+                     Color="#c0c0c0" />
+    <SolidColorBrush x:Key="server_panel_fg_o"
+                     Color="#ffffff" />
+    <SolidColorBrush x:Key="server_panel_fg_p"
+                     Color="#c0c0c0" />
+    <SolidColorBrush x:Key="NginxC"
+                     Color="#009944" />
+    <SolidColorBrush x:Key="MySQLC"
+                     Color="#e06e10" />
+    <SolidColorBrush x:Key="PHPC"
+                     Color="#036eb8" />
+    <SolidColorBrush x:Key="ServerOff"
+                     Color="#808080" />
+
+    <Visibility x:Key="Visible">Visible</Visibility>
+    <Visibility x:Key="Hidden">Hidden</Visibility>
+    <Visibility x:Key="Collapsed">Collapsed</Visibility>
+
+    <ser:ServerStatus x:Key="SS_Nginx">Nginx</ser:ServerStatus>
+    <ser:ServerStatus x:Key="SS_MySQL">MySQL</ser:ServerStatus>
+    <ser:ServerStatus x:Key="SS_PHP">PHP</ser:ServerStatus>
+
+    <Style x:Key="server_panel_btn"
+           TargetType="yt_btn:FIconButton">
+        <Setter Property="LabelVisibility"
+                Value="Collapsed" />
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Height"
+                Value="24" />
+        <Setter Property="Width"
+                Value="24" />
+        <Setter Property="IconFgNormal"
+                Value="{StaticResource server_panel_fg_n}" />
+        <Setter Property="IconFgOver"
+                Value="{StaticResource server_panel_fg_o}" />
+        <Setter Property="IconFgPressed"
+                Value="{StaticResource server_panel_fg_p}" />
+        <Setter Property="IconBgNormal"
+                Value="Transparent" />
+        <Setter Property="IconBgOver"
+                Value="Transparent" />
+        <Setter Property="IconBgPressed"
+                Value="Transparent" />
+    </Style>
+
+    <Style x:Key="server_item_btn_toggle"
+           TargetType="yt_btn:FIconToggleButton">
+        <Setter Property="LabelVisibility"
+                Value="Collapsed" />
+        <Setter Property="FontSize"
+                Value="24" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="IconSelect"
+                Value="&#xEDB4;" />
+        <Setter Property="Content"
+                Value="&#xF5B0;" />
+        <Setter Property="Height"
+                Value="64" />
+        <Setter Property="Width"
+                Value="64" />
+        <!---->
+                <Setter Property="IconFgNormal"
+                        Value="{StaticResource server_panel_fg_n}" />
+                <Setter Property="IconFgOver"
+                        Value="{StaticResource server_panel_fg_o}" />
+                <Setter Property="IconFgPressed"
+                        Value="{StaticResource server_panel_fg_p}" />
+                <Setter Property="IconFgDisabled"
+                        Value="{StaticResource server_panel_fg_n}"/>
+                <Setter Property="IconBgNormal"
+                        Value="Transparent" />
+                <Setter Property="IconBgOver"
+                        Value="Transparent" />
+                <Setter Property="IconBgPressed"
+                        Value="Transparent" />
+                <Setter Property="IconBgDisabled"
+                        Value="Transparent"/>
+                <!---->
+        <Setter Property="IconSelectFgNormal"
+                Value="{StaticResource server_panel_fg_n}" />
+        <Setter Property="IconSelectFgOver"
+                Value="{StaticResource server_panel_fg_o}" />
+        <Setter Property="IconSelectFgPressed"
+                Value="{StaticResource server_panel_fg_p}" />
+        <Setter Property="IconSelectFgDisabled"
+                Value="{StaticResource server_panel_fg_n}" />
+        <Setter Property="IconSelectBgNormal"
+                Value="Transparent" />
+        <Setter Property="IconSelectBgOver"
+                Value="Transparent" />
+        <Setter Property="IconSelectBgPressed"
+                Value="Transparent" />
+        <Setter Property="IconSelectBgDisabled"
+                Value="Transparent" />
+    </Style>
+
+</ResourceDictionary>

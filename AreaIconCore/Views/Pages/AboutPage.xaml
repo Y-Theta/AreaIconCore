@@ -4,12 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:yt_text="clr-namespace:YControls.TextControls;assembly=YControls"
+      xmlns:yt_slide="clr-namespace:YControls.SlideControls;assembly=YControls"
       xmlns:manager="clr-namespace:AreaIconCore.Services"
       xmlns:local="clr-namespace:AreaIconCore.Views.Pages"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
       mc:Ignorable="d">
-    <Grid Margin="0,30,0,0">
-        <StackPanel Orientation="Horizontal">
-
-        </StackPanel>
-    </Grid>
+    <yt_slide:YT_ScrollViewer  Style="{StaticResource DefaultScrollViewer}"
+                               HorizontalScrollBarVisibility="Disabled">
+        
+    </yt_slide:YT_ScrollViewer>
 </Page>

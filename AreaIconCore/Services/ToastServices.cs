@@ -20,6 +20,7 @@ namespace AreaIconCore.Services {
 
         #region Methods
         protected override void OnSetNotifyXML(XmlDocument xml) {
+            
             base.OnSetNotifyXML(xml);
         }
         #endregion

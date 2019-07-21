@@ -1,7 +1,8 @@
 ﻿<toast>
   <visual>
     <binding template="ToastGeneric">
-
+      <text>Hello</text>
+      <text>mssage</text>
     </binding>
   </visual>
 </toast>
